@@ -1,0 +1,1006 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+/* ===================================
+   NAVBAR
+=================================== */
+
+.top-navbar{
+
+  width:100%;
+
+  height:95px;
+
+  padding:0 32px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  position:sticky;
+
+  top:0;
+
+  z-index:1000;
+
+  overflow:visible;
+
+  background:#166534;
+
+  backdrop-filter:blur(18px);
+
+  border-bottom:
+    1px solid rgba(199,154,43,0.12);
+
+  animation:
+    navbarFade 0.8s ease;
+}
+
+/* ===================================
+   BACKGROUND EFFECT
+=================================== */
+
+.nav-bg{
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+    linear-gradient(
+      120deg,
+      rgba(237,240,238,0.03),
+      transparent,
+      rgba(199,154,43,0.04)
+    );
+
+  background-size:200% 200%;
+
+  animation:
+    bgMove 10s linear infinite;
+}
+
+/* FLOATING BLOBS */
+
+.nav-bg::before,
+.nav-bg::after{
+
+  content:'';
+
+  position:absolute;
+
+  width:260px;
+  height:260px;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(22,101,52,0.08),
+      transparent 70%
+    );
+
+  animation:
+    floatingBlob 10s infinite ease-in-out;
+}
+
+.nav-bg::before{
+
+  top:-120px;
+  left:-80px;
+}
+
+.nav-bg::after{
+
+  bottom:-140px;
+  right:-100px;
+
+  animation-delay:4s;
+}
+
+/* ===================================
+   GREETING
+=================================== */
+
+.greeting-section{
+
+  position:absolute;
+
+  left:40px;
+
+  top:50%;
+
+  transform:translateY(-50%);
+
+  z-index:5;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:flex-start;
+
+  justify-content:center;
+
+  gap:4px;
+
+  max-width:420px;
+}
+
+/* TITLE */
+
+.greeting-section h2{
+
+  font-size:34px;
+
+  color:#ffffff;
+
+  font-weight:900;
+
+  letter-spacing:-1px;
+
+  line-height:1.1;
+
+  animation:
+    fadeUp 0.7s ease,
+    titleFloat 4s ease-in-out infinite;
+}
+
+/* DOCTOR NAME */
+
+.greeting-section h2 span{
+
+  color:#fef3c7;
+
+  text-shadow:
+    0 0 14px rgba(255,255,255,0.18);
+
+  animation:
+    glowPulse 3s infinite;
+}
+
+/* SUBTITLE */
+
+.greeting-section p{
+
+  color:#d1d5db;
+
+  font-size:17px;
+
+  font-weight:500;
+
+  letter-spacing:1px;
+
+  animation:
+    fadeUp 1s ease,
+    subtitleFloat 5s ease-in-out infinite;
+}
+
+/* ===================================
+   SANSKRIT SECTION
+=================================== */
+
+.sanskrit-section{
+
+  position:absolute;
+
+  left:60%;
+
+  top:50%;
+
+  transform:translate(-50%, -50%);
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  justify-content:center;
+
+  z-index:5;
+}
+
+/* SLOKA */
+
+.sanskrit-quote{
+
+  font-size:30px;
+
+  color:#fef3c7;
+
+  font-weight:800;
+
+  letter-spacing:1px;
+
+  line-height:1;
+
+  text-align:center;
+
+  white-space:nowrap;
+
+  text-shadow:
+    0 0 14px rgba(255,255,255,0.12);
+}
+
+/* MEANING */
+
+.quote-meaning{
+
+  margin-top:8px;
+
+  color:#d1d5db;
+
+  font-size:17px;
+
+  font-style:italic;
+
+  letter-spacing:0.3px;
+
+  text-align:center;
+}
+
+/* ===================================
+   PROFILE
+=================================== */
+
+.profile-wrapper{
+
+  position:absolute;
+
+  right:28px;
+
+  top:50%;
+
+  transform:translateY(-50%);
+
+  z-index:9999;
+}
+
+/* PROFILE BUTTON */
+
+.profile-card{
+
+  width:82px;
+
+  height:62px;
+
+  border-radius:22px;
+
+  background:
+    rgba(255,255,255,0.82);
+
+  border:
+    1px solid rgba(199,154,43,0.14);
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  cursor:pointer;
+
+  backdrop-filter:blur(16px);
+
+  box-shadow:
+    0 10px 24px rgba(0,0,0,0.06);
+
+  transition:0.4s ease;
+
+  position:relative;
+
+  overflow:hidden;
+
+  animation:
+    cardFloat 5s ease-in-out infinite;
+}
+
+/* HOVER */
+
+.profile-card:hover{
+
+  transform:
+    translateY(-4px)
+    scale(1.06);
+
+  box-shadow:
+    0 18px 36px rgba(22,101,52,0.16);
+}
+
+/* SHINE EFFECT */
+
+.profile-card::before{
+
+  content:'';
+
+  position:absolute;
+
+  top:0;
+  left:-120%;
+
+  width:100%;
+  height:100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,0.4),
+      transparent
+    );
+
+  transition:0.8s;
+}
+
+.profile-card:hover::before{
+
+  left:120%;
+}
+
+/* PROFILE RING */
+
+.profile-ring{
+
+  width:50px;
+  height:50px;
+
+  border-radius:50%;
+
+  padding:2px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #facc15,
+      #166534,
+      #facc15
+    );
+}
+
+/* PROFILE IMAGE */
+
+.profile-image{
+
+  width:100%;
+  height:100%;
+
+  border-radius:50%;
+
+  object-fit:cover;
+
+  background:white;
+}
+
+/* ===================================
+   DOCTOR ID CARD
+=================================== */
+
+.doctor-id-card{
+
+  position:absolute;
+
+  top:85px;
+
+  right:5px;
+
+  width:200px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  opacity:0;
+
+  visibility:hidden;
+
+  transform:
+    translateY(-40px)
+    scale(0.75)
+    rotate(-8deg);
+
+  transition:
+    0.6s cubic-bezier(.22,1,.36,1);
+
+  z-index:99999;
+
+  cursor:pointer;
+
+  border-radius:24px;
+
+  padding:12px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(4, 150, 50, 0.96),
+      rgba(2,6,23,0.96)
+    );
+
+  border:
+    1px solid rgba(19, 138, 73, 0.08);
+
+  box-shadow:
+    0 20px 45px rgba(0,0,0,0.32);
+
+  overflow:hidden;
+}
+
+/* SHOW CARD */
+
+.show-card{
+
+  opacity:1;
+
+  visibility:visible;
+
+  transform:
+    translateY(0)
+    scale(1)
+    rotate(0deg);
+
+  animation:
+    swingDrop 1s ease,
+    floatingTag 4s ease-in-out infinite 1s;
+}
+
+/* ===================================
+   GLOW EFFECT
+=================================== */
+
+.doctor-id-card::after{
+
+  content:'';
+
+  position:absolute;
+
+  inset:0;
+
+  border-radius:22px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(250,204,21,0.18),
+      transparent 70%
+    );
+
+  filter:blur(18px);
+
+  z-index:-1;
+
+  animation:
+    pulseGlow 3s infinite;
+}
+
+.doctor-id-card::before{
+
+  content:'';
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(250,204,21,0.12),
+      transparent 60%
+    );
+
+  pointer-events:none;
+}
+/* TOP SECTION */
+
+.id-top{
+
+  width:100%;
+
+  padding:10px;
+
+  border-radius:18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #1e293b,
+      #0f172a
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05);
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  position:relative;
+
+  overflow:hidden;
+}
+
+/* ===================================
+   SHINE SWEEP
+=================================== */
+
+.id-top::before{
+
+  content:'';
+
+  position:absolute;
+
+  top:-120%;
+
+  left:-40%;
+
+  width:70%;
+
+  height:250%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,0.35),
+      transparent
+    );
+
+  transform:rotate(25deg);
+
+  animation:
+    shineSweep 4s linear infinite;
+}
+
+/* PHOTO */
+
+.id-photo{
+
+  width:100%;
+
+  height:190px;
+
+  object-fit:cover;
+
+  border-radius:14px;
+
+  border:
+    4px solid rgba(255,255,255,0.92);
+
+  background:white;
+
+  transition:0.45s ease;
+
+  animation:
+    imageFloat 5s ease-in-out infinite;
+}
+
+
+
+.doctor-id-card:hover .id-photo{
+
+  transform:
+    scale(1.06)
+    rotate(-3deg);
+}
+
+.id-content h3{
+
+  color:white;
+
+  font-size:15px;
+
+  font-weight:800;
+
+  margin-bottom:5px;
+
+  text-shadow:
+    0 0 10px rgba(255,255,255,0.25);
+
+  animation:
+    textGlow 3s infinite;
+}
+
+/* CONTENT */
+
+.id-content{
+
+  padding:14px 8px 4px;
+
+  text-align:center;
+}
+
+/* NAME */
+
+.id-content h3{
+
+  color:white;
+
+  font-size:15px;
+
+  font-weight:800;
+
+  margin-bottom:8px;
+
+  letter-spacing:0.5px;
+}
+
+/* QUALIFICATION */
+
+.qualification{
+
+  color:#fef3c7;
+
+  font-size:15px;
+
+  font-weight:700;
+
+  margin-bottom:6px;
+}
+
+/* SPECIALITY */
+
+.speciality{
+
+  color:#d1d5db;
+
+  font-size:14px;
+
+  letter-spacing:0.5px;
+}
+
+/* ===================================
+   ANIMATIONS
+=================================== */
+/* ===================================
+   ADVANCED ANIMATIONS
+=================================== */
+
+@keyframes swingDrop{
+
+  0%{
+
+    opacity:0;
+
+    transform:
+      translateY(-80px)
+      rotate(-16deg)
+      scale(0.6);
+  }
+
+  40%{
+
+    transform:
+      translateY(10px)
+      rotate(8deg)
+      scale(1.03);
+  }
+
+  65%{
+
+    transform:
+      translateY(-6px)
+      rotate(-4deg)
+      scale(0.98);
+  }
+
+  100%{
+
+    opacity:1;
+
+    transform:
+      translateY(0)
+      rotate(0deg)
+      scale(1);
+  }
+}
+
+@keyframes floatingTag{
+
+  0%{
+
+    transform:
+      translateY(0px);
+  }
+
+  50%{
+
+    transform:
+      translateY(-10px);
+  }
+
+  100%{
+
+    transform:
+      translateY(0px);
+  }
+}
+
+@keyframes shineSweep{
+
+  0%{
+
+    left:-80%;
+  }
+
+  100%{
+
+    left:140%;
+  }
+}
+
+@keyframes pulseGlow{
+
+  0%{
+
+    opacity:0.4;
+  }
+
+  50%{
+
+    opacity:1;
+  }
+
+  100%{
+
+    opacity:0.4;
+  }
+}
+
+@keyframes imageFloat{
+
+  0%{
+
+    transform:
+      translateY(0px);
+  }
+
+  50%{
+
+    transform:
+      translateY(-5px);
+  }
+
+  100%{
+
+    transform:
+      translateY(0px);
+  }
+}
+
+@keyframes textGlow{
+
+  0%{
+
+    text-shadow:
+      0 0 6px rgba(255,255,255,0.15);
+  }
+
+  50%{
+
+    text-shadow:
+      0 0 18px rgba(255,255,255,0.45);
+  }
+
+  100%{
+
+    text-shadow:
+      0 0 6px rgba(255,255,255,0.15);
+  }
+}
+
+@keyframes navbarFade{
+
+  from{
+
+    opacity:0;
+
+    transform:translateY(-20px);
+  }
+
+  to{
+
+    opacity:1;
+
+    transform:translateY(0);
+  }
+}
+
+@keyframes fadeUp{
+
+  from{
+
+    opacity:0;
+
+    transform:translateY(10px);
+  }
+
+  to{
+
+    opacity:1;
+
+    transform:translateY(0);
+  }
+}
+
+@keyframes bgMove{
+
+  0%{
+    background-position:0% 50%;
+  }
+
+  100%{
+    background-position:100% 50%;
+  }
+}
+
+@keyframes floatingBlob{
+
+  0%{
+
+    transform:
+      translateY(0px)
+      scale(1);
+  }
+
+  50%{
+
+    transform:
+      translateY(-25px)
+      scale(1.08);
+  }
+
+  100%{
+
+    transform:
+      translateY(0px)
+      scale(1);
+  }
+}
+
+@keyframes glowPulse{
+
+  0%{
+
+    text-shadow:
+      0 0 10px rgba(255,255,255,0.14);
+  }
+
+  50%{
+
+    text-shadow:
+      0 0 24px rgba(255,255,255,0.3);
+  }
+
+  100%{
+
+    text-shadow:
+      0 0 10px rgba(255,255,255,0.14);
+  }
+}
+
+@keyframes titleFloat{
+
+  0%{
+    transform:translateY(0px);
+  }
+
+  50%{
+    transform:translateY(-2px);
+  }
+
+  100%{
+    transform:translateY(0px);
+  }
+}
+
+@keyframes subtitleFloat{
+
+  0%{
+    transform:translateY(0px);
+  }
+
+  50%{
+    transform:translateY(2px);
+  }
+
+  100%{
+    transform:translateY(0px);
+  }
+}
+
+@keyframes cardFloat{
+
+  0%{
+    transform:translateY(0px);
+  }
+
+  50%{
+    transform:translateY(-3px);
+  }
+
+  100%{
+    transform:translateY(0px);
+  }
+}
+
+/* ===================================
+   RESPONSIVE
+=================================== */
+
+@media(max-width:900px){
+
+  .top-navbar{
+
+    height:auto;
+
+    padding:18px;
+  }
+
+  .greeting-section h2{
+
+    font-size:22px;
+  }
+
+  .greeting-section p{
+
+    font-size:13px;
+  }
+
+  .sanskrit-quote{
+
+    font-size:20px;
+  }
+
+  .quote-meaning{
+
+    font-size:12px;
+  }
+
+  .profile-wrapper{
+
+    right:18px;
+  }
+
+  .profile-card{
+
+    width:72px;
+
+    height:56px;
+  }
+
+  .profile-ring{
+
+    width:42px;
+    height:42px;
+  }
+
+  .doctor-id-card{
+
+    width:220px;
+  }
+
+  .id-top{
+
+    height:180px;
+  }
+
+  .id-photo{
+
+    width:120px;
+
+    height:150px;
+  }
+}

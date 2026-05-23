@@ -1,0 +1,1305 @@
+/* =========================================
+   REPORTS PAGE
+========================================= */
+
+.reports-page{
+
+  min-height:100vh;
+
+  padding:20px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #f5fff7,
+    #eefcf1
+  );
+
+  animation:
+  fadePage .7s ease;
+}
+
+/* =========================================
+   GLOBAL SCROLL
+========================================= */
+
+html{
+
+  scroll-behavior:smooth;
+}
+
+/* =========================================
+   CUSTOM SCROLLBAR
+========================================= */
+
+::-webkit-scrollbar{
+
+  width:10px;
+
+  height:10px;
+}
+
+::-webkit-scrollbar-track{
+
+  background:#e6f7ea;
+
+  border-radius:999px;
+}
+
+::-webkit-scrollbar-thumb{
+
+  background:
+  linear-gradient(
+    180deg,
+    #15803d,
+    #4ade80
+  );
+
+  border-radius:999px;
+
+  border:2px solid #e6f7ea;
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+  background:
+  linear-gradient(
+    180deg,
+    #166534,
+    #22c55e
+  );
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.reports-header{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  gap:18px;
+
+  margin-bottom:20px;
+
+  flex-wrap:wrap;
+}
+
+.header-left h1{
+
+  font-size:30px;
+
+  font-weight:900;
+
+  color:#14532d;
+
+  margin:6px 0;
+}
+
+.header-left p{
+
+  color:#6b7280;
+
+  font-size:13px;
+}
+
+.report-badge{
+
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:8px;
+
+  padding:
+  8px 14px;
+
+  border-radius:999px;
+
+  background:
+  rgba(22,163,74,.12);
+
+  color:#15803d;
+
+  font-size:12px;
+
+  font-weight:800;
+}
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.header-actions{
+
+  display:flex;
+
+  gap:10px;
+
+  flex-wrap:wrap;
+}
+
+.excel-btn,
+.pdf-btn{
+
+  position:relative;
+
+  overflow:hidden;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:8px;
+
+  min-width:160px;
+
+  height:42px;
+
+  padding:0 20px;
+
+  border:none;
+
+  border-radius:14px;
+
+  color:white;
+
+  font-size:12px;
+
+  font-weight:800;
+
+  cursor:pointer;
+
+  white-space:nowrap;
+
+  transition:
+  transform .2s ease,
+  box-shadow .2s ease,
+  filter .2s ease;
+
+  box-shadow:
+  0 8px 20px rgba(0,0,0,.10);
+}
+
+.excel-btn{
+
+  background:
+  linear-gradient(
+    135deg,
+    #15803d,
+    #22c55e
+  );
+}
+
+.pdf-btn{
+
+  background:
+  linear-gradient(
+    135deg,
+    #1d4ed8,
+    #3b82f6
+  );
+}
+
+.excel-btn:hover,
+.pdf-btn:hover{
+
+  transform:
+  translateY(-2px);
+
+  filter:brightness(1.05);
+
+  box-shadow:
+  0 14px 28px rgba(0,0,0,.18);
+}
+
+.excel-btn *,
+.pdf-btn *{
+
+  pointer-events:none;
+}
+.excel-btn:active,
+.pdf-btn:active{
+
+  transform:
+  scale(.98);
+}
+
+.excel-btn::before,
+.pdf-btn::before,
+.apply-btn::before{
+
+  content:'';
+
+  position:absolute;
+
+  inset:0;
+
+  transform:
+  translateX(-100%);
+
+  background:
+  linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.25),
+    transparent
+  );
+
+  pointer-events:none;
+
+  transition:
+  transform .7s ease;
+}
+
+.excel-btn:hover::before,
+.pdf-btn:hover::before,
+.apply-btn:hover::before{
+
+  transform:
+  translateX(100%);
+}
+
+.excel-btn,
+.pdf-btn{
+
+  isolation:isolate;
+}
+
+.excel-btn span,
+.pdf-btn span{
+
+  position:relative;
+
+  z-index:2;
+}
+/* =========================================
+   FILTER CARD
+========================================= */
+
+.filter-card{
+
+  display:flex;
+
+  align-items:flex-end;
+
+  gap:14px;
+
+  flex-wrap:wrap;
+
+  margin-bottom:20px;
+
+  padding:18px;
+
+  border-radius:20px;
+
+  background:white;
+
+  box-shadow:
+  0 8px 20px rgba(0,0,0,.05);
+}
+
+.filter-group{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:6px;
+}
+
+.filter-group label{
+
+  font-size:12px;
+
+  font-weight:700;
+
+  color:#166534;
+}
+
+.filter-group input{
+
+  width:180px;
+
+  height:42px;
+
+  padding:0 12px;
+
+  border-radius:12px;
+
+  border:
+  1px solid #d1d5db;
+
+  outline:none;
+
+  font-size:13px;
+}
+
+.apply-btn{
+
+  position:relative;
+
+  overflow:hidden;
+
+  height:42px;
+
+  padding:
+  0 18px;
+
+  border:none;
+
+  border-radius:12px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #14532d,
+    #22c55e
+  );
+
+  color:white;
+
+  font-size:12px;
+
+  font-weight:800;
+
+  cursor:pointer;
+
+  transition:.3s;
+}
+
+.apply-btn:hover{
+
+  transform:
+  translateY(-2px);
+}
+
+/* =========================================
+   STATS GRID
+========================================= */
+
+.stats-grid{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(4,1fr);
+
+  gap:16px;
+
+  margin-bottom:20px;
+}
+
+/* =========================================
+   STAT CARD
+========================================= */
+
+.stat-card{
+
+  position:relative;
+
+  overflow:hidden;
+
+  border-radius:22px;
+
+  padding:18px;
+
+  min-height:110px;
+
+  color:white;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:14px;
+
+  box-shadow:
+  0 10px 24px rgba(0,0,0,.08);
+
+  transition:
+  transform .35s,
+  box-shadow .35s;
+
+  animation:
+  cardFade .7s ease;
+}
+
+.stat-card:hover{
+
+  transform:
+  translateY(-4px);
+
+  box-shadow:
+  0 16px 32px rgba(34,197,94,.15);
+}
+
+.green-card{
+
+  background:
+  linear-gradient(
+    135deg,
+    #166534,
+    #22c55e
+  );
+}
+
+.orange-card{
+
+  background:
+  linear-gradient(
+    135deg,
+    #c2410c,
+    #fb923c
+  );
+}
+
+.blue-card{
+
+  background:
+  linear-gradient(
+    135deg,
+    #1d4ed8,
+    #60a5fa
+  );
+}
+
+.purple-card{
+
+  background:
+  linear-gradient(
+    135deg,
+    #7e22ce,
+    #c084fc
+  );
+}
+
+.stat-icon{
+
+  min-width:56px;
+
+  height:56px;
+
+  border-radius:16px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-size:26px;
+
+  background:
+  rgba(255,255,255,.18);
+
+  backdrop-filter:blur(12px);
+}
+
+.stat-content h2{
+
+  font-size:30px;
+
+  font-weight:900;
+
+  margin-bottom:4px;
+}
+
+.stat-content p{
+
+  font-size:13px;
+
+  opacity:.95;
+}
+
+/* =========================================
+   CHART GRID
+========================================= */
+
+.charts-grid{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(2,1fr);
+
+  gap:18px;
+
+  margin-bottom:20px;
+}
+
+/* =========================================
+   CHART CARD
+========================================= */
+
+.chart-card{
+
+  border-radius:22px;
+
+  padding:18px;
+
+  background:white;
+
+  box-shadow:
+  0 8px 20px rgba(0,0,0,.05);
+
+  animation:
+  cardFade .7s ease;
+
+  transition:
+  transform .35s,
+  box-shadow .35s;
+}
+
+.chart-card:hover{
+
+  transform:
+  translateY(-4px);
+
+  box-shadow:
+  0 16px 32px rgba(34,197,94,.12);
+}
+
+.card-header{
+
+  margin-bottom:18px;
+}
+
+.card-header h3{
+
+  font-size:18px;
+
+  font-weight:900;
+
+  color:#14532d;
+}
+
+/* =========================================
+   DONUT CHART
+========================================= */
+
+.gender-chart-wrapper{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  gap:18px;
+
+  flex-wrap:wrap;
+}
+
+.donut-chart{
+
+  width:170px;
+
+  height:170px;
+
+  border-radius:50%;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  margin:auto;
+
+  transition:.4s ease;
+
+  animation:
+  rotateDonut 1.2s ease;
+}
+
+.donut-inner{
+
+  width:95px;
+
+  height:95px;
+
+  border-radius:50%;
+
+  background:white;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  justify-content:center;
+
+  animation:
+  pulseDonut 3s infinite;
+}
+
+.donut-inner h2{
+
+  font-size:26px;
+
+  color:#14532d;
+
+  font-weight:900;
+}
+
+.donut-inner p{
+
+  font-size:11px;
+
+  color:#6b7280;
+}
+
+.gender-legends{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:14px;
+}
+
+.legend-item{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+  font-size:13px;
+
+  font-weight:700;
+
+  color:#374151;
+}
+
+.legend-dot{
+
+  width:16px;
+
+  height:16px;
+
+  border-radius:50%;
+}
+
+.male-dot{
+
+  background:#15803d;
+}
+
+.female-dot{
+
+  background:#eab308;
+}
+
+/* =========================================
+   BAR CHART
+========================================= */
+
+.bar-chart{
+
+  height:240px;
+
+  display:flex;
+
+  align-items:flex-end;
+
+  justify-content:space-between;
+
+  gap:14px;
+}
+
+.bar-item{
+
+  flex:1;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  justify-content:flex-end;
+
+  height:100%;
+}
+
+.bar-value{
+
+  margin-bottom:8px;
+
+  font-size:11px;
+
+  font-weight:800;
+
+  color:#14532d;
+}
+
+.bar-fill{
+
+  width:100%;
+
+  min-height:18px;
+
+  border-radius:
+  14px 14px 0 0;
+
+  background:
+  linear-gradient(
+    180deg,
+    #22c55e,
+    #14532d
+  );
+
+  animation:
+  growBar 1.2s ease;
+}
+
+.bar-item p{
+
+  margin-top:8px;
+
+  font-size:11px;
+
+  font-weight:700;
+
+  color:#374151;
+}
+
+/* =========================================
+   CONDITIONS CARD
+========================================= */
+
+.conditions-card{
+
+  border-radius:22px;
+
+  padding:18px;
+
+  background:white;
+
+  margin-bottom:20px;
+
+  box-shadow:
+  0 8px 20px rgba(0,0,0,.05);
+
+  animation:
+  cardFade .7s ease;
+}
+
+/* =========================================
+   CONDITION ROW
+========================================= */
+
+.condition-row{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:14px;
+
+  margin-bottom:14px;
+}
+
+.condition-name{
+
+  width:180px;
+
+  font-size:12px;
+
+  font-weight:700;
+
+  color:#374151;
+}
+
+.condition-progress{
+
+  flex:1;
+
+  height:14px;
+
+  border-radius:999px;
+
+  overflow:hidden;
+
+  background:#ecfdf3;
+}
+
+.condition-fill{
+
+  height:100%;
+
+  border-radius:999px;
+
+  background:
+  linear-gradient(
+    90deg,
+    #15803d,
+    #4ade80
+  );
+
+  animation:
+  loadProgress 1.3s ease;
+}
+
+.condition-count{
+
+  width:34px;
+
+  text-align:right;
+
+  font-size:12px;
+
+  font-weight:900;
+
+  color:#14532d;
+}
+
+/* =========================================
+   TABLE CARD
+========================================= */
+
+.patient-table-card{
+
+  border-radius:22px;
+
+  padding:18px;
+
+  background:white;
+
+  box-shadow:
+  0 8px 20px rgba(0,0,0,.05);
+
+  animation:
+  cardFade .7s ease;
+}
+
+/* =========================================
+   TABLE
+========================================= */
+
+.table-wrapper{
+
+  overflow:auto;
+
+  border-radius:18px;
+
+  border:
+  1px solid #e5e7eb;
+}
+
+.patients-table{
+
+  width:100%;
+
+  border-collapse:collapse;
+}
+
+.patients-table thead tr{
+
+  background:
+  linear-gradient(
+    135deg,
+    #14532d,
+    #22c55e
+  );
+}
+
+.patients-table th{
+
+  padding:14px;
+
+  text-align:left;
+
+  color:white;
+
+  font-size:12px;
+
+  font-weight:800;
+}
+
+.patients-table td{
+
+  padding:12px;
+
+  border-bottom:
+  1px solid #eef2f7;
+
+  font-size:12px;
+
+  color:#374151;
+}
+
+.patients-table tbody tr{
+
+  transition:.3s;
+
+  animation:
+  rowFade .5s ease;
+}
+
+.patients-table tbody tr:hover{
+
+  background:
+  linear-gradient(
+    90deg,
+    rgba(34,197,94,.08),
+    transparent
+  );
+
+  transform:
+  scale(1.005);
+}
+
+/* =========================================
+   PATIENT ID
+========================================= */
+
+.patient-id{
+
+  padding:
+  6px 12px;
+
+  border-radius:999px;
+
+  background:
+  rgba(34,197,94,.12);
+
+  color:#15803d;
+
+  font-size:11px;
+
+  font-weight:800;
+}
+
+/* =========================================
+   PATIENT INFO
+========================================= */
+
+.patient-info{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+}
+
+.patient-avatar{
+
+  width:40px;
+
+  height:40px;
+
+  border-radius:50%;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  background:
+  linear-gradient(
+    135deg,
+    #15803d,
+    #4ade80
+  );
+
+  color:white;
+
+  font-size:15px;
+
+  font-weight:900;
+
+  transition:
+  transform .35s,
+  box-shadow .35s;
+}
+
+.patient-avatar:hover{
+
+  transform:
+  scale(1.08)
+  rotate(5deg);
+
+  box-shadow:
+  0 8px 20px rgba(34,197,94,.3);
+}
+
+.patient-info h4{
+
+  font-size:13px;
+
+  font-weight:800;
+
+  color:#14532d;
+
+  margin-bottom:2px;
+}
+
+.patient-info p{
+
+  font-size:10px;
+
+  color:#6b7280;
+}
+
+/* =========================================
+   FOLLOWUP CHIP
+========================================= */
+
+.followup-chip{
+
+  padding:
+  6px 12px;
+
+  border-radius:999px;
+
+  background:
+  rgba(59,130,246,.12);
+
+  color:#2563eb;
+
+  font-size:10px;
+
+  font-weight:800;
+
+  animation:
+  chipPulse 2s infinite;
+}
+
+.no-followup{
+
+  font-size:10px;
+
+  font-weight:700;
+
+  color:#dc2626;
+}
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes fadePage{
+
+  from{
+
+    opacity:0;
+
+    transform:
+    translateY(20px);
+  }
+
+  to{
+
+    opacity:1;
+
+    transform:
+    translateY(0);
+  }
+}
+
+@keyframes cardFade{
+
+  from{
+
+    opacity:0;
+
+    transform:
+    translateY(20px);
+  }
+
+  to{
+
+    opacity:1;
+
+    transform:
+    translateY(0);
+  }
+}
+
+@keyframes rotateDonut{
+
+  from{
+
+    transform:
+    rotate(-180deg)
+    scale(.7);
+
+    opacity:0;
+  }
+
+  to{
+
+    transform:
+    rotate(0deg)
+    scale(1);
+
+    opacity:1;
+  }
+}
+
+@keyframes pulseDonut{
+
+  0%{
+
+    box-shadow:
+    0 0 0 0 rgba(34,197,94,.3);
+  }
+
+  70%{
+
+    box-shadow:
+    0 0 0 14px rgba(34,197,94,0);
+  }
+
+  100%{
+
+    box-shadow:
+    0 0 0 0 rgba(34,197,94,0);
+  }
+}
+
+@keyframes growBar{
+
+  from{
+
+    height:0;
+  }
+}
+
+@keyframes loadProgress{
+
+  from{
+
+    width:0;
+  }
+}
+
+@keyframes rowFade{
+
+  from{
+
+    opacity:0;
+
+    transform:
+    translateX(-10px);
+  }
+
+  to{
+
+    opacity:1;
+
+    transform:
+    translateX(0);
+  }
+}
+
+@keyframes chipPulse{
+
+  0%{
+
+    transform:scale(1);
+  }
+
+  50%{
+
+    transform:scale(1.04);
+  }
+
+  100%{
+
+    transform:scale(1);
+  }
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width:1200px){
+
+  .stats-grid{
+
+    grid-template-columns:
+    repeat(2,1fr);
+  }
+
+  .charts-grid{
+
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:768px){
+
+  .reports-page{
+
+    padding:14px;
+  }
+
+  .stats-grid{
+
+    grid-template-columns:1fr;
+  }
+
+  .reports-header{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+  }
+
+  .header-actions{
+
+    width:100%;
+  }
+
+  .excel-btn,
+  .pdf-btn{
+
+    flex:1;
+  }
+
+  .filter-card{
+
+    flex-direction:column;
+
+    align-items:stretch;
+  }
+
+  .filter-group input{
+
+    width:100%;
+  }
+
+  .patients-table{
+
+    min-width:850px;
+  }
+
+  .donut-chart{
+
+    width:150px;
+
+    height:150px;
+  }
+
+  .donut-inner{
+
+    width:85px;
+
+    height:85px;
+  }
+}

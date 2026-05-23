@@ -1,0 +1,662 @@
+<!-- reports.html -->
+
+<div class="reports-page">
+
+  <!-- =====================================
+       HEADER
+  ====================================== -->
+
+  <div class="reports-header">
+
+    <div class="header-left">
+
+
+      <h1>
+        Clinic Reports
+      </h1>
+
+      <p>
+        Live patient statistics and insights
+      </p>
+
+    </div>
+
+    <!-- ACTIONS -->
+
+    <div class="header-actions">
+
+      <button
+        class="excel-btn"
+        (click)="exportExcel()"
+      >
+
+        📗 Export Excel
+
+      </button>
+
+      <button
+        class="pdf-btn"
+        (click)="exportPDF()"
+      >
+
+        📄 Export PDF
+
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- =====================================
+       DATE FILTER
+  ====================================== -->
+
+  <div class="filter-card">
+
+    <div class="filter-group">
+
+      <label>
+        From Date
+      </label>
+
+      <input
+        type="date"
+        [(ngModel)]="fromDate"
+      />
+
+    </div>
+
+    <div class="filter-group">
+
+      <label>
+        To Date
+      </label>
+
+      <input
+        type="date"
+        [(ngModel)]="toDate"
+      />
+
+    </div>
+
+    <button
+      class="apply-btn"
+      (click)="applyDateFilter()"
+    >
+
+      Apply Filter
+
+    </button>
+
+  </div>
+
+  <!-- =====================================
+       TOP STATISTICS
+  ====================================== -->
+
+  <div class="stats-grid">
+
+    <!-- TOTAL PATIENTS -->
+
+    <div class="stat-card green-card">
+
+      <div class="stat-icon">
+        👨‍⚕️
+      </div>
+
+      <div class="stat-content">
+
+        <h2>
+          {{ totalPatients }}
+        </h2>
+
+        <p>
+          Total Patients
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- TOTAL CASES -->
+
+    <div class="stat-card orange-card">
+
+      <div class="stat-icon">
+        📋
+      </div>
+
+      <div class="stat-content">
+
+        <h2>
+          {{ totalCases }}
+        </h2>
+
+        <p>
+          Total Cases
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- PRESCRIPTIONS -->
+
+    <div class="stat-card blue-card">
+
+      <div class="stat-icon">
+        💊
+      </div>
+
+      <div class="stat-content">
+
+        <h2>
+          {{ totalPrescriptions }}
+        </h2>
+
+        <p>
+          Prescriptions
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- FOLLOWUPS -->
+
+    <div class="stat-card purple-card">
+
+      <div class="stat-icon">
+        🔄
+      </div>
+
+      <div class="stat-content">
+
+        <h2>
+          {{ totalAppointments }}
+        </h2>
+
+        <p>
+          Followups
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- =====================================
+       CHART GRID
+  ====================================== -->
+
+  <div class="charts-grid">
+
+    <!-- GENDER DISTRIBUTION -->
+
+    <div class="chart-card">
+
+      <div class="card-header">
+
+        <h3>
+          Patient Gender Distribution
+        </h3>
+
+      </div>
+
+      <div class="gender-chart-wrapper">
+
+        <!-- DONUT -->
+
+        <div
+    class="donut-chart"
+
+    [style.background]="
+        'conic-gradient(' +
+
+        '#15803d 0deg ' +
+
+        maleDegree +
+
+        'deg,' +
+
+        '#eab308 ' +
+
+        maleDegree +
+
+        'deg 360deg)'
+    "
+    >
+
+          <div class="donut-inner">
+
+            <h2>
+              {{ totalPatients }}
+            </h2>
+
+            <p>
+              Patients
+            </p>
+
+          </div>
+
+        </div>
+
+        <!-- LEGENDS -->
+
+        <div class="gender-legends">
+
+          <div class="legend-item">
+
+            <span class="legend-dot male-dot"></span>
+
+            <span>
+              Male :
+              {{ maleCount }}
+            </span>
+
+          </div>
+
+          <div class="legend-item">
+
+            <span class="legend-dot female-dot"></span>
+
+            <span>
+              Female :
+              {{ femaleCount }}
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- AGE DISTRIBUTION -->
+
+    <div class="chart-card">
+
+      <div class="card-header">
+
+        <h3>
+          Age Group Distribution
+        </h3>
+
+      </div>
+
+      <div class="bar-chart">
+
+        <!-- CHILD -->
+
+        <div class="bar-item">
+
+          <span class="bar-value">
+            {{ ageGroups.child }}
+          </span>
+
+          <div
+            class="bar-fill"
+
+            [style.height.%]="
+              ageGroups.child * 2
+            "
+          ></div>
+
+          <p>
+            0-18
+          </p>
+
+        </div>
+
+        <!-- YOUTH -->
+
+        <div class="bar-item">
+
+          <span class="bar-value">
+            {{ ageGroups.youth }}
+          </span>
+
+          <div
+            class="bar-fill"
+
+            [style.height.%]="
+              ageGroups.youth * 2
+            "
+          ></div>
+
+          <p>
+            19-30
+          </p>
+
+        </div>
+
+        <!-- ADULT -->
+
+        <div class="bar-item">
+
+          <span class="bar-value">
+            {{ ageGroups.adult }}
+          </span>
+
+          <div
+            class="bar-fill"
+
+            [style.height.%]="
+              ageGroups.adult * 2
+            "
+          ></div>
+
+          <p>
+            31-45
+          </p>
+
+        </div>
+
+        <!-- MIDDLE -->
+
+        <div class="bar-item">
+
+          <span class="bar-value">
+            {{ ageGroups.middle }}
+          </span>
+
+          <div
+            class="bar-fill"
+
+            [style.height.%]="
+              ageGroups.middle * 2
+            "
+          ></div>
+
+          <p>
+            46-60
+          </p>
+
+        </div>
+
+        <!-- SENIOR -->
+
+        <div class="bar-item">
+
+          <span class="bar-value">
+            {{ ageGroups.senior }}
+          </span>
+
+          <div
+            class="bar-fill"
+
+            [style.height.%]="
+              ageGroups.senior * 2
+            "
+          ></div>
+
+          <p>
+            60+
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- =====================================
+       TOP CONDITIONS
+  ====================================== -->
+
+  <div class="conditions-card">
+
+    <div class="card-header">
+
+      <h3>
+        Top Diagnosed Conditions
+      </h3>
+
+    </div>
+
+    <!-- CONDITION ROW -->
+
+    <div
+      class="condition-row"
+
+      *ngFor="
+        let condition of topConditions
+      "
+    >
+
+      <!-- NAME -->
+
+      <div class="condition-name">
+
+        {{ condition.name }}
+
+      </div>
+
+      <!-- BAR -->
+
+      <div class="condition-progress">
+
+        <div
+          class="condition-fill"
+
+          [style.width.%]="
+            getBarWidth(
+              condition.count
+            )
+          "
+        ></div>
+
+      </div>
+
+      <!-- COUNT -->
+
+      <div class="condition-count">
+
+        {{ condition.count }}
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- =====================================
+       PATIENT TABLE
+  ====================================== -->
+
+  <div class="patient-table-card">
+
+    <div class="card-header">
+
+      <h3>
+        Patient Master List
+      </h3>
+
+    </div>
+
+    <!-- TABLE -->
+
+    <div class="table-wrapper">
+
+      <table class="patients-table">
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Patient ID
+            </th>
+
+            <th>
+              Name
+            </th>
+
+            <th>
+              Age
+            </th>
+
+            <th>
+              Gender
+            </th>
+
+            <th>
+              Mobile
+            </th>
+
+            <th>
+              Diagnosis
+            </th>
+
+            <th>
+              Followup
+            </th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr
+            *ngFor="
+              let patient of patients
+            "
+          >
+
+            <!-- ID -->
+
+            <td>
+
+              <span class="patient-id">
+
+                {{
+                  patient.patientCode
+                }}
+
+              </span>
+
+            </td>
+
+            <!-- NAME -->
+
+            <td>
+
+              <div class="patient-info">
+
+                <div class="patient-avatar">
+
+                  {{
+                    patient.name
+                    ?.charAt(0)
+                  }}
+
+                </div>
+
+                <div>
+
+                  <h4>
+
+                    {{ patient.name }}
+
+                  </h4>
+
+                  <p>
+
+                    {{
+                      patient.address
+                    }}
+
+                  </p>
+
+                </div>
+
+              </div>
+
+            </td>
+
+            <!-- AGE -->
+
+            <td>
+
+              {{ patient.age }}
+
+            </td>
+
+            <!-- GENDER -->
+
+            <td>
+
+              {{ patient.sex }}
+
+            </td>
+
+            <!-- MOBILE -->
+
+            <td>
+
+              {{
+                patient.phoneNumber
+              }}
+
+            </td>
+
+            <!-- DIAGNOSIS -->
+
+            <td>
+
+              {{
+                patient.diagnosis
+                || 'General'
+              }}
+
+            </td>
+
+            <!-- FOLLOWUP -->
+
+            <td>
+
+              <span
+                class="followup-chip"
+
+                *ngIf="
+                  patient.followUpDate
+                "
+              >
+
+                {{
+                  patient.followUpDate
+                  | date:'dd/MM/yyyy'
+                }}
+
+              </span>
+
+              <span
+                class="no-followup"
+
+                *ngIf="
+                  !patient.followUpDate
+                "
+              >
+
+                No Followup
+
+              </span>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>

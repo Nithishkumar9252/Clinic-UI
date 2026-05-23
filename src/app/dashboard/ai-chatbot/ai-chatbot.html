@@ -1,0 +1,749 @@
+<div class="medical-dashboard">
+
+  <!-- BACKGROUND -->
+
+  <div class="bg-circle one"></div>
+
+  <div class="bg-circle two"></div>
+
+  <!-- HEADER -->
+
+  <div class="dashboard-header">
+
+    <div class="logo-section">
+
+      <div class="logo-icon">
+        🩺
+      </div>
+
+      <div>
+
+        <h1>
+          AI Disease Analysis
+        </h1>
+
+        <p>
+          Advanced Homeopathy Clinical Intelligence
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="status-badge">
+
+      <span class="pulse-dot"></span>
+
+      AI ACTIVE
+
+    </div>
+
+  </div>
+
+  <!-- SEARCH -->
+
+  <div class="search-container">
+
+    <div class="search-card">
+
+      <h2>
+        Enter Patient ID
+      </h2>
+
+      <p>
+        Search and analyze patient disease patterns using AI
+      </p>
+
+      <div class="search-box">
+
+        <input
+
+          type="text"
+
+          [(ngModel)]="patientId"
+          
+
+          placeholder="Enter Patient ID..."
+
+        />
+
+        <button
+
+          (click)="analyzePatient()"
+
+          [disabled]="isAnalyzing"
+
+        >
+
+          <span *ngIf="!isAnalyzing">
+
+            Analyze
+
+          </span>
+
+          <span *ngIf="isAnalyzing">
+
+            Analyzing...
+
+          </span>
+
+        </button>
+
+      </div>
+      <div
+  class="validation-message"
+  *ngIf="validationMessage"
+>
+  {{ validationMessage }}
+</div>
+
+<!-- DOCTOR AI SECTION -->
+
+<div class="doctor-ai-section">
+
+  <div
+    class="doctor-ai-card"
+    (click)="toggleDoctorChat()"
+  >
+
+    <div class="doctor-image">
+
+      👨‍⚕️
+
+      <div class="doctor-pulse"></div>
+
+    </div>
+
+    <div class="doctor-content">
+
+      <h3>
+        AI Homeopathy Doctor
+      </h3>
+
+      <p>
+        Click to open expert AI medical assistant
+      </p>
+
+      <button>
+        Open AI Chat
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+      
+    </div>
+    
+
+  </div>
+
+  
+
+  <div
+
+    class="analysis-popup"
+
+    [class.show]="selectedPatient"
+
+  >
+
+    <!-- HEADER -->
+
+    <div class="popup-header">
+
+      <div class="popup-title">
+
+        <div class="brain-icon">
+          🧠
+        </div>
+
+        <div>
+
+          <h2>
+            AI Homeopathy Analysis
+          </h2>
+
+          <p>
+            Advanced Clinical Intelligence
+          </p>
+
+        </div>
+
+      </div>
+
+      <button
+
+        class="popup-close"
+
+        (click)="selectedPatient = null"
+
+      >
+
+        ✕
+
+      </button>
+
+    </div>
+
+    <!-- CONTENT -->
+
+    <div class="popup-content">
+
+      <!-- LEFT PANEL -->
+
+      <div class="popup-patient-card">
+
+        <!-- PROFILE -->
+
+        <div class="popup-profile">
+
+          <div class="popup-avatar">
+
+            {{ selectedPatient?.name?.charAt(0) }}
+
+          </div>
+
+          <div>
+
+            <h3>
+              {{ selectedPatient?.name }}
+            </h3>
+
+            <p>
+              Patient ID :
+              {{ patientId }}
+            </p>
+
+          </div>
+
+        </div>
+
+        <!-- INFO GRID -->
+
+        <div class="popup-info-grid">
+
+          <div class="popup-info-box">
+
+            <label>
+              Age
+            </label>
+
+            <h4>
+              {{ selectedPatient?.age }}
+            </h4>
+
+          </div>
+
+          <div class="popup-info-box">
+
+            <label>
+              Gender
+            </label>
+
+            <h4>
+              {{ selectedPatient?.sex }}
+            </h4>
+
+          </div>
+
+          <div class="popup-info-box">
+
+            <label>
+              Phone
+            </label>
+
+            <h4>
+              {{ selectedPatient?.phoneNumber }}
+            </h4>
+
+          </div>
+
+          <div class="popup-info-box">
+
+            <label>
+              Status
+            </label>
+
+            <h4>
+              Stable
+            </h4>
+
+          </div>
+
+        </div>
+
+        <!-- COMPLAINTS -->
+
+        <div class="popup-medical-box">
+
+          <h4>
+            Presenting Complaints
+          </h4>
+
+          <p>
+            {{ selectedPatient?.presentingComplaints }}
+          </p>
+
+        </div>
+
+        <!-- HISTORY -->
+
+        <div class="popup-medical-box">
+
+          <h4>
+            History Of Illness
+          </h4>
+
+          <p>
+            {{ selectedPatient?.historyPresentIllness }}
+          </p>
+
+        </div>
+
+        <!-- DIAGNOSIS -->
+
+        <div class="popup-medical-box">
+
+          <h4>
+            Diagnosis
+          </h4>
+
+          <p>
+            {{ selectedPatient?.diagnosis }}
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- RIGHT PANEL -->
+
+      <div class="popup-analysis-section">
+
+        <!-- LOADER -->
+
+        <div
+
+          class="mini-loader"
+
+          *ngIf="isAnalyzing"
+
+        >
+
+          <div class="loader-spinner"></div>
+
+          <span>
+
+            AI generating expert homeopathy report...
+
+          </span>
+
+        </div>
+
+        <!-- RESULT -->
+
+        <div class="analysis-result">
+<div class="simple-report">
+
+  <div class="simple-report-header">
+
+    <div class="report-ai-icon">
+      🧠
+    </div>
+
+    <div>
+
+      <h2>
+        AI Homeopathy Clinical Report
+      </h2>
+
+      <p>
+        Advanced Clinical Intelligence
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="simple-report-content">
+
+    <div
+      *ngFor="let line of analysisResult.split('\n')"
+    >
+
+      <!-- HEADINGS -->
+
+      <h3
+        *ngIf="
+          line.includes(':')
+          &&
+          (
+            line.includes('Analysis')
+            ||
+            line.includes('Recommendations')
+            ||
+            line.includes('Evaluation')
+            ||
+            line.includes('Medicines')
+            ||
+            line.includes('Factors')
+            ||
+            line.includes('Correlation')
+            ||
+            line.includes('Summary')
+            ||
+            line.includes('Advice')
+            ||
+            line.includes('Analysis')
+            ||
+            line.includes('Recommendations')
+            ||
+            line.includes('Evaluation')
+            ||
+            line.includes('Medicines')
+            ||
+            line.includes('Factors')
+            ||
+            line.includes('Correlation')
+            ||
+            line.includes('Summary')
+            ||
+            line.includes('Advice')
+            ||
+            line.includes('Prognosis')
+            ||
+            line.includes('Differentiation')
+            ||
+            line.includes('Restrictions')
+            ||
+            line.includes('Timeline')
+            ||
+            line.includes('Prevention')
+            ||
+            line.includes('Healing')
+            ||
+            line.includes('Symptoms')
+            ||
+            line.includes('Dosage')
+            ||
+            line.includes('Potency')
+            ||
+            line.includes('Complaints')
+            ||
+            line.includes('Diagnosis')
+          )
+        "
+      >
+
+        {{ line }}
+
+      </h3>
+
+      <!-- CONTENT -->
+
+      <p
+        *ngIf="
+          !(
+            line.includes(':')
+            &&
+            (
+              line.includes('Analysis')
+              ||
+              line.includes('Recommendations')
+              ||
+              line.includes('Evaluation')
+              ||
+              line.includes('Medicines')
+              ||
+              line.includes('Factors')
+              ||
+              line.includes('Correlation')
+              ||
+              line.includes('Summary')
+              ||
+              line.includes('Advice')
+              ||
+              line.includes('Analysis')
+              ||
+              line.includes('Recommendations')
+              ||
+              line.includes('Evaluation')
+              ||
+              line.includes('Medicines')
+              ||
+              line.includes('Factors')
+              ||
+              line.includes('Correlation')
+              ||
+              line.includes('Summary')
+              ||
+              line.includes('Advice')
+              ||
+              line.includes('Prognosis')
+              ||
+              line.includes('Differentiation')
+              ||
+              line.includes('Restrictions')
+              ||
+              line.includes('Timeline')
+              ||
+              line.includes('Prevention')
+              ||
+              line.includes('Healing')
+              ||
+              line.includes('Symptoms')
+              ||
+              line.includes('Dosage')
+              ||
+              line.includes('Potency')
+              ||
+              line.includes('Complaints')
+              ||
+              line.includes('Diagnosis')
+            )
+          )
+          &&
+          line.trim()
+        "
+      >
+
+        {{ line }}
+
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+        </div>
+
+        <!-- RECOMMENDATIONS -->
+
+        <div class="recommendation-grid">
+
+          <div class="recommendation-card">
+
+            <div class="recommendation-icon">
+              💊
+            </div>
+
+            <h4>
+              Medicines
+            </h4>
+
+            <p>
+              Constitutional and acute remedy suggestions
+            </p>
+
+          </div>
+
+          <div class="recommendation-card">
+
+            <div class="recommendation-icon">
+              ⚗
+            </div>
+
+            <h4>
+              Potency
+            </h4>
+
+            <p>
+              30C, 200C, 1M potency recommendations
+            </p>
+
+          </div>
+
+          <div class="recommendation-card">
+
+            <div class="recommendation-icon">
+              🥗
+            </div>
+
+            <h4>
+              Diet
+            </h4>
+
+            <p>
+              Personalized homeopathy dietary guidance
+            </p>
+
+          </div>
+
+          <div class="recommendation-card">
+
+            <div class="recommendation-icon">
+              🌿
+            </div>
+
+            <h4>
+              Holistic Care
+            </h4>
+
+            <p>
+              Lifestyle and recovery recommendations
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+  
+  <div
+  class="chat-popup"
+  [class.open]="showDoctorChat"
+>
+
+  <!-- HEADER -->
+
+  <div class="chat-header">
+
+    <div class="chat-title">
+
+      <div class="chat-icon">
+        👨‍⚕️
+      </div>
+
+      <div>
+
+        <h3>
+          AI Doctor
+        </h3>
+
+        <p>
+          Expert Homeopathy Assistant
+        </p>
+
+      </div>
+
+    </div>
+
+    <button
+      class="close-btn"
+      (click)="toggleDoctorChat()"
+    >
+      ✕
+    </button>
+
+  </div>
+
+  <!-- CHAT BODY -->
+
+  <div class="chat-body">
+
+    <div
+      class="message-wrapper"
+      [ngClass]="message.role"
+      *ngFor="let message of messages"
+    >
+
+      <div class="message-bubble">
+
+        {{ message.text }}
+
+        <div class="message-time">
+
+          {{ message.time }}
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- QUICK ACTIONS -->
+
+  <div class="quick-actions">
+
+    <button
+      (click)="askQuickQuestion('Suggest homeopathy medicine for migraine')"
+    >
+      Migraine
+    </button>
+
+    <button
+      (click)="askQuickQuestion('Best remedy for gastric problems')"
+    >
+      Gastric
+    </button>
+
+    <button
+      (click)="askQuickQuestion('Homeopathy remedy for anxiety')"
+    >
+      Anxiety
+    </button>
+
+    <button
+      (click)="askQuickQuestion('Best immunity boosting homeopathy medicines')"
+    >
+      Immunity
+    </button>
+
+  </div>
+
+  <!-- INPUT -->
+
+  <div class="chat-input-area">
+
+    <textarea
+
+      [(ngModel)]="userMessage"
+
+      (keydown)="onEnter($event)"
+
+      placeholder="Ask your medical question..."
+
+    ></textarea>
+
+    <button
+
+      class="send-btn"
+
+      (click)="sendMessage()"
+
+    >
+
+      ➤
+
+    </button>
+
+  </div>
+
+</div>  <!-- FLOATING AI BUTTON -->
+
+  <div
+
+    class="floating-ai-btn"
+
+    (click)="toggleChatPopup()"
+
+  >
+
+    🤖
+
+  </div>
+
+
+
+  <div
+
+    class="chat-popup"
+
+  >
+
+
+  </div>
+
+  
+
+</div>

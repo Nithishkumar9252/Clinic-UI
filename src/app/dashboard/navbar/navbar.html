@@ -1,0 +1,96 @@
+<div class="top-navbar">
+
+  <!-- BACKGROUND -->
+  <div class="nav-bg"></div>
+
+  <!-- GREETING -->
+  <div class="greeting-section">
+
+    <h2>
+      Good Day ,
+      <span>
+        Dr. Sahithi
+      </span>
+      🌿
+    </h2>
+
+    <p>
+      Healing lives naturally,
+      one patient at a time.
+    </p>
+
+  </div>
+
+  <!-- SANSKRIT SECTION -->
+  <div class="sanskrit-section">
+
+    <h3 class="sanskrit-quote">
+      सर्वे सन्तु निरामयाः ॥
+    </h3>
+
+    <p class="quote-meaning">
+      May all be free from illness.
+    </p>
+
+  </div>
+
+  <!-- PROFILE -->
+  <div class="profile-wrapper">
+
+    <!-- PROFILE BUTTON -->
+    <div
+      class="profile-card"
+      (click)="toggleCard()"
+    >
+
+      <div class="profile-ring">
+
+        <img
+          src="assets/Sahithi_photo.jpeg"
+          alt="Doctor"
+          class="profile-image"
+        >
+
+      </div>
+
+    </div>
+
+    <!-- ID CARD -->
+    <div
+      class="doctor-id-card"
+      [class.show-card]="showCard"
+    >
+
+      <!-- TOP IMAGE -->
+      <div class="id-top">
+
+        <img
+          src="assets/Sahithi_photo.jpeg"
+          alt="Doctor"
+          class="id-photo"
+        >
+
+      </div>
+
+      <!-- CONTENT -->
+      <div class="id-content">
+
+        <h3>
+          Dr. Sahithi Kalva
+        </h3>
+
+        <p class="qualification">
+          BHMS
+        </p>
+
+        <p class="speciality">
+          Homeopathic Family Physician
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

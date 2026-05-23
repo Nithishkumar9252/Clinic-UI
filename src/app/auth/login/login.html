@@ -1,0 +1,317 @@
+<!-- login.html -->
+
+<div class="auth-page">
+
+  <!-- ANIMATED BACKGROUND -->
+
+  <div class="background-animation">
+
+    <span></span>
+    <span></span>
+    <span></span>
+
+  </div>
+
+  <!-- FLOATING PARTICLES -->
+
+  <div class="particles">
+
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+
+  </div>
+
+  <!-- ECG LINE -->
+
+  <!-- HEARTBEAT ECG -->
+
+<div class="ecg-container">
+
+  <svg
+    class="ecg-svg"
+    viewBox="0 0 2000 120"
+    preserveAspectRatio="none"
+  >
+
+    <path
+  d="
+  M0 72
+
+  L30 72
+  L48 70
+  L60 72
+  L82 72
+  L98 45
+  L118 100
+  L140 55
+  L162 72
+  L250 72
+
+  L290 74
+  L320 70
+  L350 72
+  L370 30
+  L392 112
+  L415 52
+  L438 72
+  L560 72
+
+  L590 70
+  L620 73
+  L648 72
+  L672 52
+  L695 90
+  L720 60
+  L748 72
+  L860 72
+
+  L900 75
+  L930 72
+  L960 72
+  L985 18
+  L1010 118
+  L1040 48
+  L1070 72
+  L1180 72
+
+  L1220 68
+  L1250 72
+  L1280 72
+  L1300 40
+  L1325 98
+  L1350 58
+  L1380 72
+  L1510 72
+
+  L1540 76
+  L1570 72
+  L1600 72
+  L1625 28
+  L1655 108
+  L1685 54
+  L1715 72
+  L1820 72
+
+  L1860 71
+  L1890 72
+  L1920 72
+  L1945 48
+  L1970 88
+  L1995 62
+  L2020 72
+  L2150 72
+
+  L2190 73
+  L2220 72
+  L2250 72
+  L2280 24
+  L2310 120
+  L2340 50
+  L2370 72
+  L2520 72
+  "
+/>
+
+  </svg>
+
+</div>
+
+  <div class="auth-container">
+
+    <!-- LEFT SIDE -->
+
+    <div class="left-section">
+
+      <div class="logo-area">
+
+        <h1>
+           Homeopathy Clinic
+        </h1>
+
+        <p>
+          Smart Healthcare Management
+        </p>
+
+      </div>
+
+      <!-- DOCTOR CARD -->
+
+      <div class="doctor-card-animation">
+
+        <div class="medical-circle"></div>
+
+        <div class="doctor-card">
+
+          <div class="doctor-image">
+
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png"
+              alt="doctor"
+            >
+
+          </div>
+
+          <div class="pulse-ring"></div>
+
+        </div>
+
+        <!-- FLOATING PLUS -->
+
+        <div class="floating-plus plus1">+</div>
+        <div class="floating-plus plus2">+</div>
+        <div class="floating-plus plus3">+</div>
+
+      </div>
+
+      <!-- MEDICAL ICONS -->
+
+      <div class="medical-icons">
+
+        <div class="icon icon1">✚</div>
+
+        <div class="icon icon2">💊</div>
+
+        <div class="icon icon3">🩺</div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+
+    <div class="right-section">
+
+      <div class="glass-card">
+
+        <h2>Doctor Login</h2>
+
+        <p class="subtitle">
+          Welcome Back 👋
+        </p>
+
+        <!-- USERNAME -->
+<!-- USERNAME -->
+
+            <div class="input-group">
+
+            <input
+                type="text"
+                placeholder="Username"
+                [(ngModel)]="username"
+                #userRef="ngModel"
+                required
+            >
+
+            </div>
+
+            <div
+            class="error-text"
+            *ngIf="userRef.invalid && userRef.touched"
+            >
+
+            Username is required
+
+            </div>
+
+            <!-- PASSWORD -->
+
+            <div class="input-group password-group">
+
+            <input
+                [type]="showPassword ? 'text' : 'password'"
+                placeholder="Password"
+                [(ngModel)]="password"
+                #passRef="ngModel"
+                required
+            >
+
+            <span
+                class="eye-icon"
+                (click)="togglePassword()"
+            >
+
+                {{ showPassword ? '🙈' : '👁️' }}
+
+            </span>
+
+            </div>
+
+            <div
+            class="error-text"
+            *ngIf="passRef.invalid && passRef.touched"
+            >
+
+            Password is required
+
+            </div>
+
+        <!-- LOGIN BUTTON -->
+
+        <button
+        class="login-btn"
+        (click)="login()"
+        [disabled]="!username || !password"
+        >
+        Login
+        </button>
+
+        <!-- BUTTON GLOW -->
+
+        <div class="login-glow"></div>
+
+        <!-- BOTTOM -->
+
+        <div class="bottom-text">
+
+          Don’t have an account?
+
+          <a routerLink="/signup">
+            Create Account
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- HOMEOPATHY BOTTLE -->
+
+  <div class="homeo-bottle-area">
+
+    <div class="bottle-glow"></div>
+
+    <div class="homeo-bottle">
+
+      <div class="bottle-cap"></div>
+
+      <div class="bottle-label">
+
+        <span>HOMEO</span>
+
+      </div>
+
+    </div>
+
+    <!-- TABLETS -->
+
+    <div class="tablet tablet1"></div>
+    <div class="tablet tablet2"></div>
+    <div class="tablet tablet3"></div>
+    <div class="tablet tablet4"></div>
+    <div class="tablet tablet5"></div>
+
+  </div>
+
+  <!-- CORNER LIGHT -->
+
+  <div class="corner-light"></div>
+
+</div>

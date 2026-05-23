@@ -1,0 +1,1069 @@
+<!-- prescriptions.html -->
+
+<div class="patients-page">
+
+  <!-- BACKGROUND -->
+
+  <div class="bg-circle bg1"></div>
+  <div class="bg-circle bg2"></div>
+  <div class="bg-circle bg3"></div>
+
+  <!-- ===================================== -->
+  <!-- PAGE CONTENT -->
+  <!-- ===================================== -->
+
+  <div
+    class="page-content"
+    [class.disabled-content]="previewMode"
+  >
+
+    <!-- ===================================== -->
+    <!-- TOP BAR -->
+    <!-- ===================================== -->
+
+    <div class="top-bar">
+
+      <!-- SEARCH -->
+
+      <div class="search-box">
+
+        <div class="search-glow"></div>
+
+        <span class="search-icon">
+          🔍
+        </span>
+
+        <input
+          type="text"
+          placeholder="Search patient..."
+          [(ngModel)]="searchText"
+          (ngModelChange)="updatePagination()"
+        />
+
+      </div>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- TABLE -->
+    <!-- ===================================== -->
+
+    <div
+      class="patients-table-wrapper"
+      *ngIf="filteredPatients.length > 0"
+    >
+
+      <table class="patients-table">
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Patient ID
+            </th>
+
+            <th>
+              Patient
+            </th>
+
+            <th>
+              Phone
+            </th>
+
+            <th>
+              Diagnosis
+            </th>
+
+            <th>
+              Actions
+            </th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr
+            *ngFor="
+              let p of filteredPatients
+            "
+          >
+
+            <!-- ID -->
+
+            <td>
+
+              <span class="patient-id">
+
+                {{ p.patientCode }}
+
+              </span>
+
+            </td>
+
+            <!-- PATIENT -->
+
+            <td>
+
+              <div class="patient-name-box">
+
+                <div class="table-avatar">
+
+                  {{ p.name?.charAt(0) }}
+
+                </div>
+
+                <div>
+
+                  <h4>
+
+                    {{ p.name }}
+
+                  </h4>
+
+                  <p>
+
+                    {{ p.age }} yrs •
+                    {{ p.sex }}
+
+                  </p>
+
+                </div>
+
+              </div>
+
+            </td>
+
+            <!-- PHONE -->
+
+            <td>
+
+              {{ p.phoneNumber }}
+
+            </td>
+
+            <!-- DIAGNOSIS -->
+
+            <td>
+
+              {{ p.diagnosis }}
+
+            </td>
+
+            <!-- ACTION -->
+
+            <td>
+
+              <div class="action-buttons">
+
+                <button
+                  class="
+                  icon-btn
+                  view-btn
+                  "
+                  (click)="viewPrescription(p)"
+                >
+
+                  👁
+
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- PAGINATION -->
+    <!-- ===================================== -->
+
+    <div
+      class="pagination-wrapper"
+      *ngIf="totalPages > 1"
+    >
+
+      <!-- PREVIOUS -->
+
+      <button
+        class="pagination-nav"
+        (click)="prevPage()"
+        [disabled]="currentPage === 1"
+      >
+        ‹
+      </button>
+
+      <!-- PAGE NUMBERS -->
+
+      <button
+        class="pagination-number"
+
+        *ngFor="
+          let page of pages
+        "
+
+        [class.active-page]="
+          currentPage === page
+        "
+
+        (click)="goToPage(page)"
+      >
+
+        {{ page }}
+
+      </button>
+
+      <!-- NEXT -->
+
+      <button
+        class="pagination-nav"
+
+        (click)="nextPage()"
+
+        [disabled]="
+          currentPage === totalPages
+        "
+      >
+        ›
+      </button>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- EMPTY -->
+    <!-- ===================================== -->
+
+    <div
+      class="empty-state"
+      *ngIf="
+        filteredPatients.length === 0
+      "
+    >
+
+      <div class="empty-icon">
+        💊
+      </div>
+
+      <h2>
+        No Prescriptions Found
+      </h2>
+
+      <p>
+        No patient records available
+      </p>
+
+    </div>
+
+  </div>
+
+  <!-- ===================================== -->
+  <!-- PREVIEW MODAL -->
+  <!-- ===================================== -->
+
+  <div
+    class="preview-overlay"
+    *ngIf="previewMode"
+  >
+
+    <div class="preview-modal">
+
+      <!-- CLOSE -->
+
+      <button
+        class="preview-close"
+        (click)="closePreview()"
+      >
+        ✕
+      </button>
+
+      <!-- DOWNLOAD -->
+
+      <button
+        class="pdf-download-btn"
+        (click)="downloadPrescription()"
+      >
+
+        Download PDF
+
+      </button>
+
+      <!-- ===================================== -->
+      <!-- PAGE BUTTONS -->
+      <!-- ===================================== -->
+
+      <div
+        class="pagination-container"
+
+        *ngIf="
+          paginatedPrescriptions.length > 1
+        "
+      >
+
+        <button
+          class="page-btn"
+
+          *ngFor="
+            let page of paginatedPrescriptions;
+            let i = index
+          "
+
+          (click)="changePreviewPage(i)"
+
+          [class.active-page]="
+            currentPreviewPage === i
+          "
+        >
+
+          {{ i + 1 }}
+
+        </button>
+
+      </div>
+
+      <!-- ===================================== -->
+      <!-- PDF CONTENT -->
+      <!-- ===================================== -->
+
+      <div
+        id="previewPrescriptionCanvas"
+        class="a4-container"
+      >
+
+        <!-- ===================================== -->
+        <!-- SINGLE PAGE -->
+        <!-- ===================================== -->
+
+        <div
+          class="modern-prescription"
+
+          *ngFor="
+            let page of paginatedPrescriptions;
+            let pageIndex = index
+          "
+
+          [hidden]="
+            currentPreviewPage !== pageIndex
+          "
+        >
+
+          <!-- ===================================== -->
+          <!-- HEADER -->
+          <!-- ===================================== -->
+
+          <div class="prescription-header">
+
+            <div class="clinic-left">
+
+              <h1>
+                SAHITHI HOMEOPATHY CLINIC
+              </h1>
+
+              <p>
+                Holistic Healing •
+                Classical Homeopathy
+              </p>
+
+            </div>
+
+            <div class="clinic-right">
+
+              <h2>
+                Dr. Sahithi Kalva
+              </h2>
+
+              <span>
+                BHMS
+              </span>
+
+            </div>
+
+          </div>
+
+          <!-- LINE -->
+
+          <div class="header-line"></div>
+
+          <!-- ===================================== -->
+          <!-- PATIENT INFO -->
+          <!-- ===================================== -->
+
+          <div class="patient-info-grid">
+
+            <div class="info-card">
+
+              <label>
+                Patient Name
+              </label>
+
+              <h3>
+                {{ previewPatient?.name }}
+              </h3>
+
+            </div>
+
+            <div class="info-card">
+
+              <label>
+                Patient ID
+              </label>
+
+              <h3>
+                {{
+                  previewPatient?.patientCode
+                }}
+              </h3>
+
+            </div>
+
+            <div class="info-card">
+
+              <label>
+                Age
+              </label>
+
+              <h3>
+                {{
+                  previewPatient?.age
+                }} Years
+              </h3>
+
+            </div>
+
+            <div class="info-card">
+
+              <label>
+                Gender
+              </label>
+
+              <h3>
+                {{ previewPatient?.sex }}
+              </h3>
+
+            </div>
+
+            <div class="info-card">
+
+              <label>
+                Mobile
+              </label>
+
+              <h3>
+                {{
+                  previewPatient?.phoneNumber
+                }}
+              </h3>
+
+            </div>
+
+            <div class="info-card">
+
+              <label>
+                Date
+              </label>
+
+              <h3>
+                {{
+                  todayDate
+                  | date:'dd/MM/yyyy'
+                }}
+              </h3>
+
+            </div>
+
+          </div>
+
+          <!-- ===================================== -->
+          <!-- BODY -->
+          <!-- ===================================== -->
+
+          <div class="prescription-body">
+
+            <!-- CARD -->
+
+            <div
+              class="prescription-card"
+
+              *ngFor="
+                let rx of page
+              "
+            >
+
+              <!-- ===================================== -->
+              <!-- NON FOLLOWUP CASE -->
+              <!-- ===================================== -->
+
+              <div
+                *ngIf="!rx.isFollowup"
+              >
+
+                <div class="single-title">
+
+                  Prescription Details
+
+                </div>
+
+                <div class="rx-grid">
+
+                  <!-- COMPLAINTS -->
+
+                  <div>
+
+                    <label>
+                      Complaints
+                    </label>
+
+                    <p>
+
+                      {{
+                        rx.complaints
+                      }}
+
+                    </p>
+
+                  </div>
+
+                  <!-- RX -->
+
+                  <div>
+
+                    <label>
+                      Rx
+                    </label>
+
+                    <p>
+
+                      {{
+                        rx.rx
+                      }}
+
+                    </p>
+
+                  </div>
+
+                  <!-- ADVICE -->
+
+                  <div>
+
+                    <label>
+                      Advice
+                    </label>
+
+                    <p>
+
+                      {{
+                        rx.advice
+                      }}
+
+                    </p>
+
+                  </div>
+
+                  <!-- FOLLOWUP -->
+
+                  <div>
+
+                    <label>
+                      Follow Up Date
+                    </label>
+
+                    <p>
+
+                      {{
+                        rx.followupDate
+                        | date:'dd/MM/yyyy'
+                      }}
+
+                    </p>
+
+                  </div>
+
+                  <!-- DOSAGE -->
+
+                  <div>
+
+                    <label>
+                      Dosage
+                    </label>
+
+                    <p>
+
+                      {{
+                        rx.dosage
+                      }}
+
+                    </p>
+
+                  </div>
+
+                  <!-- FREQUENCY -->
+
+                  <div>
+
+                    <label>
+                      Frequency
+                    </label>
+
+                    <p>
+
+                      {{
+                        rx.frequency
+                      }}
+
+                    </p>
+
+                  </div>
+
+                  <!-- DURATION -->
+
+                  <div>
+
+                    <label>
+                      Duration
+                    </label>
+
+                    <p>
+
+                      {{
+                        rx.duration
+                      }}
+
+                    </p>
+
+                  </div>
+
+                  <!-- INSTRUCTIONS -->
+
+                  <div>
+
+                    <label>
+                      Instructions
+                    </label>
+
+                    <p>
+
+                      {{
+                        rx.instructions
+                      }}
+
+                    </p>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              <!-- ===================================== -->
+              <!-- FOLLOWUP CASE -->
+              <!-- ===================================== -->
+
+              <div
+                *ngIf="rx.isFollowup"
+                class="followup-layout"
+              >
+
+                <!-- ===================================== -->
+                <!-- PREVIOUS DATA -->
+                <!-- ===================================== -->
+
+                <div
+                  class="
+                  comparison-box
+                  previous-box
+                  "
+                >
+
+                  <div class="compare-title">
+
+                    Previous Data
+
+                  </div>
+
+                  <div class="rx-grid">
+
+                    <!-- COMPLAINTS -->
+
+                    <div>
+
+                      <label>
+                        Complaints
+                      </label>
+
+                      <p>
+
+                        {{
+                          rx.previousComplaints
+                        }}
+
+                      </p>
+
+                    </div>
+
+                    <!-- RX -->
+
+                    <div>
+
+                      <label>
+                        Rx
+                      </label>
+
+                      <p>
+
+                        {{
+                          rx.previousRx
+                        }}
+
+                      </p>
+
+                    </div>
+
+                    <!-- ADVICE -->
+
+                    <div>
+
+                      <label>
+                        Advice
+                      </label>
+
+                      <p>
+
+                        {{
+                          rx.previousAdvice
+                        }}
+
+                      </p>
+
+                    </div>
+
+                    <!-- FOLLOWUP -->
+
+                    <div>
+
+                      <label>
+                        Follow Up Date
+                      </label>
+
+                      <p>
+
+                        {{
+                          rx.previousFollowupDate
+                          | date:'dd/MM/yyyy'
+                        }}
+
+                      </p>
+
+                    </div>
+
+                    <!-- DOSAGE -->
+
+                    <div>
+
+                      <label>
+                        Dosage
+                      </label>
+
+                      <p>
+
+                        {{
+                          rx.previousDosage
+                        }}
+
+                      </p>
+
+                    </div>
+
+                    <!-- FREQUENCY -->
+
+                    <div>
+
+                      <label>
+                        Frequency
+                      </label>
+
+                      <p>
+
+                        {{
+                          rx.previousFrequency
+                        }}
+
+                      </p>
+
+                    </div>
+
+                    <!-- DURATION -->
+
+                    <div>
+
+                      <label>
+                        Duration
+                      </label>
+
+                      <p>
+
+                        {{
+                          rx.previousDuration
+                        }}
+
+                      </p>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <!-- ===================================== -->
+                <!-- UPDATED FOLLOWUP DATA -->
+                <!-- ===================================== -->
+
+                <div
+                  class="
+                  comparison-box
+                  new-box
+                  "
+                >
+
+                  <div class="compare-title">
+
+                    Updated Followup Data
+
+                  </div>
+
+                  <div class="rx-grid">
+
+                    <!-- COMPLAINTS -->
+
+                    <div>
+
+                      <label>
+                        Symptoms
+                      </label>
+
+                      <p>
+
+                        {{
+                          rx.newComplaints
+                        }}
+
+                      </p>
+
+                    </div>
+
+                    <!-- MEDICINES -->
+
+                    <div>
+
+                      <label>
+                        Medicines
+                      </label>
+
+                      <p>
+
+                        {{
+                          rx.newRx
+                        }}
+
+                      </p>
+
+                    </div>
+
+                    <!-- NOTES -->
+
+                    <div>
+
+                      <label>
+                        Doctor Notes
+                      </label>
+
+                      <p>
+
+                        {{
+                          rx.newAdvice
+                        }}
+
+                      </p>
+
+                    </div>
+
+                    <!-- OBSERVATIONS -->
+
+                    <div>
+
+                      <label>
+                        Observations
+                      </label>
+
+                      <p>
+
+                        {{
+                          rx.newObservations
+                        }}
+
+                      </p>
+
+                    </div>
+
+                    <!-- STATUS -->
+
+                    <div>
+
+                      <label>
+                        Improvement Status
+                      </label>
+
+                      <p>
+
+                        {{
+                          rx.newImprovementStatus
+                        }}
+
+                      </p>
+
+                    </div>
+
+                    <!-- NEXT FOLLOWUP -->
+
+                    <div>
+
+                      <label>
+                        Next Follow Up
+                      </label>
+
+                      <p>
+
+                        {{
+                          rx.newFollowupDate
+                          | date:'dd/MM/yyyy'
+                        }}
+
+                      </p>
+
+                    </div>
+
+                    <!-- DOSAGE -->
+
+                    <div>
+
+                      <label>
+                        Dosage
+                      </label>
+
+                      <p>
+
+                        {{
+                          rx.newDosage
+                        }}
+
+                      </p>
+
+                    </div>
+
+                    <!-- FREQUENCY -->
+
+                    <div>
+
+                      <label>
+                        Frequency
+                      </label>
+
+                      <p>
+
+                        {{
+                          rx.newFrequency
+                        }}
+
+                      </p>
+
+                    </div>
+
+                    <!-- DURATION -->
+
+                    <div>
+
+                      <label>
+                        Duration
+                      </label>
+
+                      <p>
+
+                        {{
+                          rx.newDuration
+                        }}
+
+                      </p>
+
+                    </div>
+
+                    <!-- INSTRUCTIONS -->
+
+                    <div>
+
+                      <label>
+                        Instructions
+                      </label>
+
+                      <p>
+
+                        {{
+                          rx.newInstructions
+                        }}
+
+                      </p>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- ===================================== -->
+          <!-- FOOTER -->
+          <!-- ===================================== -->
+
+          <div class="prescription-footer">
+
+            <div class="quote">
+
+              “The physician’s highest
+              calling is to restore
+              health naturally.”
+
+            </div>
+
+            <div class="signature">
+
+              <h2>
+                Dr. Sahithi Kalva
+              </h2>
+
+              <span>
+                Signature
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

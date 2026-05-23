@@ -1,0 +1,353 @@
+<!-- home.html -->
+
+<div class="dashboard-home">
+
+  <!-- =========================================
+       HERO SECTION
+  ========================================== -->
+
+  <div class="hero-wrapper">
+
+    <!-- GLOW EFFECTS -->
+    <div class="bg-glow glow1"></div>
+    <div class="bg-glow glow2"></div>
+    <div class="bg-glow glow3"></div>
+
+    <!-- SLIDES -->
+    <div
+      class="hero-slide"
+      *ngFor="let slide of slides; let i = index"
+      [class.active]="i === currentSlide"
+    >
+
+      <!-- LEFT CONTENT -->
+      <div class="hero-left">
+
+        <div class="hero-badge">
+          🌿 Homeopathy Healing
+        </div>
+
+        <h1 class="hero-title">
+          {{ slide.title }}
+        </h1>
+
+        <p class="hero-quote">
+          “{{ slide.quote }}”
+        </p>
+
+        <div class="quote-line"></div>
+
+      </div>
+
+      <!-- RIGHT FEATURE CARDS -->
+      <div class="hero-right">
+
+        <div
+          class="feature-card"
+          *ngFor="let card of slide.cards"
+        >
+
+          <div class="card-bg"></div>
+
+          <div class="feature-icon">
+            {{ card.icon }}
+          </div>
+
+          <h3>
+            {{ card.title }}
+          </h3>
+
+          <p>
+            {{ card.text }}
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- SLIDER DOTS -->
+    <div class="slider-controls">
+
+      <div class="dots">
+
+        <span
+          *ngFor="let slide of slides; let i = index"
+          [class.active-dot]="i === currentSlide"
+          (click)="goToSlide(i)"
+        ></span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- =========================================
+       BOTTOM DASHBOARD
+  ========================================== -->
+
+  <div class="bottom-dashboard">
+
+    <!-- =====================================
+         LEFT : ANALYTICS SECTION
+    ====================================== -->
+
+    <div class="analytics-panel">
+
+      <!-- BG GLOW -->
+      <div class="panel-glow"></div>
+
+      <!-- HEADER -->
+      <div class="section-header">
+
+        <div>
+
+          <span class="section-badge">
+            📊 Clinic Analytics
+          </span>
+
+          <h2>
+            Patient Overview
+          </h2>
+
+        </div>
+
+        <div class="live-status">
+
+          <span class="live-dot"></span>
+
+          Live
+
+        </div>
+
+      </div>
+
+      <!-- ANALYTICS GRID -->
+      <div class="analytics-grid">
+
+        <!-- TOTAL PATIENTS -->
+        <div class="analytics-card total-card">
+
+          <div class="card-top">
+
+            <div class="analytics-icon">
+              👨‍⚕️
+            </div>
+
+            
+
+          </div>
+
+          <h3>
+            {{ totalPatients }}
+          </h3>
+
+          <h4>
+            Total Patients
+          </h4>
+
+          <p>
+            Increased this month
+          </p>
+
+          <div class="mini-bar">
+            <span></span>
+          </div>
+
+        </div>
+
+        <!-- TODAY PATIENTS -->
+        <div class="analytics-card today-card">
+
+          <div class="card-top">
+
+            <div class="analytics-icon">
+              🩺
+            </div>
+
+           
+          </div>
+
+          <h3>
+             {{ todayPatients }}
+          </h3>
+
+          <h4>
+            Today's Patients
+          </h4>
+
+          <p>
+            Active consultations
+          </p>
+
+          <div class="mini-bar">
+            <span></span>
+          </div>
+
+        </div>
+
+        <!-- RECOVERY -->
+        <div class="analytics-card recovery-card">
+
+          <div class="card-top">
+
+            <div class="analytics-icon">
+              💚
+            </div>
+
+            
+
+          </div>
+
+          <h3>
+            {{ recoveryRate }}%
+          </h3>
+
+          <h4>
+            Recovery Rate
+          </h4>
+
+          <p>
+            Excellent treatment success
+          </p>
+
+          <div class="mini-bar">
+            <span></span>
+          </div>
+
+        </div>
+
+        <!-- FOLLOW UPS -->
+        <div class="analytics-card follow-card">
+
+          <div class="card-top">
+
+            <div class="analytics-icon">
+              📅
+            </div>
+
+           
+
+          </div>
+
+          <h3>
+            {{ followupPatients }}
+          </h3>
+
+          <h4>
+            Follow Ups
+          </h4>
+
+          <p>
+            Scheduled for today
+          </p>
+
+          <div class="mini-bar">
+            <span></span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- =====================================
+         RIGHT : QUICK ACTIONS
+    ====================================== -->
+
+    <div class="quick-actions-panel">
+
+      <!-- BG GLOW -->
+      <div class="quick-glow"></div>
+
+      <!-- HEADER -->
+      <div class="quick-header">
+
+        <div>
+
+          <span class="section-badge">
+            ⚡ Quick Actions
+          </span>
+
+          <h2>
+            Smart Shortcuts
+          </h2>
+
+        </div>
+
+      </div>
+
+      <!-- ACTION -->
+      <div class="action-card"
+      (click)="openAddPatient()">
+
+        <div class="action-icon green-action">
+          ➕
+        </div>
+
+        <div class="action-content">
+
+          <h4>
+            Add Patient
+          </h4>
+
+          <p>
+            Register new patient profile
+          </p>
+
+        </div>
+
+      </div>
+
+      
+
+      <!-- ACTION -->
+      <div class="action-card" (click)="openFollowups()">
+
+        <div class="action-icon purple-action">
+          📞
+        </div>
+
+        <div class="action-content">
+
+          <h4>
+            Follow Up
+          </h4>
+
+          <p>
+            Track patient recovery
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- ACTION -->
+      <div class="action-card" (click)="openReports()">
+
+        <div class="action-icon orange-action">
+          📊
+        </div>
+
+        <div class="action-content">
+
+          <h4>
+            View Reports
+          </h4>
+
+          <p>
+            Open analytics dashboard
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

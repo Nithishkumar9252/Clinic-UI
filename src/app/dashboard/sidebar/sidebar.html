@@ -1,0 +1,178 @@
+<!-- sidebar.html -->
+
+<div class="sidebar">
+
+  <!-- TOP SECTION -->
+
+  <div class="top-section">
+
+    <!-- LOGO -->
+
+    <div class="logo-wrapper">
+
+      <div class="logo-circle">
+        🌿
+      </div>
+
+      <div class="logo-text">
+
+        <h1>
+          SAHITHI
+        </h1>
+
+        <p>
+          HOMEOPATHY CLINIC
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- MENU SECTION -->
+
+    <div class="menu-section">
+
+      <!-- DASHBOARD -->
+
+      <a
+        routerLink="/dashboard"
+        routerLinkActive="active"
+        class="menu-item"
+      >
+
+        <span class="menu-icon">
+          🏠
+        </span>
+
+        <span class="menu-text">
+          Home
+        </span>
+
+      </a>
+
+      <!-- PATIENTS -->
+
+      <a
+        routerLink="/patients"
+        routerLinkActive="active"
+        class="menu-item"
+      >
+
+        <span class="menu-icon">
+          👨‍⚕️
+        </span>
+
+        <span class="menu-text">
+          Patients
+        </span>
+
+      </a>
+
+      <!-- FOLLOW UPS -->
+
+      <a
+        routerLink="/followups"
+        routerLinkActive="active"
+        class="menu-item"
+      >
+
+        <span class="menu-icon">
+          🔄
+        </span>
+
+        <span class="menu-text">
+          Follow Ups
+        </span>
+
+      </a>
+
+      <!-- PRESCRIPTIONS -->
+
+      <a
+        routerLink="/prescriptions"
+        routerLinkActive="active"
+        class="menu-item"
+      >
+
+        <span class="menu-icon">
+          💊
+        </span>
+
+        <span class="menu-text">
+          Prescriptions
+        </span>
+
+      </a>
+
+      <!-- REPORTS -->
+
+      <a
+        routerLink="/reports"
+        routerLinkActive="active"
+        class="menu-item"
+      >
+
+        <span class="menu-icon">
+          📊
+        </span>
+
+        <span class="menu-text">
+          Reports
+        </span>
+
+      </a>
+
+      <!-- AI CHAT -->
+
+      <a
+        routerLink="/ai-chatbot"
+        routerLinkActive="active"
+        class="menu-item"
+      >
+
+        <span class="menu-icon">
+          💬
+        </span>
+
+        <span class="menu-text">
+          AI ChatBot
+        </span>
+
+      </a>
+
+    </div>
+
+  </div>
+
+  <!-- LOGOUT SECTION -->
+
+  <div class="logout-section">
+
+    <button
+      class="logout-btn"
+      (click)="logout()"
+    >
+
+      <span class="logout-text">
+        Logout
+      </span>
+
+      <div class="logout-animation">
+
+        <!-- DOOR -->
+
+        <div class="door"></div>
+
+        <!-- WALKER -->
+
+        <div class="walker">
+          🚶‍♂️
+        </div>
+
+      </div>
+
+    </button>
+
+  </div>
+
+</div>

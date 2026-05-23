@@ -1,0 +1,930 @@
+<!-- =====================================
+     FOLLOWUPS PAGE
+===================================== -->
+
+<div class="followups-page">
+
+  <!-- =====================================
+       BACKGROUND
+  ====================================== -->
+
+  <div class="bg-circle bg1"></div>
+
+  <div class="bg-circle bg2"></div>
+
+  <div class="bg-circle bg3"></div>
+
+  <!-- =====================================
+       TOP BAR
+  ====================================== -->
+
+  <div class="top-bar">
+
+    <!-- SEARCH -->
+
+    <div class="search-box">
+
+      <div class="search-glow"></div>
+
+      <span class="search-icon">
+        🔍
+      </span>
+
+      <input
+        type="text"
+
+        placeholder="Search patients..."
+
+        [(ngModel)]="searchText"
+
+        (input)="updatePagination()"
+      />
+
+    </div>
+
+  </div>
+
+  <!-- =====================================
+       TABLE
+  ====================================== -->
+
+  <div class="patients-table-wrapper">
+
+    <table class="patients-table">
+
+      <thead>
+
+      <tr>
+
+        <th>
+          Patient ID
+        </th>
+
+        <th>
+          Patient
+        </th>
+
+        <th>
+          Phone
+        </th>
+
+        <th>
+          Diagnosis
+        </th>
+
+        <th>
+          Last Followup
+        </th>
+
+        <th>
+          Status
+        </th>
+
+        <th class="actions-header">
+          Actions
+        </th>
+
+      </tr>
+
+      </thead>
+
+      <tbody>
+
+      <!-- =====================================
+           ROW
+      ====================================== -->
+
+      <tr *ngFor="let p of filteredPatients">
+
+        <!-- PATIENT CODE -->
+
+        <td>
+
+          <span class="patient-id">
+
+            {{ p.patientCode }}
+
+          </span>
+
+        </td>
+
+        <!-- PATIENT -->
+
+        <td>
+
+          <div class="patient-name-box">
+
+            <div class="table-avatar">
+
+              {{ p.name?.charAt(0) }}
+
+            </div>
+
+            <div>
+
+              <h4>
+                {{ p.name }}
+              </h4>
+
+              <p>
+                {{ p.age }} yrs • {{ p.sex }}
+              </p>
+
+            </div>
+
+          </div>
+
+        </td>
+
+        <!-- PHONE -->
+
+        <td>
+
+          {{ p.phoneNumber }}
+
+        </td>
+
+        <!-- DIAGNOSIS -->
+
+        <td>
+
+          {{ p.diagnosis || 'N/A' }}
+
+        </td>
+
+        <!-- LAST FOLLOWUP -->
+
+        <td>
+
+          <span *ngIf="p.latestFollowupDate">
+
+            {{ p.latestFollowupDate }}
+
+          </span>
+
+          <span *ngIf="!p.latestFollowupDate">
+
+            No Followup
+
+          </span>
+
+        </td>
+
+        <!-- STATUS -->
+
+        <td>
+
+          <span
+
+            class="status-badge"
+
+            [ngClass]="
+              p.latestImprovementStatus
+            "
+
+          >
+
+            {{
+
+              p.latestImprovementStatus
+
+              ||
+
+              'Pending'
+
+            }}
+
+          </span>
+
+        </td>
+
+        <!-- ACTIONS -->
+
+        <td>
+
+          <div class="action-buttons">
+
+            <!-- VIEW -->
+
+            <button
+
+              class="icon-btn view-btn"
+
+              (click)="viewFollowup(p)"
+
+            >
+
+              👁
+
+            </button>
+
+            <!-- ADD -->
+
+            <button
+
+              class="icon-btn add-btn"
+
+              (click)="openFollowupForm(p)"
+
+            >
+
+              ➕
+
+            </button>
+
+          </div>
+
+        </td>
+
+      </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <!-- =====================================
+       PAGINATION
+  ====================================== -->
+
+  <div class="pagination-wrapper">
+
+    <button
+
+      class="page-btn"
+
+      (click)="prevPage()"
+
+      [disabled]="currentPage === 1"
+
+    >
+
+     <
+
+    </button>
+
+    <button
+
+      *ngFor="let page of pages"
+
+      class="page-btn"
+
+      [class.active-page]="
+        currentPage === page
+      "
+
+      (click)="goToPage(page)"
+
+    >
+
+      {{ page }}
+
+    </button>
+
+    <button
+
+      class="page-btn"
+
+      (click)="nextPage()"
+
+      [disabled]="
+        currentPage === totalPages
+      "
+
+    >
+
+       >
+
+    </button>
+
+  </div>
+
+  <!-- =====================================
+       FOLLOWUP FORM
+  ====================================== -->
+
+  <div
+
+    class="followup-form-card"
+
+    *ngIf="showFollowupForm"
+
+  >
+
+    <!-- HEADER -->
+
+    <div class="form-header">
+
+      <h2>
+        Patient Followup
+      </h2>
+
+      <p>
+        Update patient followup details
+      </p>
+
+      <button
+
+        class="close-btn"
+
+        (click)="closeFollowupForm()"
+
+      >
+
+        ✕
+
+      </button>
+
+    </div>
+
+    <!-- =====================================
+         PROFILE
+    ====================================== -->
+
+    <div class="patient-profile-card">
+
+      <div class="profile-avatar">
+
+        {{ selectedPatient?.name?.charAt(0) }}
+
+      </div>
+
+      <div>
+
+        <h2>
+
+          {{ selectedPatient?.name }}
+
+        </h2>
+
+        <p>
+
+          {{ selectedPatient?.patientCode }}
+
+          •
+
+          {{ selectedPatient?.phoneNumber }}
+
+        </p>
+
+        <p>
+
+          {{ selectedPatient?.diagnosis }}
+
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- =====================================
+         FORM
+    ====================================== -->
+
+    <div class="form-grid">
+
+      <!-- STATUS -->
+
+      <div class="form-group">
+
+        <label>
+
+          Improvement Status
+
+        </label>
+
+        <select
+          [(ngModel)]="
+            followup.improvementStatus
+          "
+        >
+
+          <option value="">
+            Select Status
+          </option>
+
+          <option value="Improved">
+            Improved
+          </option>
+
+          <option value="Same">
+            Same
+          </option>
+
+          <option value="Worse">
+            Worse
+          </option>
+
+        </select>
+
+      </div>
+
+      <!-- NEXT FOLLOWUP -->
+
+      <div class="form-group">
+
+        <label>
+
+          Next Followup Date
+
+        </label>
+
+        <input
+
+          type="date"
+
+          [(ngModel)]="
+            followup.nextFollowupDate
+          "
+        />
+
+      </div>
+
+      <!-- SYMPTOMS -->
+
+      <div
+        class="form-group full-width"
+      >
+
+        <label>
+          Symptoms
+        </label>
+
+        <textarea
+
+          [(ngModel)]="
+            followup.symptoms
+          "
+
+        ></textarea>
+
+      </div>
+
+      <!-- OBSERVATIONS -->
+
+      <div
+        class="form-group full-width"
+      >
+
+        <label>
+          Observations
+        </label>
+
+        <textarea
+
+          [(ngModel)]="
+            followup.observations
+          "
+
+        ></textarea>
+
+      </div>
+
+      <!-- MEDICINES -->
+
+      <div
+        class="form-group full-width"
+      >
+
+        <label>
+          Medicines
+        </label>
+
+        <textarea
+
+          [(ngModel)]="
+            followup.medicines
+          "
+
+        ></textarea>
+
+      </div>
+
+      <!-- NOTES -->
+
+      <div
+        class="form-group full-width"
+      >
+
+        <label>
+          Doctor Notes
+        </label>
+
+        <textarea
+
+          [(ngModel)]="
+            followup.doctorNotes
+          "
+
+        ></textarea>
+
+      </div>
+
+    </div>
+
+    <!-- =====================================
+         PRESCRIPTION PREVIEW
+    ====================================== -->
+
+    <div
+      class="preview-followup-card"
+    >
+
+      <h2>
+        Prescription Preview
+      </h2>
+
+      <!-- OLD RX -->
+
+      <div class="rx-preview-box">
+
+        <h3>
+          Previous Prescription
+        </h3>
+
+        <p>
+
+          {{
+            selectedPatient?.rx
+            || 'No Previous RX'
+          }}
+
+        </p>
+
+      </div>
+
+      <!-- NEW RX -->
+
+      <div
+        class="
+        rx-preview-box
+        new-rx
+        "
+      >
+
+        <h3>
+          Current Followup Medicines
+        </h3>
+
+        <p>
+
+          {{
+            followup.medicines
+          }}
+
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- =====================================
+         FOLLOWUP HISTORY
+    ====================================== -->
+
+    <div class="history-section">
+
+      <h3>
+        Followup History
+      </h3>
+
+      <div
+
+        class="history-card"
+
+        *ngFor="
+            let f of patientFollowups;
+            trackBy: trackByFollowup
+            "
+
+      >
+
+        <!-- TOP -->
+
+        <div class="history-top">
+
+          <div>
+
+            <h4>
+
+              {{
+                f.nextFollowupDate
+              }}
+
+            </h4>
+
+            <p>
+
+              {{
+                f.createdAt
+                | date:'medium'
+              }}
+
+            </p>
+
+          </div>
+
+          <span
+
+            class="history-status"
+
+          >
+
+            {{
+              f.improvementStatus
+            }}
+
+          </span>
+
+        </div>
+
+        <!-- CONTENT -->
+
+        <p>
+
+          <strong>
+            Symptoms:
+          </strong>
+
+          {{ f.symptoms }}
+
+        </p>
+
+        <br>
+
+        <p>
+
+          <strong>
+            Observations:
+          </strong>
+
+          {{ f.observations }}
+
+        </p>
+
+        <br>
+
+        <p>
+
+          <strong>
+            Notes:
+          </strong>
+
+          {{ f.doctorNotes }}
+
+        </p>
+
+        <!-- RX -->
+
+        <div class="history-rx">
+
+          💊
+
+          {{ f.medicines }}
+
+        </div>
+
+        <!-- ACTIONS -->
+
+        <div
+          class="action-buttons"
+          style="margin-top:20px"
+        >
+
+          <!-- EDIT -->
+
+          <button
+
+            class="
+            icon-btn
+            edit-btn
+            "
+
+            (click)="editFollowup(f)"
+
+          >
+
+            ✏
+
+          </button>
+
+          <!-- DELETE -->
+
+          <button
+
+            class="
+            icon-btn
+            delete-btn
+            "
+
+            (click)="deleteFollowup(f.id)"
+
+          >
+
+            🗑
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- =====================================
+         SAVE BUTTON
+    ====================================== -->
+
+    <div class="step-buttons">
+
+      <button
+
+        class="save-btn"
+
+        (click)="saveFollowup()"
+
+      >
+
+        Save Followup
+
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- =====================================
+       PREVIEW MODAL
+  ====================================== -->
+
+  <div
+
+    class="followup-form-card"
+
+    *ngIf="previewMode"
+
+  >
+
+    <!-- HEADER -->
+
+    <div class="form-header">
+
+      <h2>
+        Followup Preview
+      </h2>
+
+      <p>
+        Patient Followup Report
+      </p>
+
+      <button
+
+        class="close-btn"
+
+        (click)="closePreview()"
+
+      >
+
+        ✕
+
+      </button>
+
+    </div>
+
+    <!-- PROFILE -->
+
+    <div class="patient-profile-card">
+
+      <div class="profile-avatar">
+
+        {{
+          previewPatient?.name
+          ?.charAt(0)
+        }}
+
+      </div>
+
+      <div>
+
+        <h2>
+
+          {{
+            previewPatient?.name
+          }}
+
+        </h2>
+
+        <p>
+
+          {{
+            previewPatient?.patientCode
+          }}
+
+        </p>
+
+        <p>
+
+          {{
+            previewPatient?.diagnosis
+          }}
+
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- FOLLOWUPS -->
+
+    <div
+
+      class="history-card"
+
+      *ngFor="
+        let f of patientFollowups;
+        trackBy: trackByFollowup
+        "
+
+    >
+
+      <div class="history-top">
+
+        <div>
+
+          <h4>
+
+            {{
+              f.nextFollowupDate
+            }}
+
+          </h4>
+
+          <p>
+
+            {{
+              f.createdAt
+              | date:'medium'
+            }}
+
+          </p>
+
+        </div>
+
+        <span class="history-status">
+
+          {{
+            f.improvementStatus
+          }}
+
+        </span>
+
+      </div>
+
+      <p>
+
+        <strong>
+          Symptoms:
+        </strong>
+
+        {{ f.symptoms }}
+
+      </p>
+
+      <br>
+
+      <p>
+
+        <strong>
+          Observations:
+        </strong>
+
+        {{ f.observations }}
+
+      </p>
+
+      <br>
+
+      <p>
+
+        <strong>
+          Doctor Notes:
+        </strong>
+
+        {{ f.doctorNotes }}
+
+      </p>
+
+      <div class="history-rx">
+
+        💊
+
+        {{ f.medicines }}
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,1495 @@
+<!-- patients.html -->
+
+<div class="patients-page">
+
+  <!-- BACKGROUND -->
+
+  <div class="bg-circle bg1"></div>
+  <div class="bg-circle bg2"></div>
+  <div class="bg-circle bg3"></div>
+
+  <!-- ========================================= -->
+  <!-- PAGE CONTENT -->
+  <!-- ========================================= -->
+
+  <div
+  class="page-content"
+  [class.disabled-content]="showForm || previewMode"
+>
+
+    <!-- TOP BAR -->
+
+    <div class="top-bar">
+
+      <!-- SEARCH -->
+
+      <!-- SEARCH -->
+
+      <div class="search-box">
+
+        <div class="search-glow"></div>
+
+        <span class="search-icon">
+          🔍
+        </span>
+
+       <input
+          type="text"
+          placeholder="Search patient..."
+          [(ngModel)]="searchText"
+          (ngModelChange)="updatePagination()"
+        />
+
+      </div>
+
+      <!-- ADD BUTTON -->
+
+      <button
+        class="add-patient-btn"
+        (click)="openAddPatientForm()"
+      >
+
+        <span>+</span>
+
+        Add New Patient
+
+      </button>
+
+    </div>
+
+    <!-- ========================================= -->
+    <!-- PATIENT TABLE -->
+    <!-- ========================================= -->
+
+    <div
+      class="patients-table-wrapper"
+      *ngIf="filteredPatients.length > 0"
+    >
+
+      <table class="patients-table">
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Patient Code
+            </th>
+
+            <th>
+              Name
+            </th>
+
+            <th>
+              Age
+            </th>
+
+            <th>
+              Diagnosis
+            </th>
+
+            <th class="actions-header">
+              Actions
+            </th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr
+            *ngFor="
+              let p of filteredPatients;
+              trackBy: trackByPatient
+            "
+          >
+
+            <!-- CODE -->
+
+            <td>
+
+              <span class="patient-id">
+
+                {{ p.patientCode }}
+
+              </span>
+
+            </td>
+
+            <!-- NAME -->
+
+            <td>
+
+              <div class="patient-name-box">
+
+                <div class="table-avatar">
+
+                  {{ p.name?.charAt(0) }}
+
+                </div>
+
+                <div>
+
+                  <h4>
+
+                    {{ p.name }}
+
+                  </h4>
+
+                  <p>
+
+                    {{ p.phoneNumber }}
+
+                  </p>
+
+                </div>
+
+              </div>
+
+            </td>
+
+            <!-- AGE -->
+
+            <td>
+
+              <span class="age-badge">
+
+                {{ p.age }} Yrs
+
+              </span>
+
+            </td>
+
+            <!-- DIAGNOSIS -->
+
+            <td>
+
+              <span class="disease-text">
+
+                {{
+                  p.diagnosis
+                  || 'No Diagnosis'
+                }}
+
+              </span>
+
+            </td>
+
+            <!-- ACTIONS -->
+
+            <td>
+
+              <div class="action-buttons">
+
+                <!-- VIEW -->
+
+                <button
+                  class="icon-btn view-btn"
+                  title="View"
+                  (click)="previewPrescription(p)"
+                   
+                  
+                >
+                  👁
+                </button>
+
+                <!-- EDIT -->
+
+                <button
+                  class="icon-btn edit-btn"
+                  title="Edit"
+                  (click)="editPatient(p)"
+                >
+                  ✏
+                </button>
+
+                
+
+                <!-- DELETE -->
+
+                <button
+                  class="icon-btn delete-btn"
+                  (click)="deletePatient(p.id)"
+                  title="Delete"
+                >
+                  🗑
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    
+
+<!-- PAGINATION -->
+
+<!-- PAGINATION -->
+
+<div
+  class="pagination-wrapper"
+  *ngIf="totalPages > 1"
+>
+
+  <!-- PREVIOUS -->
+
+  <button
+    class="pagination-nav"
+    (click)="prevPage()"
+    [disabled]="currentPage === 1"
+  >
+    ‹
+  </button>
+
+  <!-- PAGE NUMBERS -->
+
+  <button
+    class="pagination-number"
+    *ngFor="let page of pages"
+    [class.active-page]="currentPage === page"
+    (click)="goToPage(page)"
+  >
+
+    
+{{ page }}
+
+  </button>
+
+  <!-- NEXT -->
+
+  <button
+    class="pagination-nav"
+    (click)="nextPage()"
+    [disabled]="currentPage === totalPages"
+  >
+    ›
+  </button>
+
+</div>
+
+<!-- ========================================= -->
+<!-- EMPTY STATE -->
+<!-- ========================================= -->
+
+    <!-- ========================================= -->
+    <!-- EMPTY STATE -->
+    <!-- ========================================= -->
+
+    <div
+      class="empty-state"
+      *ngIf="filteredPatients.length === 0"
+    >
+
+      <div class="empty-icon">
+        🩺
+      </div>
+
+      <h2>
+        No Patients Found
+      </h2>
+
+      <p>
+        Add a patient to begin.
+      </p>
+
+    </div>
+
+  </div>
+
+  <!-- ========================================= -->
+  <!-- FORM CARD -->
+  <!-- ========================================= -->
+
+  <div
+    class="patient-form-card"
+    *ngIf="showForm"
+  >
+
+    <!-- HEADER -->
+
+    <div class="form-header">
+
+      <div>
+
+        <h2>
+
+          {{
+            isEditMode
+            ? 'Edit Patient'
+            : 'Patient Registration'
+          }}
+
+        </h2>
+
+        <p>
+
+          Complete Homeopathy Case Sheet
+
+        </p>
+
+      </div>
+
+      <!-- CLOSE -->
+
+      <button
+        class="close-btn"
+        (click)="closeForm()"
+      >
+        ✕
+      </button>
+
+    </div>
+
+    <!-- ========================================= -->
+    <!-- STEP NAVBAR -->
+    <!-- ========================================= -->
+
+    <div class="steps-navbar">
+
+      <!-- STEP 1 -->
+
+      <div
+        class="step-tab"
+        [class.active-step]="currentStep === 1"
+        (click)="goToStep(1)"
+      >
+
+        <div class="step-number">
+          1
+        </div>
+
+      </div>
+
+      <!-- STEP 2 -->
+
+      <!-- STEP 2 -->
+
+      <div
+        class="step-tab"
+
+        [class.active-step]="currentStep === 2"
+
+        [class.locked-step]="!patient.name || !patient.phoneNumber || !patient.age"
+
+        (click)="
+          patient.name &&
+          patient.phoneNumber &&
+          patient.age &&
+          goToStep(2)
+        "
+      >
+
+        <div class="step-number">
+          2
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ========================================= -->
+    <!-- STEP 1 -->
+    <!-- ========================================= -->
+
+    <div
+      class="step-content"
+      *ngIf="currentStep === 1"
+    >
+
+      <h3>
+        STEP 1 → Complete Diagnosis Details
+      </h3>
+
+      <!-- ========================================= -->
+      <!-- BASIC DETAILS -->
+      <!-- ========================================= -->
+
+      <div class="section-title">
+        Basic Details
+      </div>
+
+      <div class="form-grid">
+
+        <div class="form-group">
+
+          <label>
+            Name
+          </label>
+
+          <input
+            type="text"
+            [(ngModel)]="patient.name"
+          />
+
+        </div>
+
+        <div class="form-group">
+
+          <label>
+            Age
+          </label>
+
+          <input
+            type="number"
+            [(ngModel)]="patient.age"
+          />
+
+        </div>
+
+        <div class="form-group">
+
+          <label>
+            Sex
+          </label>
+
+          <select
+            [(ngModel)]="patient.sex"
+          >
+
+            <option value="">
+              Select
+            </option>
+
+            <option>
+              Male
+            </option>
+
+            <option>
+              Female
+            </option>
+
+          </select>
+
+        </div>
+
+        <div class="form-group">
+
+          <label>
+            Marital Status
+          </label>
+
+          <input
+            type="text"
+            [(ngModel)]="
+              patient.maritalStatus
+            "
+          />
+
+        </div>
+
+        <div class="form-group">
+
+          <label>
+            D/S/W Of
+          </label>
+
+          <input
+            type="text"
+            [(ngModel)]="
+              patient.dswOf
+            "
+          />
+
+        </div>
+
+        <div class="form-group">
+
+          <label>
+            Phone Number
+          </label>
+
+          <input
+            type="text"
+            maxlength="10"
+            pattern="[0-9]*"
+            inputmode="numeric"
+            [(ngModel)]="patient.phoneNumber"
+          />
+
+        </div>
+
+        <div class="form-group">
+
+          <label>
+            Occupation
+          </label>
+
+          <input
+            type="text"
+            [(ngModel)]="
+              patient.occupation
+            "
+          />
+
+        </div>
+
+        <div class="form-group">
+
+          <label>
+            Religion
+          </label>
+
+          <input
+            type="text"
+            [(ngModel)]="
+              patient.religion
+            "
+          />
+
+        </div>
+
+        <div class="form-group full-width">
+
+          <label>
+            Address
+          </label>
+
+          <textarea
+            [(ngModel)]="
+              patient.address
+            "
+          ></textarea>
+
+        </div>
+
+        <div class="form-group">
+
+          <label>
+            Aadhaar No
+          </label>
+
+          <input
+            type="text"
+            [(ngModel)]="
+              patient.aadhaarNo
+            "
+          />
+
+        </div>
+
+      </div>
+
+      <!-- ========================================= -->
+      <!-- CASE SHEET -->
+      <!-- ========================================= -->
+
+      <div class="section-title">
+        Case Sheet
+      </div>
+
+      <div class="form-grid">
+
+        <div class="form-group full-width">
+
+          <label>
+            Presenting Complaints
+          </label>
+
+          <textarea
+            [(ngModel)]="
+              patient.presentingComplaints
+            "
+          ></textarea>
+
+        </div>
+
+        <div class="form-group full-width">
+
+          <label>
+            History Present Illness
+          </label>
+
+          <textarea
+            [(ngModel)]="
+              patient.historyPresentIllness
+            "
+          ></textarea>
+
+        </div>
+
+        <div class="form-group full-width">
+
+          <label>
+            Past Medical History
+          </label>
+
+          <textarea
+            [(ngModel)]="
+              patient.pastMedicalHistory
+            "
+          ></textarea>
+
+        </div>
+
+        <div class="form-group full-width">
+
+          <label>
+            Family History
+          </label>
+
+          <textarea
+            [(ngModel)]="
+              patient.familyHistory
+            "
+          ></textarea>
+
+        </div>
+
+        <div class="form-group full-width">
+
+          <label>
+            Life Space Investigation
+          </label>
+
+          <textarea
+            [(ngModel)]="
+              patient.lifeSpaceInvestigation
+            "
+          ></textarea>
+
+        </div>
+
+      </div>
+
+      <!-- ========================================= -->
+      <!-- PHYSICAL GENERALS -->
+      <!-- ========================================= -->
+
+      <div class="section-title">
+        Physical Generals
+      </div>
+
+      <div class="form-grid">
+
+        <div class="form-group">
+          <label>Appetite</label>
+          <input
+            type="text"
+            [(ngModel)]="patient.appetite"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Thirst</label>
+          <input
+            type="text"
+            [(ngModel)]="patient.thirst"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Stool</label>
+          <input
+            type="text"
+            [(ngModel)]="patient.stool"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Urine</label>
+          <input
+            type="text"
+            [(ngModel)]="patient.urine"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Desires</label>
+          <input
+            type="text"
+            [(ngModel)]="patient.desires"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Aversions</label>
+          <input
+            type="text"
+            [(ngModel)]="patient.aversions"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Sleep</label>
+          <input
+            type="text"
+            [(ngModel)]="patient.sleep"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Dreams</label>
+          <input
+            type="text"
+            [(ngModel)]="patient.dreams"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Sweat</label>
+          <input
+            type="text"
+            [(ngModel)]="patient.sweat"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Habits</label>
+          <input
+            type="text"
+            [(ngModel)]="patient.habits"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Menses</label>
+          <input
+            type="text"
+            [(ngModel)]="patient.menses"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Obstetric</label>
+          <input
+            type="text"
+            [(ngModel)]="patient.obstetric"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Thermals</label>
+          <input
+            type="text"
+            [(ngModel)]="patient.thermals"
+          />
+        </div>
+
+      </div>
+
+      <!-- ========================================= -->
+      <!-- MENTAL GENERALS -->
+      <!-- ========================================= -->
+
+      <div class="section-title">
+        Mental Generals
+      </div>
+
+      <div class="form-group full-width">
+
+        <textarea
+          [(ngModel)]="
+            patient.mentalGenerals
+          "
+        ></textarea>
+
+      </div>
+
+      <!-- ========================================= -->
+      <!-- PHYSICAL EXAMINATION -->
+      <!-- ========================================= -->
+
+      <div class="section-title">
+        Physical Examination
+      </div>
+
+      <div class="form-grid">
+
+        <div class="form-group">
+          <label>Pulse</label>
+          <input
+            type="text"
+            [(ngModel)]="patient.pulse"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>BP</label>
+          <input
+            type="text"
+            [(ngModel)]="patient.bp"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>WT</label>
+          <input
+            type="text"
+            [(ngModel)]="patient.wt"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>TEMP</label>
+          <input
+            type="text"
+            [(ngModel)]="patient.temp"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>RR</label>
+          <input
+            type="text"
+            [(ngModel)]="patient.rr"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Pallor</label>
+          <input
+            type="text"
+            [(ngModel)]="patient.pallor"
+          />
+        </div>
+
+      </div>
+
+      <!-- ========================================= -->
+      <!-- SYSTEMIC -->
+      <!-- ========================================= -->
+
+      <div class="section-title">
+        Systemic Examination
+      </div>
+
+      <div class="form-group full-width">
+
+        <textarea
+          [(ngModel)]="
+            patient.systemicExamination
+          "
+        ></textarea>
+
+      </div>
+
+      <!-- ========================================= -->
+      <!-- INVESTIGATIONS -->
+      <!-- ========================================= -->
+
+      <div class="section-title">
+        Investigations
+      </div>
+
+      <div class="form-group full-width">
+
+        <textarea
+          [(ngModel)]="
+            patient.investigations
+          "
+        ></textarea>
+
+      </div>
+
+      <!-- ========================================= -->
+      <!-- DIAGNOSIS -->
+      <!-- ========================================= -->
+
+      <div class="section-title">
+        Diagnosis
+      </div>
+
+      <div class="form-group full-width">
+
+        <textarea
+          [(ngModel)]="
+            patient.diagnosis
+          "
+        ></textarea>
+
+      </div>
+
+      <!-- ========================================= -->
+      <!-- REPERTORIAL -->
+      <!-- ========================================= -->
+
+      <div class="section-title">
+        Repertorial Totality
+      </div>
+
+      <div class="form-group full-width">
+
+        <textarea
+          [(ngModel)]="
+            patient.repertorialTotality
+          "
+        ></textarea>
+
+      </div>
+
+      <!-- ========================================= -->
+      <!-- RX -->
+      <!-- ========================================= -->
+
+      <div class="section-title">
+        RX
+      </div>
+
+      <div class="form-group full-width">
+
+        <textarea
+          [(ngModel)]="
+            patient.rx
+          "
+        ></textarea>
+
+      </div>
+
+      <!-- ========================================= -->
+      <!-- FOLLOW UP -->
+      <!-- ========================================= -->
+
+      <div class="section-title">
+        Follow Up
+      </div>
+
+      <!-- ========================================= -->
+<!-- FOLLOW UP -->
+<!-- ========================================= -->
+
+
+
+<div class="form-grid">
+
+  <!-- FOLLOW UP DATE -->
+
+  <div class="form-group">
+
+    <label>
+      Follow Up Date
+    </label>
+
+    <input
+      type="date"
+      [(ngModel)]="patient.followUpDate"
+      class="followup-date-input"
+    />
+
+  </div>
+
+  <!-- FOLLOW UP NOTES -->
+
+  <div class="form-group full-width">
+
+    <label>
+      Follow Up Notes
+    </label>
+
+    <textarea
+      [(ngModel)]="patient.followUpNotes"
+      placeholder="Enter follow up instructions..."
+    ></textarea>
+
+  </div>
+
+</div>
+      <div class="step-buttons">
+
+  <button
+    class="next-btn"
+    (click)="nextStep()"
+  >
+    Generate Prescription →
+  </button>
+
+</div>
+
+    </div>
+   
+    <!-- ========================================= -->
+    <!-- STEP 2 -->
+    <!-- ========================================= -->
+
+    <div
+      class="step-content"
+      *ngIf="currentStep === 2"
+    >
+
+      <h3>
+        STEP 2 → Prescription Preview
+      </h3>
+
+      <!-- ===================================== -->
+<!-- LIVE PRESCRIPTION PREVIEW -->
+<!-- ===================================== -->
+
+<div
+*ngIf="!previewMode"
+  id="livePrescriptionCanvas"
+  class="modern-prescription"
+>
+
+  <!-- HEADER -->
+
+  <div class="prescription-header">
+
+    <div class="clinic-left">
+
+      <h1>
+        SAHITHI HOMEOPATHY CLINIC
+      </h1>
+
+      <p>
+        Holistic Healing • Classical Homeopathy
+      </p>
+
+    </div>
+
+    <div class="clinic-right">
+
+      <h2>
+        Dr. Sahithi Kalva
+      </h2>
+
+      <span>
+        BHMS
+      </span>
+      
+    </div>
+
+  </div>
+
+  <!-- TOP LINE -->
+
+  <div class="header-line"></div>
+
+  <!-- PATIENT INFO -->
+
+  <div class="patient-info-grid">
+
+    <div class="info-card">
+
+      <label>
+        Patient Name
+      </label>
+
+      <h3>
+        {{ patient.name }}
+      </h3>
+
+    </div>
+
+    <div class="info-card">
+
+      <label>
+        Age
+      </label>
+
+      <h3>
+        {{ patient.age }} Years
+      </h3>
+
+    </div>
+
+    <div class="info-card">
+
+      <label>
+        Sex
+      </label>
+
+      <h3>
+        {{ patient.sex }}
+      </h3>
+
+    </div>
+
+    <div class="info-card">
+
+      <label>
+        Mobile
+      </label>
+
+      <h3>
+        {{ patient.phoneNumber }}
+      </h3>
+
+    </div>
+
+    <div class="info-card full-info">
+
+      <label>
+        Date
+      </label>
+
+      <h3>
+        {{ todayDate | date:'dd/MM/yyyy' }}
+      </h3>
+
+    </div>
+
+  </div>
+
+  <!-- BODY -->
+
+  <div class="prescription-body">
+
+    <!-- COMPLAINTS -->
+
+    <div class="prescription-section">
+
+      <div class="section-badge">
+        Complaints
+      </div>
+
+      <p>
+        {{ patient.presentingComplaints }}
+      </p>
+
+    </div>
+
+    <!-- RX -->
+
+    <div class="prescription-section rx-box">
+
+      <div class="section-badge">
+        Rx
+      </div>
+
+      <p>
+        {{ patient.rx }}
+      </p>
+
+    </div>
+
+    <!-- ADVICE -->
+
+    <div class="prescription-section">
+
+      <div class="section-badge">
+        Advice
+      </div>
+
+      <p>
+        {{ patient.followUpNotes }}
+      </p>
+
+    </div>
+
+    <!-- FOLLOWUP -->
+
+    <div class="prescription-section">
+
+      <div class="section-badge">
+        Follow Up
+      </div>
+
+      <p>
+        {{ patient.followUpDate }}
+      </p>
+
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+
+  <div class="prescription-footer">
+
+    <div class="footer-left">
+
+      <p>
+        “The physician’s highest calling is to restore health naturally.”
+      </p>
+
+    </div>
+
+    <div class="footer-right">
+
+      <div class="signature-line"></div>
+
+      <h4>
+        Dr. Sahithi Kalva
+      </h4>
+
+      <span>
+        Signature
+      </span>
+
+    </div>
+
+  </div>
+
+</div>
+
+    <!-- ========================================= -->
+    <!-- STEP BUTTONS -->
+    <!-- ========================================= -->
+
+    <div class="step-buttons">
+
+      <!-- BACK -->
+
+      <button
+        class="prev-btn"
+        *ngIf="currentStep === 2"
+        (click)="prevStep()"
+      >
+        ← Back
+      </button>
+
+      <!-- GENERATE -->
+
+      <!-- SAVE -->
+
+      <button
+        class="save-btn"
+        *ngIf="currentStep === 2"
+        (click)="addPatient()"
+      >
+
+        {{
+          isEditMode
+          ? 'Update Patient'
+          : 'Save Patient'
+        }}
+
+      </button>
+       <button
+        class="download-pdf-btn"
+        *ngIf="currentStep === 2"
+        (click)="downloadPrescriptionPDF()"
+      >
+        Download PDF
+      </button>
+
+    </div>
+
+  </div>
+   <!-- ===================================== -->
+<!-- PREVIEW MODAL -->
+<!-- ===================================== -->
+
+
+
+  </div>
+
+<div
+  class="preview-overlay"
+  *ngIf="previewMode"
+>
+
+  <div class="preview-modal">
+
+    <!-- CLOSE -->
+
+    <button
+      class="preview-close"
+      (click)="closePreview()"
+    >
+      ✕
+    </button>
+
+    <!-- DOWNLOAD -->
+
+    <button
+      class="pdf-download-btn"
+      (click)="downloadPrescriptionPDF()"
+    >
+      Download PDF
+    </button>
+
+    <!-- PRESCRIPTION -->
+
+    <div
+      class="preview-live-wrapper"
+    >
+
+      <div
+        id="previewPrescriptionCanvas"
+        class="modern-prescription"
+      >
+
+        <!-- HEADER -->
+
+        <div class="prescription-header">
+
+          <div class="clinic-left">
+
+            <h1>
+              SAHITHI HOMEOPATHY CLINIC
+            </h1>
+
+            <p>
+              Holistic Healing • Classical Homeopathy
+            </p>
+
+          </div>
+
+          <div class="clinic-right">
+
+            <h2>
+              Dr. Sahithi Kalva
+            </h2>
+
+            <span>
+              BHMS
+            </span>
+
+          </div>
+
+        </div>
+
+        <!-- LINE -->
+
+        <div class="header-line"></div>
+
+        <!-- PATIENT INFO -->
+
+        <div class="patient-info-grid">
+
+          <div class="info-card">
+
+            <label>Patient Name</label>
+
+            <h3>
+              {{ previewPatient?.name }}
+            </h3>
+
+          </div>
+
+          <div class="info-card">
+
+            <label>Age</label>
+
+            <h3>
+              {{ previewPatient?.age }} Years
+            </h3>
+
+          </div>
+
+          <div class="info-card">
+
+            <label>Sex</label>
+
+            <h3>
+              {{ previewPatient?.sex }}
+            </h3>
+
+          </div>
+
+          <div class="info-card">
+
+            <label>Mobile</label>
+
+            <h3>
+              {{ previewPatient?.phoneNumber }}
+            </h3>
+
+          </div>
+
+          <div class="info-card full-info">
+
+            <label>Date</label>
+
+            <h3>
+              {{ todayDate | date:'dd/MM/yyyy' }}
+            </h3>
+
+          </div>
+
+        </div>
+
+        <!-- BODY -->
+
+        <div class="prescription-body">
+
+          <!-- COMPLAINTS -->
+
+          <div class="prescription-section">
+
+            <div class="section-badge">
+              Complaints
+            </div>
+
+            <p>
+              {{ previewPatient?.presentingComplaints || 'No complaints added' }}
+            </p>
+
+          </div>
+
+          <!-- RX -->
+
+          <div class="prescription-section rx-box">
+
+            <div class="section-badge">
+              Rx
+            </div>
+
+            <p>
+              {{ previewPatient?.rx || 'No prescription added' }}
+            </p>
+
+          </div>
+
+          <!-- ADVICE -->
+
+          <div class="prescription-section">
+
+            <div class="section-badge">
+              Advice
+            </div>
+
+            <p>
+              {{ previewPatient?.followUpNotes || 'No advice added' }}
+            </p>
+
+          </div>
+
+          <!-- FOLLOWUP -->
+
+          <div class="prescription-section">
+
+            <div class="section-badge">
+              Follow Up
+            </div>
+
+            <p>
+              {{ previewPatient?.followUpDate || 'No follow up date' }}
+            </p>
+
+          </div>
+
+        </div>
+
+        <!-- FOOTER -->
+
+        <div class="prescription-footer">
+
+          <div class="footer-left">
+
+            <p>
+              “The physician’s highest calling is to restore health naturally.”
+            </p>
+
+          </div>
+
+          <div class="footer-right">
+
+            <div class="signature-line"></div>
+
+            <h4>
+              Dr. Sahithi Kalva
+            </h4>
+
+            <span>
+              Signature
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+

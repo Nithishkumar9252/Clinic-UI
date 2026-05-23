@@ -1,0 +1,2862 @@
+/* patients.css */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:
+  'Segoe UI',
+  sans-serif;
+
+  overflow-x:hidden;
+
+  overflow-y:auto;
+}
+
+
+
+/* PAGE */
+
+.patients-page{
+
+  position:relative;
+
+  min-height:87vh;
+
+  padding:28px;
+
+  overflow-x:hidden;
+  overflow-y:hidden;
+
+  background:
+  linear-gradient(
+    135deg,
+    #003b1f,
+    #006b31,
+    #007f3a
+  );
+}
+
+/* ========================================= */
+/* BACKGROUND GLOW */
+/* ========================================= */
+
+.bg-circle{
+
+  position:absolute;
+
+  border-radius:50%;
+
+  filter:blur(90px);
+
+  opacity:.22;
+
+  z-index:0;
+
+  animation:
+  floatGlow 12s infinite ease-in-out;
+}
+
+.bg1{
+
+  width:320px;
+
+  height:320px;
+
+  background:#00ff88;
+
+  top:-120px;
+
+  left:-100px;
+}
+
+.bg2{
+
+  width:260px;
+
+  height:260px;
+
+  background:#7cffcb;
+
+  right:-80px;
+
+  top:35%;
+}
+
+.bg3{
+
+  width:220px;
+
+  height:220px;
+
+  background:#d0ff87;
+
+  bottom:-80px;
+
+  left:40%;
+}
+
+@keyframes floatGlow{
+
+  0%{
+    transform:
+    translateY(0px)
+    translateX(0px);
+  }
+
+  50%{
+    transform:
+    translateY(-20px)
+    translateX(20px);
+  }
+
+  100%{
+    transform:
+    translateY(0px)
+    translateX(0px);
+  }
+}
+
+
+
+/* ========================================= */
+/* TOP BAR */
+/* ========================================= */
+
+/* TOP BAR */
+
+.top-bar{
+
+  position:relative;
+
+  z-index:2;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:20px;
+
+  margin-bottom:34px;
+}
+
+/* SEARCH */
+
+
+
+/* ========================================= */
+/* COOL SEARCH BAR */
+/* ========================================= */
+
+.search-box{
+
+  position:relative;
+
+  width:78px;
+
+  height:50px;
+
+  border-radius:999px;
+
+  overflow:hidden;
+
+  transition:
+  width .45s ease,
+  transform .35s ease;
+
+  background:
+  rgba(255,255,255,.12);
+
+  backdrop-filter:blur(18px);
+
+  border:
+  1px solid rgba(255,255,255,.18);
+
+  box-shadow:
+  0 10px 30px rgba(0,0,0,.18);
+}
+
+/* EXPAND */
+
+.search-box:hover,
+.search-box:focus-within{
+
+  width:430px;
+
+  transform:
+  translateY(-2px);
+}
+
+/* GLOW */
+
+.search-glow{
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+  linear-gradient(
+    135deg,
+    rgba(34,197,94,.35),
+    rgba(255,255,255,.06)
+  );
+
+  opacity:0;
+
+  transition:.45s;
+}
+
+.search-box:hover .search-glow,
+.search-box:focus-within .search-glow{
+
+  opacity:1;
+}
+
+/* ICON */
+
+.search-icon{
+
+  position:absolute;
+
+  top:50%;
+
+  left:24px;
+
+  transform:translateY(-50%);
+
+  font-size:24px;
+
+  z-index:3;
+
+  transition:.35s;
+}
+
+.search-box:hover .search-icon,
+.search-box:focus-within .search-icon{
+
+  transform:
+  translateY(-50%)
+  scale(1.15)
+  rotate(-8deg);
+}
+
+/* INPUT */
+
+.search-box input{
+
+  position:absolute;
+
+  inset:0;
+
+  width:100%;
+
+  height:100%;
+
+  border:none;
+
+  outline:none;
+
+  background:transparent;
+
+  padding-left:74px;
+
+  padding-right:24px;
+
+  color:white;
+
+  font-size:18px;
+
+  font-weight:600;
+
+  opacity:0;
+
+  transition:.35s;
+}
+
+/* SHOW INPUT */
+
+.search-box:hover input,
+.search-box:focus-within input{
+
+  opacity:1;
+}
+
+/* PLACEHOLDER */
+
+.search-box input::placeholder{
+
+  color:
+  rgba(255,255,255,.75);
+}
+
+/* FOCUS RING */
+
+.search-box:focus-within{
+
+  box-shadow:
+  0 0 0 4px rgba(34,197,94,.22),
+  0 18px 40px rgba(0,0,0,.24);
+}
+
+/* ADD BUTTON */
+
+.add-patient-btn{
+
+  min-width:280px;
+
+  height:50px;
+
+  border:none;
+
+  border-radius:28px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #22c55e,
+    #16a34a
+  );
+
+  color:white;
+
+  font-size:20px;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:14px;
+
+  transition:.35s;
+
+  box-shadow:
+  0 16px 32px rgba(0,0,0,.24);
+}
+
+.add-patient-btn span{
+
+  font-size:34px;
+}
+
+.add-patient-btn:hover{
+
+  transform:
+  translateY(-4px)
+  scale(1.03);
+}
+
+/* ========================================= */
+/* FORM CARD */
+/* ========================================= */
+
+/* ========================================= */
+/* PROFESSIONAL PATIENT MODAL */
+/* ========================================= */
+
+.patient-form-card{
+
+  position:fixed;
+
+  inset:50% auto auto 50%;
+
+  transform:
+  translate(-50%,-50%)
+  scale(.92);
+
+  width:92%;
+
+  max-width:1350px;
+
+  height:88vh;
+
+  overflow-y:auto;
+
+  border-radius:6px;
+
+  padding:28px;
+
+  z-index:99999;
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(255,255,255,.96),
+    rgba(248,250,252,.94)
+  );
+
+  backdrop-filter:blur(24px);
+
+  border:
+  1px solid rgba(255,255,255,.7);
+
+  box-shadow:
+  0 25px 80px rgba(0,0,0,.18);
+
+  animation:
+  popupEntrance .45s ease forwards;
+}
+
+/* ANIMATION */
+
+@keyframes popupEntrance{
+
+  to{
+
+    transform:
+    translate(-50%,-50%)
+    scale(1);
+  }
+}
+
+/* SCROLLBAR */
+
+/* ========================================= */
+/* CUSTOM SCROLLBAR */
+/* ========================================= */
+
+.patient-form-card::-webkit-scrollbar{
+
+  width:10px;
+}
+
+.patient-form-card::-webkit-scrollbar-track{
+
+  background:
+  rgba(0,0,0,.04);
+
+  border-radius:999px;
+}
+
+.patient-form-card::-webkit-scrollbar-thumb{
+
+  background:
+  linear-gradient(
+    180deg,
+    #22c55e,
+    #15803d
+  );
+
+  border-radius:999px;
+}
+
+.patient-form-card::-webkit-scrollbar-thumb:hover{
+
+  background:
+  linear-gradient(
+    180deg,
+    #16a34a,
+    #166534
+  );
+}
+
+/* POPUP ANIMATION */
+
+@keyframes popupFade{
+
+  from{
+
+    opacity:0;
+
+    transform:
+    translate(-50%, -45%)
+    scale(.94);
+  }
+
+  to{
+
+    opacity:1;
+
+    transform:
+    translate(-50%, -50%)
+    scale(1);
+  }
+}
+
+/* ========================================= */
+/* HEADER */
+/* ========================================= */
+
+/* ========================================= */
+/* PREMIUM FORM HEADER */
+/* ========================================= */
+
+.form-header{
+
+  position:relative;
+
+  margin-bottom:34px;
+
+  padding-bottom:22px;
+
+  border-bottom:
+  1px solid rgba(15,23,42,.08);
+}
+
+/* MAIN TITLE */
+
+.form-header h2{
+
+  position:relative;
+
+  display:inline-block;
+
+  font-size:44px;
+
+  font-weight:900;
+
+  line-height:1.1;
+
+  letter-spacing:-1.5px;
+
+  margin-bottom:12px;
+
+  color:#0f172a;
+
+  padding-right:18px;
+}
+
+/* GREEN HIGHLIGHT */
+
+.form-header h2::after{
+
+  content:'';
+
+  position:absolute;
+
+  left:0;
+
+  bottom:-6px;
+
+  width:72px;
+
+  height:6px;
+
+  border-radius:999px;
+
+  background:
+  linear-gradient(
+    90deg,
+    #22c55e,
+    #15803d
+  );
+
+  box-shadow:
+  0 4px 14px rgba(34,197,94,.35);
+}
+
+/* SUBTITLE */
+
+.form-header p{
+
+  margin-top:16px;
+
+  font-size:18px;
+
+  font-weight:500;
+
+  letter-spacing:.2px;
+
+  color:#64748b;
+
+  line-height:1.6;
+
+  max-width:620px;
+}
+
+/* OPTIONAL ICON GLOW */
+
+.form-header::before{
+
+  content:'';
+
+  position:absolute;
+
+  top:-20px;
+
+  left:-40px;
+
+  width:180px;
+
+  height:180px;
+
+  background:
+  radial-gradient(
+    circle,
+    rgba(34,197,94,.10),
+    transparent 70%
+  );
+
+  pointer-events:none;
+
+  filter:blur(18px);
+}
+
+/* CLOSE BUTTON */
+
+/* ========================================= */
+/* FLOATING CLOSE BUTTON */
+/* ========================================= */
+
+/* ========================================= */
+/* PREMIUM CLOSE BUTTON */
+/* ========================================= */
+
+/* ========================================= */
+/* PERFECT CLOSE BUTTON */
+/* ========================================= */
+
+.close-btn{
+
+  position:absolute;
+
+  top:24px;
+
+  right:24px;
+
+  width:54px;
+
+  height:54px;
+
+  border:none;
+
+  outline:none;
+
+  border-radius:18px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #ef4444,
+    #dc2626
+  );
+
+  color:white;
+
+  font-size:30px;
+
+  font-weight:300;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  cursor:pointer !important;
+
+  z-index:99999;
+
+  box-shadow:
+  0 14px 30px rgba(239,68,68,.28);
+
+  transition:
+  transform .25s ease,
+  box-shadow .25s ease,
+  background .25s ease;
+
+  padding:0;
+
+  line-height:1;
+}
+
+/* HOVER */
+
+.close-btn:hover{
+
+  transform:
+  scale(1.08)
+  rotate(90deg);
+
+  box-shadow:
+  0 20px 40px rgba(239,68,68,.38);
+
+  background:
+  linear-gradient(
+    135deg,
+    #f87171,
+    #dc2626
+  );
+}
+
+/* ACTIVE */
+
+.close-btn:active{
+
+  transform:scale(.96);
+}
+
+/* ICON ALIGN */
+
+.close-btn span{
+
+  position:relative;
+
+  top:-1px;
+}
+/* ========================================= */
+/* STEP NAVBAR */
+/* ========================================= */
+
+/* STEPS */
+
+/* ========================================= */
+/* PROFESSIONAL STEP NAV */
+/* ========================================= */
+
+.steps-navbar{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:20px;
+
+  margin-bottom:34px;
+}
+
+/* STEP */
+
+.step-tab{
+
+  position:relative;
+
+  width:58px;
+
+  height:58px;
+
+  border-radius:18px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  background:#f1f5f9;
+
+  color:#64748b;
+
+  font-size:18px;
+
+  font-weight:800;
+
+  cursor:pointer;
+
+  transition:.35s;
+}
+
+/* ACTIVE */
+
+.active-step{
+
+  background:
+  linear-gradient(
+    135deg,
+    #22c55e,
+    #15803d
+  );
+
+  color:white;
+
+  box-shadow:
+  0 14px 28px rgba(34,197,94,.28);
+}
+
+/* LOCKED STEP */
+
+.locked-step{
+
+  opacity:.45;
+
+  cursor:not-allowed;
+
+  pointer-events:none;
+}
+
+.step-number{
+
+  color:white;
+
+  font-size:22px;
+
+  font-weight:800;
+}
+
+/* ========================================= */
+/* STEP CONTENT */
+/* ========================================= */
+
+.step-content{
+
+  animation:
+  slideFade .35s ease;
+}
+
+.step-content h3{
+
+  font-size:42px;
+
+  font-weight:800;
+
+  color:#0f172a;
+
+  margin-bottom:28px;
+
+  letter-spacing:-1px;
+}
+
+.section-title{
+
+  font-size:18px;
+
+  font-weight:700;
+
+  color:#15803d;
+
+  margin:
+  26px 0 14px;
+
+  padding-left:10px;
+
+  border-left:
+  4px solid #22c55e;
+}
+
+/* GRID */
+
+/* FORM GRID */
+
+.form-grid{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(2,1fr);
+
+  gap:18px;
+}
+
+/* GROUP */
+
+.form-group{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:8px;
+}
+
+/* LABEL */
+
+.form-group label{
+
+  font-size:14px;
+
+  font-weight:700;
+
+  color:#334155;
+}
+
+/* INPUTS */
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+
+  height:48px;
+
+  border:none;
+
+  outline:none;
+
+  border-radius:16px;
+
+  padding:0 16px;
+
+  background:#f8fafc;
+
+  border:
+  1px solid #e2e8f0;
+
+  font-size:14px;
+
+  font-weight:500;
+
+  color:#0f172a;
+
+  transition:.25s;
+}
+
+/* TEXTAREA */
+
+.form-group textarea{
+
+  min-height:90px;
+
+  padding-top:14px;
+
+  resize:vertical;
+}
+
+/* FOCUS */
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+
+  border-color:#22c55e;
+
+  background:white;
+
+  box-shadow:
+  0 0 0 4px rgba(34,197,94,.12);
+}
+
+/* ========================================= */
+/* BUTTONS */
+/* ========================================= */
+
+/* ========================================= */
+/* STEP BUTTONS */
+/* ========================================= */
+
+.step-buttons{
+
+  width:100%;
+
+  display:flex;
+
+  justify-content:flex-end;
+
+  align-items:center;
+
+  gap:18px;
+
+  margin-top:32px;
+
+  padding:
+  20px 10px 10px;
+
+  flex-wrap:wrap;
+}
+
+/* BUTTON COMMON */
+
+.prev-btn,
+.save-btn,
+.download-pdf-btn{
+
+  min-width:180px;
+
+  height:58px;
+
+  border:none;
+
+  border-radius:18px;
+
+  font-size:18px;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:.3s;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+}
+
+/* BACK */
+
+.prev-btn{
+
+  background:#e5e7eb;
+
+  color:#111827;
+}
+
+/* SAVE */
+
+.save-btn{
+
+  background:
+  linear-gradient(
+    135deg,
+    #16a34a,
+    #15803d
+  );
+
+  color:white;
+}
+
+/* DOWNLOAD */
+
+.download-pdf-btn{
+
+  background:
+  linear-gradient(
+    135deg,
+    #7c3aed,
+    #6d28d9
+  );
+
+  color:white;
+
+  min-width:260px;
+}
+
+/* HOVER */
+
+.prev-btn:hover,
+.save-btn:hover,
+.download-pdf-btn:hover{
+
+  transform:
+  translateY(-3px);
+
+  box-shadow:
+  0 14px 28px rgba(0,0,0,.16);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+  .step-buttons{
+
+    flex-direction:column;
+
+    align-items:stretch;
+  }
+
+  .prev-btn,
+  .save-btn,
+  .download-pdf-btn{
+
+    width:100%;
+  }
+}
+
+/* ========================================= */
+/* TABLE */
+/* ========================================= */
+
+/* TABLE WRAPPER */
+
+.patients-table-wrapper{
+
+  position:relative;
+
+  z-index:2;
+
+  overflow:hidden;
+
+  border-radius:24px;
+
+  background:
+  rgba(255,255,255,.08);
+
+  backdrop-filter:blur(14px);
+
+  border:
+  1px solid rgba(255,255,255,.08);
+
+  padding:8px;
+
+  max-width:1200px;
+
+  margin:auto;
+}
+/* TABLE */
+
+.patients-table{
+
+  width:100%;
+
+  border-collapse:collapse;
+}
+
+/* TABLE HEAD */
+
+.patients-table thead tr{
+
+  background:
+  rgba(255,255,255,.08);
+}
+
+.patients-table th{
+
+  padding:14px 16px;
+
+
+  text-align:center;
+
+  color:white;
+
+  font-size:14px;
+
+  font-weight:700;
+
+  border-bottom:
+  1px solid rgba(255,255,255,.08);
+}
+
+/* TABLE BODY */
+
+.patients-table td{
+
+  padding:12px 16px;
+   font-size:14px;
+   text-align:center;
+
+  vertical-align:middle;
+
+  color:white;
+
+  border-bottom:
+  1px solid rgba(255,255,255,.06);
+}
+
+.patients-table tbody tr{
+
+  transition:.35s;
+}
+
+.patients-table tbody tr:hover{
+
+  background:
+  rgba(255,255,255,.05);
+}
+
+/* PATIENT CODE */
+
+.patient-id{
+
+  padding:7px 14px;
+
+  border-radius:999px;
+
+  background:
+  rgba(34,197,94,.18);
+
+  color:#a5ffbe;
+
+  font-size:13px;
+
+  font-weight:700;
+}
+
+/* NAME */
+
+/* NAME COLUMN */
+
+.patient-name-box{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:flex-start;
+
+  gap:14px;
+
+  width:100%;
+
+
+
+  text-align:left;
+}
+
+/* AVATAR */
+
+.table-avatar{
+
+  min-width:38px;
+
+  height:38px;
+
+  border-radius:50%;
+
+  background:
+  linear-gradient(
+    135deg,
+    #22c55e,
+    #15803d
+  );
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  color:white;
+
+  font-size:16px;
+
+  font-weight:700;
+}
+
+.patient-name-box h4{
+
+  color:white;
+
+  font-size:15px;
+
+  margin-bottom:2px;
+}
+
+.patient-name-box p{
+
+  color:#e2e2e2;
+
+  font-size:12px;
+}
+
+/* AGE */
+
+.age-badge{
+
+  padding:6px 12px;
+
+  border-radius:999px;
+
+  background:
+  rgba(255,255,255,.10);
+
+  font-size:13px;
+
+  font-weight:700;
+}
+
+/* DIAGNOSIS */
+
+.disease-text{
+
+  font-size:14px;
+
+  color:#f4f4f4;
+}
+
+/* ACTIONS */
+
+.actions-header{
+
+  text-align:center;
+}
+
+.action-buttons{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:10px;
+}
+
+/* ICON BUTTON */
+
+.icon-btn{
+
+  width:36px;
+
+  height:36px;
+
+  border:none;
+
+  border-radius:12px;
+
+  color:white;
+
+  font-size:13px;
+
+  cursor:pointer;
+
+  transition:.35s;
+}
+
+/* VIEW */
+
+.view-btn{
+
+  background:
+  linear-gradient(
+    135deg,
+    #3b82f6,
+    #2563eb
+  );
+}
+
+/* EDIT */
+
+.edit-btn{
+
+  background:
+  linear-gradient(
+    135deg,
+    #f59e0b,
+    #d97706
+  );
+}
+
+/* DOWNLOAD */
+
+.download-btn{
+
+  background:
+  linear-gradient(
+    135deg,
+    #8b5cf6,
+    #7c3aed
+  );
+}
+
+/* DELETE */
+
+.delete-btn{
+
+  background:
+  linear-gradient(
+    135deg,
+    #ef4444,
+    #dc2626
+  );
+}
+
+/* HOVER */
+
+.icon-btn:hover{
+
+  transform:
+  translateY(-3px)
+  scale(1.08);
+
+  box-shadow:
+  0 12px 22px rgba(0,0,0,.22);
+}
+
+/* ========================================= */
+/* EMPTY STATE */
+/* ========================================= */
+
+.empty-state{
+
+  position:relative;
+
+  z-index:2;
+
+  min-height:320px;
+
+  border-radius:34px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:center;
+
+  align-items:center;
+
+  background:
+  rgba(255,255,255,.10);
+
+  backdrop-filter:blur(18px);
+
+  border:
+  1px solid rgba(255,255,255,.10);
+
+  animation:
+  fadeIn .4s ease;
+}
+
+.empty-icon{
+
+  font-size:82px;
+
+  margin-bottom:22px;
+}
+
+.empty-state h2{
+
+  color:white;
+
+  font-size:38px;
+
+  margin-bottom:10px;
+}
+
+.empty-state p{
+
+  color:#ebebeb;
+
+  font-size:18px;
+}
+
+/* ========================================= */
+/* ANIMATIONS */
+/* ========================================= */
+
+@keyframes fadeIn{
+
+  from{
+
+    opacity:0;
+
+    transform:
+    translateY(25px);
+  }
+
+  to{
+
+    opacity:1;
+
+    transform:
+    translateY(0);
+  }
+}
+
+@keyframes slideFade{
+
+  from{
+
+    opacity:0;
+
+    transform:
+    translateX(20px);
+  }
+
+  to{
+
+    opacity:1;
+
+    transform:
+    translateX(0);
+  }
+}
+
+/* ========================================= */
+/* RESPONSIVE */
+/* ========================================= */
+
+@media(max-width:950px){
+
+  .form-grid{
+
+    grid-template-columns:1fr;
+  }
+
+  .full-width{
+
+    grid-column: span 2;
+  }
+}
+
+@media(max-width:768px){
+
+  .patients-page{
+
+    padding:18px;
+  }
+
+  .top-bar{
+
+    flex-direction:column;
+  }
+
+  .search-box{
+
+    width:100%;
+  }
+
+  .add-patient-btn{
+
+    width:100%;
+  }
+
+  .patient-form-card{
+
+  overflow-y:auto;
+
+  overflow-x:visible;
+}
+
+
+  .step-buttons{
+
+    flex-direction:column;
+
+    gap:14px;
+  }
+
+  .prev-btn,
+  .next-btn,
+  .save-btn{
+
+    width:100%;
+  }
+
+  .form-header h2{
+
+    font-size:28px;
+  ;
+  }
+
+  .step-content h3{
+
+    font-size:28px;
+  }
+}
+
+/* ===================================== */
+/* PRESCRIPTION PREVIEW MODAL */
+/* ===================================== */
+
+.preview-overlay{
+
+  position:fixed;
+
+  inset:0;
+
+  background:
+  rgba(0,0,0,.82);
+
+  z-index:999999;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  padding:20px;
+
+  backdrop-filter:blur(8px);
+}
+
+.preview-modal{
+
+  position:relative;
+
+  width:100%;
+
+  max-width:950px;
+
+  max-height:95vh;
+
+  overflow:auto;
+
+  background:white;
+
+  border-radius:28px;
+
+  padding:20px;
+
+  animation:
+  previewPopup .35s ease;
+}
+
+/* POPUP */
+
+@keyframes previewPopup{
+
+  from{
+
+    opacity:0;
+
+    transform:
+    scale(.92)
+    translateY(20px);
+  }
+
+  to{
+
+    opacity:1;
+
+    transform:
+    scale(1)
+    translateY(0);
+  }
+}
+
+/* CLOSE BUTTON */
+
+.preview-close{
+
+  position:absolute;
+
+  top:16px;
+
+  right:16px;
+
+  width:48px;
+
+  height:48px;
+
+  border:none;
+
+  border-radius:50%;
+
+  background:
+  linear-gradient(
+    135deg,
+    #ef4444,
+    #dc2626
+  );
+
+  color:white;
+
+  font-size:20px;
+
+  cursor:pointer;
+
+  z-index:5;
+
+  transition:.3s;
+}
+
+.preview-close:hover{
+
+  transform:
+  rotate(90deg)
+  scale(1.08);
+}
+
+/* DOWNLOAD BUTTON */
+
+.pdf-download-btn{
+
+  position:absolute;
+
+  top:16px;
+
+  left:16px;
+
+  border:none;
+
+  height:48px;
+
+  padding:0 22px;
+
+  border-radius:14px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #16a34a,
+    #15803d
+  );
+
+  color:white;
+
+  font-size:15px;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  z-index:5;
+
+  transition:.3s;
+}
+
+.pdf-download-btn:hover{
+
+  transform:
+  translateY(-2px)
+  scale(1.03);
+}
+
+/* GENERATED PREVIEW IMAGE */
+
+
+
+
+
+.hidden-template{
+
+  position:fixed;
+
+  top:0;
+
+  left:0;
+
+  width:794px;
+
+  z-index:-9999;
+
+  opacity:0.01;
+
+  pointer-events:none;
+}
+/* BACKGROUND */
+
+.template-bg{
+
+  width:100%;
+
+  display:block;
+
+  border-radius:10px;
+}
+
+/* ===================================== */
+/* FIXED TEXT POSITIONS */
+/* ===================================== */
+
+
+/* ===================================== */
+/* LIVE PREVIEW */
+/* ===================================== */
+
+.live-preview-container{
+
+  display:flex;
+
+  justify-content:center;
+
+  overflow:auto;
+
+  padding:20px;
+
+  background:
+  rgba(255,255,255,.08);
+
+  border-radius:24px;
+}
+
+/* DOWNLOAD BUTTON STEP 2 */
+
+.download-pdf-btn{
+
+  min-width:220px;
+
+  height:62px;
+
+  border:none;
+
+  border-radius:22px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #7c3aed,
+    #6d28d9
+  );
+
+  color:white;
+
+  font-size:18px;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:.35s;
+}
+
+.download-pdf-btn:hover{
+
+  transform:
+  translateY(-4px)
+  scale(1.03);
+
+  box-shadow:
+  0 12px 26px rgba(0,0,0,.22);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+  .prescription-template{
+
+    width:100%;
+  }
+
+  .preview-modal{
+
+    padding:12px;
+  }
+}
+
+.generated-preview-image{
+
+  width:100%;
+
+  display:block;
+
+  border-radius:20px;
+
+  background:white;
+
+  object-fit:contain;
+}
+
+
+
+/* PAGINATION */
+
+/* ========================================= */
+/* MODERN PAGINATION */
+/* ========================================= */
+
+.pagination-wrapper{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:10px;
+
+  margin-top:18px;
+
+  flex-wrap:wrap;
+}
+
+/* BUTTON BASE */
+
+.pagination-nav,
+.pagination-number{
+
+  width:38px;
+
+  height:38px;
+
+  border:none;
+
+  border-radius:12px;
+
+  background:
+  rgba(255,255,255,.08);
+
+  color:white;
+
+  font-size:14px;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:
+  background .18s ease,
+  opacity .18s ease;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+}
+
+/* HOVER */
+
+.pagination-nav:hover:not(:disabled),
+.pagination-number:hover{
+
+  background:
+  rgba(255,255,255,.18);
+}
+
+/* ACTIVE PAGE */
+
+.active-page{
+
+  background:
+  linear-gradient(
+    135deg,
+    #22c55e,
+    #15803d
+  ) !important;
+
+  box-shadow:
+  0 4px 14px rgba(34,197,94,.28);
+}
+
+/* DISABLED */
+
+.pagination-nav:disabled{
+
+  opacity:.35;
+
+  cursor:not-allowed;
+}
+
+/* ========================================= */
+/* FOLLOW UP DATE */
+/* ========================================= */
+
+.followup-date-input{
+
+  height:46px;
+
+  border:
+  1px solid #dbe1ea;
+
+  border-radius:8px;
+
+  background:#ffffff;
+
+  padding:0 14px;
+
+  font-size:14px;
+
+  font-weight:600;
+
+  color:#0f172a;
+
+  transition:.25s;
+
+  cursor:pointer;
+
+  width:100%;
+}
+
+/* FOCUS */
+
+.followup-date-input:focus{
+
+  outline:none;
+
+  border-color:#22c55e;
+
+  box-shadow:
+  0 0 0 4px rgba(34,197,94,.12);
+}
+
+/* CALENDAR ICON */
+
+.followup-date-input::-webkit-calendar-picker-indicator{
+
+  cursor:pointer;
+
+  opacity:.85;
+
+  transform:scale(1.15);
+
+  transition:.25s;
+}
+
+/* HOVER */
+
+.followup-date-input::-webkit-calendar-picker-indicator:hover{
+
+  transform:
+  scale(1.28)
+  rotate(8deg);
+
+  opacity:1;
+}
+
+.followup-date-input:hover{
+
+  border-color:#22c55e;
+
+  box-shadow:
+  0 4px 14px rgba(34,197,94,.12);
+}
+
+/* ===================================== */
+/* MODERN PRESCRIPTION */
+/* ===================================== */
+
+
+/* =========================================
+   A4 PRESCRIPTION DESIGN
+========================================= */
+
+.modern-prescription{
+
+  width:794px;
+
+  height:1123px;
+
+  background:#ffffff;
+ 
+
+  margin:auto;
+
+  position:relative;
+
+  overflow:hidden;
+
+  border-radius:0px;
+
+  box-shadow:
+    0 10px 40px rgba(0,0,0,.15);
+
+  font-family:
+    'Segoe UI',
+    sans-serif;
+
+  display:flex;
+
+  flex-direction:column;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.prescription-header{
+
+  padding:42px 42px 28px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #14532d,
+      #166534,
+      #15803d
+    );
+
+  color:white;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:flex-start;
+
+  position:relative;
+
+  overflow:hidden;
+}
+
+/* GLOW */
+
+.prescription-header::after{
+
+  content:'';
+
+  position:absolute;
+
+  width:280px;
+
+  height:280px;
+
+  background:
+    radial-gradient(
+      rgba(255,255,255,.08),
+      transparent 70%
+    );
+
+  top:-120px;
+
+  right:-120px;
+}
+
+/* CLINIC */
+
+.clinic-left h1{
+
+  font-size:25px;
+
+  font-weight:900;
+
+  letter-spacing:-1px;
+
+  margin-bottom:8px;
+}
+
+.clinic-left p{
+
+  font-size:15px;
+
+  color:#dcfce7;
+}
+
+/* DOCTOR */
+
+.clinic-right{
+
+  text-align:right;
+}
+
+.clinic-right h2{
+
+  font-size:26px;
+
+  font-weight:800;
+
+  margin-bottom:6px;
+}
+
+.clinic-right span{
+
+  color:#facc15;
+
+  font-size:15px;
+
+  font-weight:700;
+}
+
+/* GREEN LINE */
+
+.header-line{
+
+  height:6px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #22c55e,
+      #bbf7d0,
+      #22c55e
+    );
+}
+
+/* =========================================
+   PATIENT INFO
+========================================= */
+
+.patient-info-grid{
+
+  padding:22px 34px;
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:12px;
+
+  background:
+    #f8fffa;
+}
+
+/* CARD */
+
+.info-card{
+
+  background:white;
+
+  border-radius:14px;
+
+  padding:14px 16px;
+
+  border:
+    1px solid #dcfce7;
+
+  box-shadow:
+    0 2px 8px rgba(0,0,0,.03);
+}
+
+/* DATE FULL */
+
+.full-info{
+
+  grid-column:
+    span 2;
+}
+
+/* LABEL */
+
+.info-card label{
+
+  display:block;
+
+  font-size:12px;
+
+  font-weight:800;
+
+  color:#15803d;
+
+  margin-bottom:8px;
+
+  text-transform:uppercase;
+
+  letter-spacing:.6px;
+}
+
+/* VALUE */
+
+.info-card h3{
+
+  font-size:18px;
+
+  color:#111827;
+
+  font-weight:800;
+}
+
+/* =========================================
+   BODY
+========================================= */
+
+.prescription-body{
+
+  flex:1;
+
+  padding:20px 34px 10px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:14px;
+}
+
+/* SECTION */
+
+.prescription-section{
+
+  background:white;
+
+  border:
+    1px solid #e5e7eb;
+
+  border-radius:18px;
+
+  padding:18px 22px;
+
+  position:relative;
+
+  overflow:hidden;
+
+  box-shadow:
+    0 2px 8px rgba(0,0,0,.03);
+
+  min-height:auto;
+}
+
+/* RX BOX */
+
+.rx-box{
+
+  border:
+    2px solid #bbf7d0;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f6fff8,
+      #ffffff
+    );
+}
+
+/* BADGE */
+
+.section-badge{
+
+  display:inline-flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  min-width:95px;
+
+  height:34px;
+
+  padding:0 16px;
+
+  border-radius:999px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #15803d,
+      #22c55e
+    );
+
+  color:white;
+
+  font-size:14px;
+
+  font-weight:800;
+
+  margin-bottom:12px;
+
+  box-shadow:
+    0 4px 10px rgba(34,197,94,.15);
+}
+
+/* TEXT */
+
+.prescription-section p{
+
+  font-size:17px;
+
+  line-height:1.7;
+
+  color:#374151;
+
+  font-weight:500;
+
+  white-space:pre-line;
+
+  word-break:break-word;
+
+  margin:0;
+}
+/* =========================================
+   FOOTER
+========================================= */
+
+.prescription-footer{
+
+  margin-top:auto;
+
+  padding:20px 34px 24px;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:flex-end;
+
+  border-top:
+    1px solid #e5e7eb;
+
+  background:
+    #ffffff;
+}
+
+/* QUOTE */
+
+.footer-left{
+
+  max-width:60%;
+}
+
+.footer-left p{
+
+  font-size:15px;
+
+  line-height:1.7;
+
+  color:#64748b;
+
+  font-style:italic;
+}
+
+/* SIGN */
+
+.footer-right{
+
+  text-align:center;
+}
+
+/* SIGNATURE LINE */
+
+.signature-line{
+
+  width:180px;
+
+  height:2px;
+
+  background:#111827;
+
+  margin-bottom:10px;
+}
+
+/* NAME */
+
+.footer-right h4{
+
+  font-size:22px;
+
+  color:#14532d;
+
+  margin-bottom:4px;
+}
+
+/* TEXT */
+
+.footer-right span{
+
+  font-size:14px;
+
+  color:#6b7280;
+}
+
+/* =========================================
+   PDF / PRINT PERFECT
+========================================= */
+
+@media print{
+
+  body{
+
+    margin:0;
+  }
+
+  .modern-prescription{
+
+    width:210mm;
+
+    min-height:297mm;
+
+    border-radius:0;
+
+    box-shadow:none;
+  }
+}
+
+/* ROW */
+
+.detail-row{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  margin-bottom:14px;
+
+  gap:20px;
+
+  font-size:18px;
+
+  font-weight:600;
+
+  color:#1f2937;
+}
+
+.detail-row b{
+
+  color:#0f5c33;
+}
+
+/* SECTIONS */
+
+.rx-section{
+
+  padding:
+  28px 42px;
+
+  background:#ffffff;
+
+  border-bottom:
+  1px solid #edf2e9;
+
+  position:relative;
+}
+
+/* SECTION TITLE */
+
+.rx-section::before{
+
+  content:'';
+
+  position:absolute;
+
+  left:0;
+
+  top:0;
+
+  width:6px;
+
+  height:100%;
+
+  background:
+  linear-gradient(
+    180deg,
+    #1f7a43,
+    #49b96d
+  );
+}
+
+/* TITLES */
+
+.rx-section h3{
+
+  font-size:32px;
+
+  font-weight:800;
+
+  color:#166534;
+
+  margin-bottom:18px;
+
+  letter-spacing:-0.5px;
+}
+
+/* CONTENT */
+
+.rx-section p{
+
+  font-size:20px;
+
+  line-height:2;
+
+  color:#374151;
+
+  font-weight:500;
+
+  white-space:pre-line;
+}
+
+/* BOTTOM IMAGE */
+
+.prescription-bottom-image{
+
+  width:100%;
+
+  display:block;
+
+  margin-top:10px;
+}
+
+.modern-prescription{
+
+  background:
+  linear-gradient(
+    180deg,
+    #fffefb,
+    #fcfffc
+  );
+
+  position:relative;
+}
+
+.modern-prescription::after{
+
+  content:'';
+
+  position:absolute;
+
+  inset:0;
+
+  background-image:
+  radial-gradient(
+    rgba(0,0,0,.015) 1px,
+    transparent 1px
+  );
+
+  background-size:4px 4px;
+
+  pointer-events:none;
+}
+
+/* ========================================= */
+/* GENERATE PRESCRIPTION BUTTON */
+/* ========================================= */
+
+.next-btn{
+
+  min-width:280px;
+
+  height:60px;
+
+  border:none;
+
+  border-radius:18px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #16a34a,
+    #15803d
+  );
+
+  color:white;
+
+  font-size:15px;
+
+  font-weight:800;
+
+  letter-spacing:.3px;
+
+  cursor:pointer;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:12px;
+
+  transition:.35s;
+
+  box-shadow:
+  0 16px 32px rgba(22,163,74,.28);
+}
+
+/* HOVER */
+
+.next-btn:hover{
+
+  transform:
+  translateY(-4px)
+  scale(1.02);
+
+  box-shadow:
+  0 22px 38px rgba(22,163,74,.35);
+
+  background:
+  linear-gradient(
+    135deg,
+    #22c55e,
+    #16a34a
+  );
+}
+
+/* ACTIVE */
+
+.next-btn:active{
+
+  transform:scale(.98);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+  .next-btn{
+
+    width:100%;
+  }
+}
+
+/* ========================================= */
+/* FIX PREVIEW MODAL */
+/* ========================================= */
+
+.preview-overlay{
+
+  position:fixed !important;
+
+  inset:0;
+
+  width:100vw;
+
+  height:100vh;
+
+  background:rgba(0,0,0,.78);
+
+  z-index:999999999 !important;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  overflow:auto;
+
+  padding:20px;
+}
+
+/* MODAL */
+
+.preview-modal{
+
+  position:relative;
+
+  width:fit-content;
+
+  max-width:95vw;
+
+  max-height:95vh;
+
+  overflow:auto;
+
+  background:#ffffff;
+
+  border-radius:0px;
+
+  padding:20px;
+
+  z-index:999999999;
+}
+
+/* PRESCRIPTION */
+
+#previewPrescriptionCanvas{
+
+  transform:scale(.85);
+
+  transform-origin:top center;
+
+  margin:auto;
+}
+
+/* ========================================= */
+/* FINAL PREVIEW FIX */
+/* ========================================= */
+
+/* ========================================= */
+/* FINAL PREVIEW FIX */
+/* ========================================= */
+
+.preview-live-wrapper{
+
+  width:100%;
+
+  height:100%;
+
+  overflow:auto;
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:flex-start;
+
+  padding-top:70px;
+}
+
+#previewPrescriptionCanvas{
+
+  flex-shrink:0;
+
+  transform:scale(.82);
+
+  transform-origin:top center;
+
+  margin-bottom:60px;
+}
+
+/* MODAL SCROLL FIX */
+
+.preview-modal{
+
+  overflow:auto !important;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+  #previewPrescriptionCanvas{
+
+    transform:scale(.55);
+  }
+
+  .preview-live-wrapper{
+
+    justify-content:flex-start;
+  }
+}
+
+/* ===================================== */
+/* PREVIEW MODAL FIX */
+/* ===================================== */
+
+.preview-overlay{
+
+  overflow-y:hidden;
+
+  padding:30px;
+}
+
+.preview-modal{
+
+  margin:auto;
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:flex-start;
+}
+
+.preview-live-wrapper{
+
+  width:100%;
+
+  display:flex;
+
+  justify-content:center;
+
+  padding-top:70px;
+}
+
+/* ========================================= */
+/* MODERN PROFESSIONAL SCROLLBAR */
+/* ========================================= */
+
+/* FULL PAGE */
+
+::-webkit-scrollbar{
+
+  width:12px;
+
+  height:12px;
+}
+
+/* TRACK */
+
+::-webkit-scrollbar-track{
+
+  background:
+  rgba(255,255,255,.08);
+
+  border-radius:999px;
+
+  margin:6px;
+}
+
+/* THUMB */
+
+::-webkit-scrollbar-thumb{
+
+  background:
+  linear-gradient(
+    180deg,
+    #22c55e,
+    #15803d
+  );
+
+  border-radius:999px;
+
+  border:2px solid transparent;
+
+  background-clip:padding-box;
+
+  transition:.3s;
+}
+
+/* HOVER */
+
+::-webkit-scrollbar-thumb:hover{
+
+  background:
+  linear-gradient(
+    180deg,
+    #4ade80,
+    #16a34a
+  );
+
+  background-clip:padding-box;
+}
+
+/* ACTIVE */
+
+::-webkit-scrollbar-thumb:active{
+
+  background:
+  linear-gradient(
+    180deg,
+    #15803d,
+    #14532d
+  );
+}
+
+/* CORNER */
+
+::-webkit-scrollbar-corner{
+
+  background:transparent;
+}

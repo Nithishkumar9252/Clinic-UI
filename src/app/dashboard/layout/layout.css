@@ -1,0 +1,46 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+.layout-container{
+
+  display:flex;
+
+  width:100%;
+
+  height:100vh;
+
+  overflow:hidden;
+
+  background:#f4f8f2;
+}
+
+.layout-content{
+
+  flex:1;
+
+  display:flex;
+
+  flex-direction:column;
+
+  overflow:hidden;
+}
+
+.page-wrapper{
+
+  flex:1;
+
+  overflow-y:auto;
+
+  padding:0;
+
+  background:
+  linear-gradient(
+    135deg,
+    #f8fbf7,
+    #eef7ef
+  );
+}
+

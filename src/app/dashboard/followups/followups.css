@@ -1,0 +1,1298 @@
+/* =========================================
+   GLOBAL
+========================================= */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+
+  font-family:
+  'Segoe UI',
+  sans-serif;
+
+  overflow-x:hidden;
+
+  background:#052e16;
+}
+
+/* =========================================
+   PAGE
+========================================= */
+
+.followups-page{
+
+  position:relative;
+
+  min-height:87vh;
+
+  padding:30px;
+
+  overflow:hidden;
+
+  background:
+  linear-gradient(
+    135deg,
+    #003b1f,
+    #006b31,
+    #007f3a
+  );
+}
+
+/* =========================================
+   BACKGROUND GLOW
+========================================= */
+
+.bg-circle{
+
+  position:absolute;
+
+  border-radius:50%;
+
+  filter:blur(90px);
+
+  opacity:.28;
+
+  z-index:0;
+
+  animation:
+  floatGlow 12s infinite ease-in-out;
+}
+
+.bg1{
+
+  width:340px;
+
+  height:340px;
+
+  background:#22c55e;
+
+  top:-120px;
+
+  left:-100px;
+}
+
+.bg2{
+
+  width:280px;
+
+  height:280px;
+
+  background:#34d399;
+
+  top:35%;
+
+  right:-90px;
+}
+
+.bg3{
+
+  width:260px;
+
+  height:260px;
+
+  background:#bbf7d0;
+
+  bottom:-120px;
+
+  left:40%;
+}
+
+@keyframes floatGlow{
+
+  0%{
+
+    transform:
+    translateY(0)
+    translateX(0);
+  }
+
+  50%{
+
+    transform:
+    translateY(-20px)
+    translateX(20px);
+  }
+
+  100%{
+
+    transform:
+    translateY(0)
+    translateX(0);
+  }
+}
+
+/* =========================================
+   TOP BAR
+========================================= */
+
+.top-bar{
+
+  position:relative;
+
+  z-index:2;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:28px;
+}
+
+/* =========================================
+   SEARCH
+========================================= */
+
+.search-box{
+
+  position:relative;
+
+  width:78px;
+
+  height:50px;
+
+  border-radius:999px;
+
+  overflow:hidden;
+
+  transition:
+  width .45s ease,
+  transform .35s ease;
+
+  background:
+  rgba(255,255,255,.12);
+
+  backdrop-filter:blur(18px);
+
+  border:
+  1px solid rgba(255,255,255,.18);
+
+  box-shadow:
+  0 10px 30px rgba(0,0,0,.18);
+}
+
+.search-box:hover,
+.search-box:focus-within{
+
+  width:430px;
+
+  transform:
+  translateY(-2px);
+}
+
+.search-glow{
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+  linear-gradient(
+    135deg,
+    rgba(34,197,94,.28),
+    rgba(255,255,255,.08)
+  );
+
+  opacity:0;
+
+  transition:.35s;
+}
+
+.search-box:hover .search-glow,
+.search-box:focus-within .search-glow{
+
+  opacity:1;
+}
+
+.search-icon{
+
+  position:absolute;
+
+  top:50%;
+
+  left:22px;
+
+  transform:translateY(-50%);
+
+  font-size:24px;
+
+  z-index:5;
+
+  transition:.35s;
+}
+
+.search-box:hover .search-icon,
+.search-box:focus-within .search-icon{
+
+  transform:
+  translateY(-50%)
+  scale(1.1)
+  rotate(-8deg);
+}
+
+.search-box input{
+
+  position:absolute;
+
+  inset:0;
+
+  width:100%;
+
+  height:100%;
+
+  border:none;
+
+  outline:none;
+
+  background:transparent;
+
+  padding-left:72px;
+
+  padding-right:24px;
+
+  color:white;
+
+  font-size:17px;
+
+  font-weight:600;
+
+  opacity:0;
+
+  transition:.35s;
+}
+
+.search-box:hover input,
+.search-box:focus-within input{
+
+  opacity:1;
+}
+
+.search-box input::placeholder{
+
+  color:
+  rgba(255,255,255,.75);
+}
+
+/* =========================================
+   TABLE WRAPPER
+========================================= */
+
+.patients-table-wrapper{
+
+  position:relative;
+
+  z-index:2;
+
+  overflow:hidden;
+
+  border-radius:24px;
+
+  background:
+  rgba(255,255,255,.08);
+
+  backdrop-filter:blur(14px);
+
+  border:
+  1px solid rgba(255,255,255,.08);
+
+  padding:8px;
+
+  max-width:1200px;
+
+  margin:auto;
+}
+
+/* =========================================
+   TABLE
+========================================= */
+
+.patients-table{
+
+  width:100%;
+
+  border-collapse:collapse;
+}
+
+.patients-table thead tr{
+
+  background:
+  rgba(255,255,255,.08);
+}
+
+.patients-table th{
+
+  padding:14px 16px;
+
+
+  text-align:center;
+
+  color:white;
+
+  font-size:14px;
+
+  font-weight:700;
+
+  border-bottom:
+  1px solid rgba(255,255,255,.08);
+}
+
+/* TABLE BODY */
+
+.patients-table td{
+text-align:center;
+  padding:12px 16px;
+   font-size:14px;
+
+  color:white;
+
+  border-bottom:
+  1px solid rgba(255,255,255,.06);
+}
+
+.patients-table tbody tr{
+
+  transition:.35s;
+}
+
+.patients-table tbody tr:hover{
+
+  background:
+  rgba(255,255,255,.05);
+}
+
+/* =========================================
+   PATIENT
+========================================= */
+
+.patient-id{
+
+  padding:8px 16px;
+
+  border-radius:999px;
+
+  background:
+  rgba(34,197,94,.16);
+
+  color:#bbf7d0;
+
+  font-size:12px;
+
+  font-weight:800;
+}
+
+.patient-name-box{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:16px;
+}
+
+.table-avatar{
+
+  min-width:44px;
+
+  height:44px;
+
+  border-radius:50%;
+
+  background:
+  linear-gradient(
+    135deg,
+    #22c55e,
+    #15803d
+  );
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  color:white;
+
+  font-size:18px;
+
+  font-weight:800;
+
+  box-shadow:
+  0 10px 24px rgba(34,197,94,.35);
+}
+
+.patient-name-box h4{
+
+  font-size:15px;
+
+  margin-bottom:4px;
+}
+
+.patient-name-box p{
+
+  font-size:12px;
+
+  color:#d1fae5;
+}
+
+/* =========================================
+   STATUS
+========================================= */
+
+.status-badge{
+
+  padding:8px 14px;
+
+  border-radius:999px;
+
+  color:white;
+
+  font-size:12px;
+
+  font-weight:800;
+
+  display:inline-flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  min-width:90px;
+}
+
+.Improved{
+
+  background:
+  linear-gradient(
+    135deg,
+    #22c55e,
+    #15803d
+  );
+}
+
+.Same{
+
+  background:
+  linear-gradient(
+    135deg,
+    #f59e0b,
+    #d97706
+  );
+}
+
+.Worse{
+
+  background:
+  linear-gradient(
+    135deg,
+    #ef4444,
+    #dc2626
+  );
+}
+
+/* =========================================
+   ACTION BUTTONS
+========================================= */
+
+.actions-header{
+
+  text-align:center;
+}
+
+.action-buttons{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:10px;
+}
+
+.icon-btn{
+
+  width:42px;
+
+  height:42px;
+
+  border:none;
+
+  border-radius:14px;
+
+  cursor:pointer;
+
+  color:white;
+
+  font-size:16px;
+
+  transition:.35s;
+}
+
+.icon-btn:hover{
+
+  transform:
+  translateY(-4px)
+  scale(1.08);
+
+  box-shadow:
+  0 14px 28px rgba(0,0,0,.24);
+}
+
+.view-btn{
+
+  background:
+  linear-gradient(
+    135deg,
+    #3b82f6,
+    #2563eb
+  );
+}
+
+.add-btn{
+
+  background:
+  linear-gradient(
+    135deg,
+    #22c55e,
+    #15803d
+  );
+}
+
+.edit-btn{
+
+  background:
+  linear-gradient(
+    135deg,
+    #f59e0b,
+    #d97706
+  );
+}
+
+.download-btn{
+
+  background:
+  linear-gradient(
+    135deg,
+    #8b5cf6,
+    #7c3aed
+  );
+}
+
+.delete-btn{
+
+  background:
+  linear-gradient(
+    135deg,
+    #ef4444,
+    #dc2626
+  );
+}
+
+/* =========================================
+   PAGINATION
+========================================= */
+
+/* =========================================
+   PAGINATION FIX
+========================================= */
+
+.pagination-wrapper{
+
+  position:sticky;
+
+  bottom:0;
+
+  left:0;
+
+  width:100%;
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  gap:8px;
+
+  padding:14px 0;
+
+  margin-top:20px;
+
+  
+
+  backdrop-filter:blur(10px);
+
+  z-index:999;
+
+  border-top:
+  1px solid rgba(0,0,0,.05);
+}
+
+/* =========================================
+   PAGE BUTTON
+========================================= */
+
+.page-btn{
+
+  width:34px;
+
+  height:34px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:
+  rgba(15,23,42,.06);
+
+  color:#0f172a;
+
+  font-size:12px;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:.2s ease;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  flex-shrink:0;
+}
+
+/* HOVER */
+
+.page-btn:hover:not(:disabled){
+
+  background:
+  rgba(34,197,94,.18);
+
+  transform:
+  translateY(-2px);
+}
+
+/* ACTIVE */
+
+.active-page{
+
+  background:
+  linear-gradient(
+    135deg,
+    #22c55e,
+    #15803d
+  ) !important;
+
+  color:white;
+
+  box-shadow:
+  0 4px 12px rgba(34,197,94,.24);
+}
+
+/* DISABLED */
+
+.page-btn:disabled{
+
+  opacity:.35;
+
+  cursor:not-allowed;
+}
+
+/* =========================================
+   POPUP
+========================================= */
+
+.followup-form-card{
+
+  position:fixed;
+
+  inset:50% auto auto 50%;
+
+  transform:
+  translate(-50%,-50%)
+  scale(.92);
+
+  width:92%;
+
+  max-width:1350px;
+
+  height:92vh;
+
+  overflow-y:auto;
+
+  z-index:99999;
+
+  border-radius:0px;
+
+  padding:30px;
+
+  background:
+  linear-gradient(
+    145deg,
+    rgba(255,255,255,.96),
+    rgba(248,250,252,.96)
+  );
+
+  backdrop-filter:blur(26px);
+
+  border:
+  1px solid rgba(255,255,255,.8);
+
+  box-shadow:
+  0 28px 80px rgba(0,0,0,.25);
+
+  animation:
+  popupEntrance .45s ease forwards;
+}
+
+.followup-form-card::-webkit-scrollbar{
+
+  width:10px;
+}
+
+.followup-form-card::-webkit-scrollbar-thumb{
+
+  border-radius:999px;
+
+  background:
+  linear-gradient(
+    180deg,
+    #22c55e,
+    #15803d
+  );
+}
+
+@keyframes popupEntrance{
+
+  to{
+
+    transform:
+    translate(-50%,-50%)
+    scale(1);
+  }
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.form-header{
+
+  position:relative;
+
+  margin-bottom:32px;
+
+  padding-bottom:20px;
+
+  border-bottom:
+  1px solid rgba(15,23,42,.08);
+}
+
+.form-header h2{
+
+  font-size:40px;
+
+  font-weight:900;
+
+  color:#0f172a;
+
+  margin-bottom:8px;
+}
+
+.form-header p{
+
+  color:#64748b;
+
+  font-size:16px;
+}
+
+.close-btn{
+
+  position:absolute;
+
+  top:0;
+
+  right:0;
+
+  width:52px;
+
+  height:52px;
+
+  border:none;
+
+  border-radius:16px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #ef4444,
+    #dc2626
+  );
+
+  color:white;
+
+  font-size:22px;
+
+  cursor:pointer;
+
+  transition:.35s;
+}
+
+.close-btn:hover{
+
+  transform:
+  rotate(90deg)
+  scale(1.08);
+}
+
+/* =========================================
+   PROFILE
+========================================= */
+
+.patient-profile-card{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:20px;
+
+  padding:24px;
+
+  border-radius:0px;
+
+  margin-bottom:30px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #ecfdf5,
+    #ffffff
+  );
+
+  border:
+  1px solid #d1fae5;
+}
+
+.profile-avatar{
+
+  width:78px;
+
+  height:78px;
+
+  border-radius:50%;
+
+  background:
+  linear-gradient(
+    135deg,
+    #22c55e,
+    #15803d
+  );
+
+  color:white;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-size:32px;
+
+  font-weight:800;
+
+  box-shadow:
+  0 18px 32px rgba(34,197,94,.35);
+}
+
+/* =========================================
+   FORM
+========================================= */
+
+.form-grid{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(2,1fr);
+
+  gap:20px;
+}
+
+.full-width{
+
+  grid-column:
+  span 2;
+}
+
+.form-group{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:10px;
+}
+
+.form-group label{
+
+  font-size:14px;
+
+  font-weight:700;
+
+  color:#334155;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+
+  border:none;
+
+  outline:none;
+
+  border-radius:18px;
+
+  padding:16px;
+
+  background:#f8fafc;
+
+  border:
+  1px solid #e2e8f0;
+
+  font-size:14px;
+
+  font-weight:500;
+
+  transition:.3s;
+}
+
+.form-group textarea{
+
+  min-height:130px;
+
+  resize:vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+
+  border-color:#22c55e;
+
+  background:white;
+
+  box-shadow:
+  0 0 0 4px rgba(34,197,94,.12);
+}
+
+/* =========================================
+   PREVIEW
+========================================= */
+
+.preview-followup-card{
+
+  margin-top:36px;
+
+  padding:28px;
+
+  border-radius:28px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #f8fffa,
+    #ffffff
+  );
+
+  border:
+  1px solid #d1fae5;
+}
+
+.preview-followup-card h2{
+
+  font-size:32px;
+
+  color:#0f172a;
+
+  margin-bottom:20px;
+}
+
+.rx-preview-box{
+
+  padding:22px;
+
+  border-radius:22px;
+
+  background:white;
+
+  border:
+  1px solid #e5e7eb;
+
+  margin-bottom:18px;
+
+  transition:.35s;
+}
+
+.rx-preview-box:hover{
+
+  transform:
+  translateY(-4px);
+
+  box-shadow:
+  0 18px 32px rgba(0,0,0,.08);
+}
+
+.rx-preview-box h3{
+
+  color:#15803d;
+
+  margin-bottom:10px;
+}
+
+.new-rx{
+
+  border:
+  2px solid #22c55e;
+}
+
+/* =========================================
+   HISTORY
+========================================= */
+
+.history-section{
+
+  margin-top:36px;
+}
+
+.history-section h3{
+
+  font-size:28px;
+
+  margin-bottom:20px;
+
+  color:#0f172a;
+}
+
+.history-card{
+
+  background:white;
+
+  border-radius:24px;
+
+  padding:24px;
+
+  margin-bottom:18px;
+
+  border:
+  1px solid #e5e7eb;
+
+  transition:.35s;
+}
+
+.history-card:hover{
+
+  transform:
+  translateY(-4px);
+
+  box-shadow:
+  0 18px 34px rgba(0,0,0,.08);
+}
+
+.history-top{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:16px;
+}
+
+.history-status{
+
+  padding:7px 14px;
+
+  border-radius:999px;
+
+  background:#dcfce7;
+
+  color:#166534;
+
+  font-size:12px;
+
+  font-weight:800;
+}
+
+.history-rx{
+
+  margin-top:18px;
+
+  padding:16px;
+
+  border-radius:16px;
+
+  background:#ecfdf5;
+
+  color:#166534;
+
+  font-weight:700;
+}
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.step-buttons{
+
+  width:100%;
+
+  display:flex;
+
+  justify-content:flex-end;
+
+  gap:18px;
+
+  flex-wrap:wrap;
+
+  margin-top:36px;
+}
+
+.save-btn,
+.download-pdf-btn{
+
+  min-width:220px;
+
+  height:58px;
+
+  border:none;
+
+  border-radius:18px;
+
+  color:white;
+
+  font-size:16px;
+
+  font-weight:800;
+
+  cursor:pointer;
+
+  transition:.35s;
+}
+
+.save-btn{
+
+  background:
+  linear-gradient(
+    135deg,
+    #16a34a,
+    #15803d
+  );
+}
+
+.download-pdf-btn{
+
+  background:
+  linear-gradient(
+    135deg,
+    #7c3aed,
+    #6d28d9
+  );
+}
+
+.save-btn:hover,
+.download-pdf-btn:hover{
+
+  transform:
+  translateY(-4px)
+  scale(1.03);
+
+  box-shadow:
+  0 18px 34px rgba(0,0,0,.22);
+}
+
+/* =========================================
+   ANIMATION
+========================================= */
+
+@keyframes fadeIn{
+
+  from{
+
+    opacity:0;
+
+    transform:
+    translateY(24px);
+  }
+
+  to{
+
+    opacity:1;
+
+    transform:
+    translateY(0);
+  }
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width:950px){
+
+  .form-grid{
+
+    grid-template-columns:1fr;
+  }
+
+  .full-width{
+
+    grid-column:span 1;
+  }
+}
+
+@media(max-width:768px){
+
+  .followups-page{
+
+    padding:18px;
+  }
+
+  .followup-form-card{
+
+    width:96%;
+
+    padding:20px;
+  }
+
+  .search-box{
+
+    width:100%;
+  }
+
+  .step-buttons{
+
+    flex-direction:column;
+  }
+
+  .save-btn,
+  .download-pdf-btn{
+
+    width:100%;
+  }
+
+  .patients-table-wrapper{
+
+    overflow-x:auto;
+  }
+}
+
