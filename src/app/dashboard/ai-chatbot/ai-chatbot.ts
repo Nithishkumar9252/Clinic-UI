@@ -83,6 +83,20 @@ export class AiChatbotComponent {
 
   userMessage = '';
 
+  patientQuestion = '';
+
+  patientChatMessages: any[] = [
+    {
+      role: 'assistant',
+      text:
+        '👋 Ask me anything about this patient. I can explain the analysis report, remedies, potency, followups, prognosis and lifestyle recommendations.'
+    }
+  ];
+
+  isPatientChatLoading = false;
+
+  reportSections: any[] = [];
+
   /* ===================================== */
   /* CHAT MESSAGES */
   /* ===================================== */
@@ -120,37 +134,36 @@ You can:
 
   async analyzePatient() {
 
-    /* ===================================== */
-    /* VALIDATION */
-    /* ===================================== */
+  // =====================================
+  // VALIDATION
+  // =====================================
 
-    if (!this.patientId.trim()) {
+  if (!this.patientId.trim()) {
 
-      this.validationMessage =
-        '⚠ Please enter Patient ID';
+    this.validationMessage =
+      '⚠ Please enter Patient ID';
 
-      return;
-    }
+    return;
+  }
 
-    /* CLEAR VALIDATION */
+  // =====================================
+  // RESET
+  // =====================================
 
-    this.validationMessage = '';
+  this.validationMessage = '';
 
-    /* ===================================== */
-    /* RESET */
-    /* ===================================== */
+  this.analysisResult = '';
 
-    this.analysisResult = '';
+  this.selectedPatient = null;
 
-    this.selectedPatient = null;
+  this.isAnalyzing = true;
 
-    this.isAnalyzing = true;
-
-    this.analysisResult = `
+  this.analysisResult = `
 
 🧠 Expert Homeopathy AI Analysis Started...
 
 Loading patient data...
+Checking followup history...
 Analyzing constitutional symptoms...
 Detecting miasmatic tendencies...
 Generating remedy differentiation...
@@ -158,68 +171,182 @@ Preparing holistic recommendations...
 
 `;
 
-    this.cdr.detectChanges();
+  this.cdr.detectChanges();
 
-   
+  // =====================================
+  // GET PATIENT
+  // =====================================
 
-    this.http.get(
+  this.http.get(
 
-      `http://localhost:8080/api/patients/code/${this.patientId.trim().toLowerCase()}`
+    `http://localhost:8080/api/patients/code/${this.patientId.trim().toLowerCase()}`
 
-    ).subscribe({
+  ).subscribe({
 
-      next: async (patient: any) => {
+    next: async (patient: any) => {
 
-        console.log('PATIENT => ', patient);
+      console.log(
+        'PATIENT => ',
+        patient
+      );
 
+      // =====================================
+      // NO PATIENT
+      // =====================================
 
-        if (!patient) {
+      if (!patient) {
 
-          this.validationMessage =
-            '❌ Patient ID does not exist';
+        this.validationMessage =
+          '❌ Patient ID does not exist';
 
-          this.analysisResult = '';
+        this.analysisResult = '';
 
-          this.selectedPatient = null;
+        this.selectedPatient = null;
 
-          this.isAnalyzing = false;
-
-          this.cdr.detectChanges();
-
-          return;
-        }
-
-        /* ===================================== */
-        /* UPDATE UI */
-        /* ===================================== */
-
-        this.selectedPatient = patient;
-
-        this.validationMessage = '';
+        this.isAnalyzing = false;
 
         this.cdr.detectChanges();
 
-        try {
+        return;
+      }
 
-          /* ===================================== */
-          /* AI PROMPT */
-          /* ===================================== */
+      // =====================================
+      // SET PATIENT
+      // =====================================
 
-          const prompt = `
+      this.selectedPatient = patient;
 
-You are an internationally experienced senior AI Homeopathy Doctor
-with deep expertise in:
+      this.validationMessage = '';
+
+      this.cdr.detectChanges();
+
+      // =====================================
+      // GET FOLLOWUPS
+      // =====================================
+
+      this.http.get<any[]>(
+
+        `http://localhost:8080/api/followups/patient/${patient.id}`
+
+      ).subscribe({
+
+        next: async (followups:any[]) => {
+
+          console.log(
+            'FOLLOWUPS => ',
+            followups
+          );
+
+          try {
+
+            // =====================================
+            // FOLLOWUP TEXT
+            // =====================================
+
+            let followupText = '';
+
+            // =====================================
+            // HAS FOLLOWUPS
+            // =====================================
+
+            if(
+
+              followups
+
+              &&
+
+              followups.length > 0
+
+            ){
+
+              followupText = `
+
+==================================================
+
+FOLLOWUP HISTORY ANALYSIS
+
+Patient has followup history.
+
+Analyze:
+• improvement progression
+• medicine response
+• remedy effectiveness
+• symptom evolution
+• constitutional changes
+• prognosis improvement
+• remedy repetition suitability
+• potency adjustment necessity
+
+`;
+
+              followups.forEach((f,index)=>{
+
+                followupText += `
+
+----------------------------------------
+
+FOLLOWUP ${index + 1}
+
+Date:
+${f.nextFollowupDate}
+
+Improvement Status:
+${f.improvementStatus}
+
+Symptoms:
+${f.symptoms}
+
+Observations:
+${f.observations}
+
+Medicines:
+${f.medicines}
+
+Doctor Notes:
+${f.doctorNotes}
+
+`;
+              });
+
+            }
+
+            // =====================================
+            // NO FOLLOWUPS
+            // =====================================
+
+            else{
+
+              followupText = `
+
+==================================================
+
+NO FOLLOWUP HISTORY AVAILABLE
+
+Analyze based only on
+initial constitutional case.
+
+`;
+            }
+
+            // =====================================
+            // AI PROMPT
+            // =====================================
+
+            const prompt = `
+
+You are an internationally experienced
+senior AI Homeopathy Doctor.
+
+Expertise:
 
 • Classical Homeopathy
 • Constitutional Homeopathy
-• Acute & Chronic Disease Management
+• Acute & Chronic Disease
 • Miasmatic Analysis
-• Mental & Physical Symptom Correlation
 • Remedy Differentiation
-• Holistic Healing
-
-Analyze the patient completely like an expert professional
-homeopathy doctor.
+• Followup Evaluation
+• Remedy Progress Analysis
+• Potency Adjustment
 
 ==================================================
 
@@ -246,157 +373,206 @@ ${patient?.historyPresentIllness}
 Diagnosis:
 ${patient?.diagnosis}
 
+Mental Generals:
+${patient?.mentalGenerals}
+
+Past Medical History:
+${patient?.pastMedicalHistory}
+
+Family History:
+${patient?.familyHistory}
+
+Thermals:
+${patient?.thermals}
+
+Sleep:
+${patient?.sleep}
+
+Appetite:
+${patient?.appetite}
+
+Thirst:
+${patient?.thirst}
+
+Desires:
+${patient?.desires}
+
+Aversions:
+${patient?.aversions}
+
+Current Prescription:
+${patient?.rx}
+
+${followupText}
+
 ==================================================
 
-Generate a highly professional homeopathy clinical report.
+GENERATE PROFESSIONAL ANALYSIS
 
-Include:
+IMPORTANT:
 
-1. Constitutional Analysis
+Do NOT write:
 
-2. Disease Pattern Analysis
+Professional Analysis
 
-3. Root Cause Analysis
+Start directly with:
 
-4. Acute vs Chronic Evaluation
+1. Constitutional Analysis:
 
-5. Miasmatic Tendency Analysis
+2. Disease Evolution Analysis
 
-6. Mental & Emotional Correlation
+3. Followup Progress Evaluation
 
-7. Trigger Factors
+4. Remedy Effectiveness Analysis
 
-8. Remedy Differentiation
+5. Symptom Change Analysis
 
-9. Best Homeopathy Medicines
+6. Miasmatic Analysis
 
-10. Potency Recommendations
+7. Remedy Differentiation
 
-11. Dosage & Repetition
+8. Potency Adjustment Suggestions
 
-12. Diet Restrictions
+9. Future Remedy Planning
 
-13. Lifestyle Modifications
+10. Prognosis Evaluation
 
-14. Recovery Timeline
+11. Recovery Progress
 
-15. Follow-up Recommendations
+12. Relapse Risk
 
-16. Emergency Symptoms
+13. Diet Restrictions
 
-17. Long-Term Prevention Advice
+14. Lifestyle Advice
 
-18. Prognosis
+15. Followup Recommendations
 
-19. Holistic Healing Advice
+16. Holistic Healing Advice
 
-20. Final Clinical Summary
+17. Long-Term Prevention
+
+18. Final Clinical Summary
 
 ==================================================
 
 IMPORTANT RULES
 
 • Focus ONLY on homeopathy
-• Recommend ONLY homeopathy medicines
-• Mention potency properly (30C, 200C, 1M etc.)
+• Mention ONLY homeopathy remedies
+• Mention potencies properly
 • Mention dosage professionally
-• Keep report medically structured
-• Keep response attractive and readable
-• Use professional clinical language
-• Add bullet points where needed
-• Mention:
+• Analyze followup progression carefully
+• Compare old symptoms vs new symptoms
+• Mention whether patient improving or worsening
+• Mention whether remedy should continue/change
+• Mention constitutional remedy possibilities
+• Keep response highly professional
+
+Add:
 "Doctor verification required before treatment."
 
 ==================================================
 
 `;
 
-          /* ===================================== */
-          /* GROQ AI CALL */
-          /* ===================================== */
+            // =====================================
+            // AI CALL
+            // =====================================
 
-          const completion = await this.client.chat.completions.create({
+            const completion = await this.client.chat.completions.create({
 
-            model:
-              'llama-3.3-70b-versatile',
+              model:
+                'llama-3.3-70b-versatile',
 
-            messages: [
+              messages: [
 
-              {
+                {
+                  role: 'user',
 
-                role: 'user',
+                  content: prompt
+                }
 
-                content: prompt
-              }
+              ],
 
-            ],
+              temperature: 0.3,
 
-            temperature: 0.3,
+              max_tokens: 1200
+            });
 
-            max_tokens: 700
-          });
+            // =====================================
+            // FINAL RESPONSE
+            // =====================================
 
-          /* ===================================== */
-          /* FINAL RESPONSE */
-          /* ===================================== */
+            this.analysisResult =
+              completion?.choices?.[0]?.message?.content
+              ?.replace(/\*\*/g, '')
+              ?.replace(/\*/g, '•')
+              ?.replace(/#{1,6}/g, '')
+              ?.replace(/\n{3,}/g, '\n\n')
+              ||
+              'Analysis completed';
 
-         this.analysisResult =
+              this.formatReport();
 
-          completion?.choices?.[0]?.message?.content
+            this.isAnalyzing = false;
 
-          ?.replace(/\*\*/g, '')
+            this.cdr.detectChanges();
 
-          ?.replace(/\*/g, '•')
+          }
 
-          ?.replace(/#{1,6}/g, '')
+          catch (error) {
 
-          ?.replace(/\n{3,}/g, '\n\n')
+            console.error(error);
 
-          ||
+            this.analysisResult =
 
-          '✅ Homeopathy AI analysis completed';
+              '❌ Homeopathy AI service unavailable';
 
-          this.isAnalyzing = false;
+            this.isAnalyzing = false;
 
-          this.cdr.detectChanges();
+            this.cdr.detectChanges();
+          }
+        },
 
-        }
+        error:(error)=>{
 
-        catch (error) {
-
-          console.error(error);
+          console.log(
+            'FOLLOWUP ERROR => ',
+            error
+          );
 
           this.analysisResult =
 
-            '❌ Homeopathy AI service unavailable';
+            '❌ Failed to load followup history';
 
           this.isAnalyzing = false;
 
           this.cdr.detectChanges();
         }
-      },
+      });
+    },
 
-      /* ===================================== */
-      /* API ERROR */
-      /* ===================================== */
+    // =====================================
+    // API ERROR
+    // =====================================
 
-      error: (err) => {
+    error: (err) => {
 
-        console.error(err);
+      console.error(err);
 
-        this.validationMessage =
-          '❌ Patient ID does not exist';
+      this.validationMessage =
+        '❌ Patient ID does not exist';
 
-        this.analysisResult = '';
+      this.analysisResult = '';
 
-        this.selectedPatient = null;
+      this.selectedPatient = null;
 
-        this.isAnalyzing = false;
+      this.isAnalyzing = false;
 
-        this.cdr.detectChanges();
-      }
-    });
-  }
+      this.cdr.detectChanges();
+    }
+  });
+}
 
   /* ===================================== */
   /* TOGGLE CHAT */
@@ -586,9 +762,180 @@ Rules:
     ];
   }
 
+  async askPatientQuestion() {
+
+  if (!this.patientQuestion.trim()) {
+    return;
+  }
+
+  const question = this.patientQuestion.trim();
+
+  this.patientChatMessages.push({
+    role: 'user',
+    text: question
+  });
+
+  this.patientQuestion = '';
+
+  this.isPatientChatLoading = true;
+
+  this.cdr.detectChanges();
+
+  try {
+
+    const completion =
+      await this.client.chat.completions.create({
+
+        model: 'llama-3.3-70b-versatile',
+
+        messages: [
+
+          {
+            role: 'system',
+
+            content: `
+
+You are a senior homeopathy consultant.
+
+Answer ONLY regarding this patient.
+
+You already know:
+
+Patient Details:
+${JSON.stringify(this.selectedPatient)}
+
+Clinical Analysis:
+${this.analysisResult}
+
+Rules:
+
+• Explain in simple doctor language
+• Reference patient symptoms
+• Explain remedy logic
+• Explain potency logic
+• Explain prognosis
+• Explain followup recommendations
+• Keep answers concise
+
+Doctor verification required before treatment.
+
+`
+          },
+
+          {
+            role: 'user',
+            content: question
+          }
+
+        ],
+
+        temperature: 0.3,
+
+        max_tokens: 500
+      });
+
+    this.patientChatMessages.push({
+
+      role: 'assistant',
+
+      text:
+        completion?.choices?.[0]?.message?.content
+        ||
+        'Unable to answer.'
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    this.patientChatMessages.push({
+
+      role: 'assistant',
+
+      text:
+        '❌ AI assistant unavailable.'
+    });
+
+  }
+
+  this.isPatientChatLoading = false;
+
+  this.cdr.detectChanges();
+}
+
+onPatientChatEnter(
+  event: KeyboardEvent
+) {
+
+  if (
+    event.key === 'Enter'
+    &&
+    !event.shiftKey
+  ) {
+
+    event.preventDefault();
+
+    this.askPatientQuestion();
+  }
+}
+
   /* ===================================== */
   /* CURRENT TIME */
   /* ===================================== */
+    formatReport() {
+
+      if (!this.analysisResult) {
+        return;
+      }
+
+      const cleanedText =
+        this.analysisResult
+          .replace(/Professional Analysis/gi, '')
+          .trim();
+
+      const sections =
+        cleanedText
+          .split(/\d+\./)
+          .filter(section => section.trim());
+
+      this.reportSections =
+        sections
+          .map(section => {
+
+            const idx =
+              section.indexOf(':');
+
+            if (idx === -1) {
+
+              return null;
+            }
+
+            return {
+
+              title:
+                section
+                  .substring(0, idx)
+                  .trim(),
+
+              content:
+                section
+                  .substring(idx + 1)
+                  .trim()
+
+            };
+
+          })
+          .filter(section =>
+            section &&
+            section.title &&
+            section.content
+          );
+
+      console.log(
+        'REPORT SECTIONS =>',
+        this.reportSections
+      );
+    }
 
   getCurrentTime(): string {
 

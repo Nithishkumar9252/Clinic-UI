@@ -48,7 +48,10 @@
        TABLE
   ====================================== -->
 
-  <div class="patients-table-wrapper">
+  <div
+  class="patients-table-wrapper"
+  *ngIf="filteredPatients.length > 0"
+>
 
     <table class="patients-table">
 
@@ -248,7 +251,10 @@
        PAGINATION
   ====================================== -->
 
-  <div class="pagination-wrapper">
+  <div
+  class="pagination-wrapper"
+  *ngIf="filteredPatients.length > 0"
+>
 
     <button
 
@@ -299,7 +305,28 @@
     </button>
 
   </div>
+  <!-- =====================================
+     EMPTY STATE
+===================================== -->
 
+<div
+  class="empty-state"
+  *ngIf="filteredPatients.length === 0"
+>
+
+  <div class="empty-icon">
+    🔄
+  </div>
+
+  <h2>
+    No Followups Found
+  </h2>
+
+  <p>
+    No patient records available
+  </p>
+
+</div>
   <!-- =====================================
        FOLLOWUP FORM
   ====================================== -->

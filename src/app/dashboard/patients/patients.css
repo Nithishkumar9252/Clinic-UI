@@ -1389,25 +1389,28 @@ body{
 
 .empty-icon{
 
-  font-size:82px;
+  font-size:70px;
 
-  margin-bottom:22px;
+  margin-bottom:40px;
+
+  animation:
+  floatGlow 4s infinite ease-in-out;
 }
 
 .empty-state h2{
 
   color:white;
 
-  font-size:38px;
+  font-size:32px;
 
-  margin-bottom:10px;
+  margin-bottom:20px;
 }
 
 .empty-state p{
 
   color:#ebebeb;
 
-  font-size:18px;
+  font-size:16px;
 }
 
 /* ========================================= */

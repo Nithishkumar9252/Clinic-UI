@@ -609,7 +609,10 @@ body{
 
   font-size:70px;
 
-  margin-bottom:18px;
+  margin-bottom:40px;
+
+  animation:
+  floatGlow 4s infinite ease-in-out;
 }
 
 .empty-state h2{

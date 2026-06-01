@@ -600,6 +600,68 @@ text-align:center;
 /* =========================================
    PAGINATION FIX
 ========================================= */
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.empty-state{
+
+  position:relative;
+
+  z-index:2;
+
+  max-width:1200px;
+
+  margin:auto;
+
+  margin-top:20px;
+
+  padding:90px 30px;
+
+  border-radius:36px;
+
+  text-align:center;
+
+  background:
+  rgba(255,255,255,.08);
+
+  backdrop-filter:blur(14px);
+
+  border:
+  1px solid rgba(255,255,255,.08);
+
+  animation:
+  fadeIn .45s ease;
+}
+
+.empty-icon{
+
+  font-size:70px;
+
+  margin-bottom:40px;
+
+  animation:
+  floatGlow 4s infinite ease-in-out;
+}
+
+.empty-state h2{
+
+  font-size:32px;
+
+  font-weight:900;
+
+  color:white;
+
+  margin-bottom:10px;
+}
+
+.empty-state p{
+
+  font-size:16px;
+
+  color:#dcfce7;
+}
+
 
 .pagination-wrapper{
 

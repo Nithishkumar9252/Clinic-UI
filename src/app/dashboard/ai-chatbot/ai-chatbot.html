@@ -369,153 +369,144 @@
 
   <div class="simple-report-content">
 
+  <!-- REPORT CARDS -->
+
+  <div
+    class="report-sections"
+    *ngIf="reportSections.length > 0">
+
     <div
-      *ngFor="let line of analysisResult.split('\n')"
-    >
+      class="report-card"
+      *ngFor="
+        let section of reportSections;
+        let i = index
+      ">
 
-      <!-- HEADINGS -->
+      <div
+        class="report-card-header">
 
-      <h3
-        *ngIf="
-          line.includes(':')
-          &&
-          (
-            line.includes('Analysis')
-            ||
-            line.includes('Recommendations')
-            ||
-            line.includes('Evaluation')
-            ||
-            line.includes('Medicines')
-            ||
-            line.includes('Factors')
-            ||
-            line.includes('Correlation')
-            ||
-            line.includes('Summary')
-            ||
-            line.includes('Advice')
-            ||
-            line.includes('Analysis')
-            ||
-            line.includes('Recommendations')
-            ||
-            line.includes('Evaluation')
-            ||
-            line.includes('Medicines')
-            ||
-            line.includes('Factors')
-            ||
-            line.includes('Correlation')
-            ||
-            line.includes('Summary')
-            ||
-            line.includes('Advice')
-            ||
-            line.includes('Prognosis')
-            ||
-            line.includes('Differentiation')
-            ||
-            line.includes('Restrictions')
-            ||
-            line.includes('Timeline')
-            ||
-            line.includes('Prevention')
-            ||
-            line.includes('Healing')
-            ||
-            line.includes('Symptoms')
-            ||
-            line.includes('Dosage')
-            ||
-            line.includes('Potency')
-            ||
-            line.includes('Complaints')
-            ||
-            line.includes('Diagnosis')
-          )
-        "
-      >
+        <div
+          class="report-number">
 
-        {{ line }}
+          {{ i + 1 }}
 
-      </h3>
+        </div>
 
-      <!-- CONTENT -->
+        <h3>
 
-      <p
-        *ngIf="
-          !(
-            line.includes(':')
-            &&
-            (
-              line.includes('Analysis')
-              ||
-              line.includes('Recommendations')
-              ||
-              line.includes('Evaluation')
-              ||
-              line.includes('Medicines')
-              ||
-              line.includes('Factors')
-              ||
-              line.includes('Correlation')
-              ||
-              line.includes('Summary')
-              ||
-              line.includes('Advice')
-              ||
-              line.includes('Analysis')
-              ||
-              line.includes('Recommendations')
-              ||
-              line.includes('Evaluation')
-              ||
-              line.includes('Medicines')
-              ||
-              line.includes('Factors')
-              ||
-              line.includes('Correlation')
-              ||
-              line.includes('Summary')
-              ||
-              line.includes('Advice')
-              ||
-              line.includes('Prognosis')
-              ||
-              line.includes('Differentiation')
-              ||
-              line.includes('Restrictions')
-              ||
-              line.includes('Timeline')
-              ||
-              line.includes('Prevention')
-              ||
-              line.includes('Healing')
-              ||
-              line.includes('Symptoms')
-              ||
-              line.includes('Dosage')
-              ||
-              line.includes('Potency')
-              ||
-              line.includes('Complaints')
-              ||
-              line.includes('Diagnosis')
-            )
-          )
-          &&
-          line.trim()
-        "
-      >
+          {{ section.title }}
 
-        {{ line }}
+        </h3>
+
+      </div>
+
+      <p>
+
+        {{ section.content }}
 
       </p>
 
     </div>
 
   </div>
+
+  <!-- FALLBACK -->
+
+  <div
+    *ngIf="reportSections.length === 0">
+
+    <pre
+      class="analysis-text">
+
+{{ analysisResult }}
+
+    </pre>
+
+  </div>
+
+  <!-- PATIENT CHATBOT -->
+
+  <div
+    class="patient-chatbot"
+    *ngIf="selectedPatient">
+
+    <div
+      class="patient-chat-header">
+
+      <h3>
+        🤖 AI Clinical Assistant
+      </h3>
+
+      <p>
+        Ask questions related to this patient,
+        remedy, potency, followups and prognosis
+      </p>
+
+    </div>
+
+    <div
+      class="patient-chat-body">
+
+      <div
+
+        *ngFor="
+          let msg of patientChatMessages
+        "
+
+        class="chat-msg"
+
+        [class.user]="
+          msg.role === 'user'
+        ">
+
+        {{ msg.text }}
+
+      </div>
+
+    </div>
+
+    <div
+      class="patient-chat-input">
+
+      <textarea
+
+        [(ngModel)]="patientQuestion"
+
+        (keydown)="onPatientChatEnter($event)"
+
+        placeholder="
+          Ask anything about this patient...
+          ">
+
+      </textarea>
+
+      <button
+
+        (click)="askPatientQuestion()"
+
+        [disabled]="isPatientChatLoading">
+
+        <span
+          *ngIf="!isPatientChatLoading">
+
+          Ask AI
+
+        </span>
+
+        <span
+          *ngIf="isPatientChatLoading">
+
+          Thinking...
+
+        </span>
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
 
 </div>
 

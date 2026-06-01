@@ -104,18 +104,20 @@ implements OnInit {
 
   followup:any = {
 
-    symptoms:'',
+  id:null,
 
-    observations:'',
+  symptoms:'',
 
-    medicines:'',
+  observations:'',
 
-    doctorNotes:'',
+  medicines:'',
 
-    improvementStatus:'',
+  doctorNotes:'',
 
-    nextFollowupDate:''
-  };
+  improvementStatus:'',
+
+  nextFollowupDate:''
+};
 
   constructor(
 
@@ -430,21 +432,23 @@ implements OnInit {
 
   resetFollowup() {
 
-    this.followup = {
+  this.followup = {
 
-      symptoms:'',
+    id:null,
 
-      observations:'',
+    symptoms:'',
 
-      medicines:'',
+    observations:'',
 
-      doctorNotes:'',
+    medicines:'',
 
-      improvementStatus:'',
+    doctorNotes:'',
 
-      nextFollowupDate:''
-    };
-  }
+    improvementStatus:'',
+
+    nextFollowupDate:''
+  };
+}
 
   // =====================================
   // GET FOLLOWUPS
@@ -505,52 +509,111 @@ implements OnInit {
 
   saveFollowup() {
 
-    if(
+  if(
 
-      !this.followup.nextFollowupDate ||
+    !this.followup.nextFollowupDate ||
 
-      !this.followup.improvementStatus
+    !this.followup.improvementStatus
 
-    ){
+  ){
 
-      if(this.isBrowser){
+    if(this.isBrowser){
 
-        window.alert(
-          'Fill required fields'
-        );
-      }
-
-      return;
+      window.alert(
+        'Fill required fields'
+      );
     }
 
-    const payload = {
+    return;
+  }
 
-      patientId:
-      this.selectedPatient.id,
+  const payload = {
 
-      symptoms:
-      this.followup.symptoms,
+    patientId:
+    this.selectedPatient.id,
 
-      observations:
-      this.followup.observations,
+    symptoms:
+    this.followup.symptoms,
 
-      medicines:
-      this.followup.medicines,
+    observations:
+    this.followup.observations,
 
-      doctorNotes:
-      this.followup.doctorNotes,
+    medicines:
+    this.followup.medicines,
 
-      improvementStatus:
-      this.followup.improvementStatus,
+    doctorNotes:
+    this.followup.doctorNotes,
 
-      nextFollowupDate:
-      this.followup.nextFollowupDate
-    };
+    improvementStatus:
+    this.followup.improvementStatus,
 
-    console.log(
-      'FOLLOWUP PAYLOAD => ',
-      payload
-    );
+    nextFollowupDate:
+    this.followup.nextFollowupDate
+  };
+
+  console.log(
+    'FOLLOWUP PAYLOAD => ',
+    payload
+  );
+
+  // =====================================
+  // UPDATE FOLLOWUP
+  // =====================================
+
+  if(this.followup.id){
+
+    this.http.put(
+
+      `http://localhost:8080/api/followups/${this.followup.id}`,
+
+      payload,
+
+      {
+        responseType:'text'
+      }
+
+    ).subscribe({
+
+      next:(response)=>{
+
+        console.log(
+          'FOLLOWUP UPDATED => ',
+          response
+        );
+
+        if(this.isBrowser){
+
+          window.alert(
+            'Followup Updated Successfully'
+          );
+        }
+
+        this.afterSaveSuccess();
+      },
+
+      error:(error)=>{
+
+        console.log(
+          'FOLLOWUP UPDATE ERROR => ',
+          error
+        );
+
+        if(this.isBrowser){
+
+          window.alert(
+            'Failed to update followup'
+          );
+        }
+      }
+    });
+
+  }
+
+  // =====================================
+  // CREATE FOLLOWUP
+  // =====================================
+
+  else{
 
     this.http.post(
 
@@ -578,74 +641,7 @@ implements OnInit {
           );
         }
 
-        // =====================================
-        // LIVE UPDATE TABLE
-        // =====================================
-
-        this.selectedPatient.latestFollowupDate =
-
-          this.followup.nextFollowupDate;
-
-        this.selectedPatient.latestImprovementStatus =
-
-          this.followup.improvementStatus;
-
-        // =====================================
-        // UPDATE PATIENT LIST
-        // =====================================
-
-        this.patients = this.patients.map((p)=>{
-
-          if(
-            p.id === this.selectedPatient.id
-          ){
-
-            return {
-
-              ...p,
-
-              latestFollowupDate:
-              this.followup.nextFollowupDate,
-
-              latestImprovementStatus:
-              this.followup.improvementStatus
-            };
-          }
-
-          return p;
-        });
-
-        // =====================================
-        // FORCE REFRESH
-        // =====================================
-
-        this.filteredPatients = [
-          ...this.filteredPatients
-        ];
-
-        this.patients = [
-          ...this.patients
-        ];
-
-        this.updatePagination();
-
-        this.cdr.detectChanges();
-
-        // =====================================
-        // RELOAD FOLLOWUPS
-        // =====================================
-
-        this.getPatientFollowups(
-          this.selectedPatient.id
-        );
-
-        // =====================================
-        // RESET
-        // =====================================
-
-        this.resetFollowup();
-
-        this.closeFollowupForm();
+        this.afterSaveSuccess();
       },
 
       error:(error)=>{
@@ -664,6 +660,79 @@ implements OnInit {
       }
     });
   }
+}
+
+afterSaveSuccess(){
+
+  // =====================================
+  // LIVE UPDATE TABLE
+  // =====================================
+
+  this.selectedPatient.latestFollowupDate =
+
+    this.followup.nextFollowupDate;
+
+  this.selectedPatient.latestImprovementStatus =
+
+    this.followup.improvementStatus;
+
+  // =====================================
+  // UPDATE PATIENT LIST
+  // =====================================
+
+  this.patients = this.patients.map((p)=>{
+
+    if(
+      p.id === this.selectedPatient.id
+    ){
+
+      return {
+
+        ...p,
+
+        latestFollowupDate:
+        this.followup.nextFollowupDate,
+
+        latestImprovementStatus:
+        this.followup.improvementStatus
+      };
+    }
+
+    return p;
+  });
+
+  // =====================================
+  // FORCE REFRESH
+  // =====================================
+
+  this.filteredPatients = [
+    ...this.filteredPatients
+  ];
+
+  this.patients = [
+    ...this.patients
+  ];
+
+  this.updatePagination();
+
+  this.cdr.detectChanges();
+
+  // =====================================
+  // RELOAD FOLLOWUPS
+  // =====================================
+
+  this.getPatientFollowups(
+    this.selectedPatient.id
+  );
+
+  // =====================================
+  // RESET
+  // =====================================
+
+  this.resetFollowup();
+
+  this.closeFollowupForm();
+}
 
   // =====================================
   // VIEW FOLLOWUP
