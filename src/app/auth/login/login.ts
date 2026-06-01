@@ -3,6 +3,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import {
+  environment
+} from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -49,7 +52,7 @@ export class LoginComponent {
     };
 
     this.http.post<any>(
-      'http://localhost:8080/api/auth/login',
+      `${environment.apiUrl}/api/auth/login`,
       payload
     ).subscribe({
 

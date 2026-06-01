@@ -21,6 +21,10 @@ import {
   HttpClient
 } from '@angular/common/http';
 
+import {
+  environment
+} from '../../../environments/environment';
+
 @Component({
   selector: 'app-home',
 
@@ -266,7 +270,7 @@ AfterViewInit {
 
     this.http.get<any[]>(
 
-      'http://localhost:8080/api/patients'
+      `${environment.apiUrl}/api/patients`
 
     ).subscribe({
 

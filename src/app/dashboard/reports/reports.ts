@@ -20,6 +20,10 @@ import jsPDF from 'jspdf';
 
 import * as XLSX from 'xlsx';
 
+import {
+  environment
+} from '../../../environments/environment';
+
 @Component({
   selector: 'app-reports',
 
@@ -152,7 +156,7 @@ implements OnInit {
 
     this.http.get<any[]>(
 
-      'http://localhost:8080/api/patients'
+      `${environment.apiUrl}/api/patients`
 
     ).subscribe({
 
@@ -205,7 +209,7 @@ implements OnInit {
 
     this.http.get<any[]>(
 
-      'http://localhost:8080/api/prescriptions'
+      `${environment.apiUrl}/api/prescriptions`
 
     ).subscribe({
 
@@ -252,7 +256,7 @@ implements OnInit {
 
     this.http.get<any[]>(
 
-      'http://localhost:8080/api/followups'
+      `${environment.apiUrl}/api/followups`
 
     ).subscribe({
 

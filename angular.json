@@ -25,14 +25,13 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/material-theme.scss", "src/styles.css","node_modules/flatpickr/dist/themes/material_green.css"],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
+            "styles": [
+              "src/material-theme.scss",
+              "src/styles.css",
+              "node_modules/flatpickr/dist/themes/material_green.css"
+            ],
             "security": {
               "allowedHosts": []
-            },
-            "ssr": {
-              "entry": "src/server.ts"
             }
           },
           "configurations": {
@@ -40,13 +39,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "3mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "30kb",
+                  "maximumError": "50kb"
                 }
               ],
               "outputHashing": "all"

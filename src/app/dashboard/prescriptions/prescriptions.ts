@@ -18,6 +18,10 @@ import {
 } from '@angular/forms';
 
 import {
+  environment
+} from '../../../environments/environment';
+
+import {
   HttpClient
 } from '@angular/common/http';
 
@@ -134,7 +138,7 @@ implements OnInit {
 
     this.http.get<any[]>(
 
-      'http://localhost:8080/api/patients'
+      `${environment.apiUrl}/api/patients`
 
     ).subscribe({
 
@@ -368,7 +372,7 @@ implements OnInit {
 
     this.http.get<any[]>(
 
-      `http://localhost:8080/api/prescriptions/patient/${patient.id}`
+      `${environment.apiUrl}/api/prescriptions/patient/${patient.id}`
 
     ).subscribe({
 
@@ -402,7 +406,7 @@ implements OnInit {
 
         this.http.get<any[]>(
 
-          `http://localhost:8080/api/followups/patient/${patient.id}`
+          `${environment.apiUrl}/api/followups/patient/${patient.id}`
 
         ).subscribe({
 

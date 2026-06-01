@@ -10,6 +10,9 @@ import {
   Router,
   RouterLink
 } from '@angular/router';
+import {
+  environment
+} from '../../../environments/environment';
 
 @Component({
   selector: 'app-signup',
@@ -129,7 +132,7 @@ export class SignupComponent {
     /* SIGNUP API */
 
     this.http.post(
-      'http://localhost:8080/api/auth/signup',
+      `${environment.apiUrl}/api/auth/signup`,
       payload,
       {
         responseType: 'text'
@@ -175,7 +178,7 @@ export class SignupComponent {
           /* AUTO LOGIN */
 
           this.http.post<any>(
-            'http://localhost:8080/api/auth/login',
+            `${environment.apiUrl}/api/auth/login`,
             {
               username: this.username,
               password: this.password

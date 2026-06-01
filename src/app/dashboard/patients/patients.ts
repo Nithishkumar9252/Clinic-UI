@@ -28,6 +28,9 @@ import {
   ActivatedRoute
 } from '@angular/router';
 
+import {
+  environment
+} from '../../../environments/environment';
 
 
 @Component({
@@ -398,7 +401,7 @@ goToPage(page:number) {
 
     this.http.get<any[]>(
 
-      'http://localhost:8080/api/patients'
+      `${environment.apiUrl}/api/patients`
 
     ).subscribe({
 
@@ -592,7 +595,7 @@ closePreview() {
 
       this.http.put(
 
-        `http://localhost:8080/api/patients/${this.editingPatientId}`,
+        `${environment.apiUrl}/api/patients/${this.editingPatientId}`,
 
         this.patient
 
@@ -641,7 +644,7 @@ closePreview() {
 
     this.http.post(
 
-      'http://localhost:8080/api/patients',
+      `${environment.apiUrl}/api/patients`,
 
       this.patient
 
@@ -695,7 +698,7 @@ closePreview() {
 
     this.http.delete(
 
-      `http://localhost:8080/api/patients/${id}`,
+      `${environment.apiUrl}/api/patients/${id}`,
 
       {
         responseType: 'text'

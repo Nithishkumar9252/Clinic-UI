@@ -47,22 +47,26 @@ export class AiChatbotComponent {
 
     private cdr: ChangeDetectorRef
 
-  ) {}
+  ) {
+     if (typeof window !== 'undefined') {
+
+    this.client = new OpenAI({
+
+      apiKey: environment.GROQ_API_KEY,
+
+      baseURL: environment.GROQ_API_URL,
+
+      dangerouslyAllowBrowser: true
+    });
+
+  }
+  }
 
   /* ===================================== */
   /* GROQ AI CLIENT */
   /* ===================================== */
 
-  client = new OpenAI({
-
-    apiKey:
-      environment.GROQ_API_KEY,
-
-    baseURL:
-      environment.GROQ_API_URL,
-
-    dangerouslyAllowBrowser: true
-  });
+  client: OpenAI | null = null;
 
   /* ===================================== */
   /* VARIABLES */
@@ -179,7 +183,7 @@ Preparing holistic recommendations...
 
   this.http.get(
 
-    `http://localhost:8080/api/patients/code/${this.patientId.trim().toLowerCase()}`
+    `${environment.apiUrl}/api/patients/code/${this.patientId.trim().toLowerCase()}`
 
   ).subscribe({
 
@@ -226,7 +230,7 @@ Preparing holistic recommendations...
 
       this.http.get<any[]>(
 
-        `http://localhost:8080/api/followups/patient/${patient.id}`
+        `${environment.apiUrl}/api/followups/patient/${patient.id}`
 
       ).subscribe({
 
@@ -478,7 +482,14 @@ Add:
             // =====================================
             // AI CALL
             // =====================================
+            if (!this.client) {
 
+              alert('AI service unavailable');
+
+              this.isAnalyzing = false;
+
+              return;
+            }
             const completion = await this.client.chat.completions.create({
 
               model:
@@ -635,6 +646,15 @@ Add:
 
     try {
 
+      if (!this.client) {
+
+        alert('AI service unavailable');
+
+        this.isAnalyzing = false;
+
+        return;
+      }
+
       const completion = await this.client.chat.completions.create({
 
         model:
@@ -782,7 +802,14 @@ Rules:
   this.cdr.detectChanges();
 
   try {
+    if (!this.client) {
 
+      alert('AI service unavailable');
+
+      this.isAnalyzing = false;
+
+      return;
+    }
     const completion =
       await this.client.chat.completions.create({
 

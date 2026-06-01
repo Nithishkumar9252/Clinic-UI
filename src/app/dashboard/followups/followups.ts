@@ -21,6 +21,10 @@ import {
   HttpClient
 } from '@angular/common/http';
 
+import {
+  environment
+} from '../../../environments/environment';
+
 @Component({
   selector: 'app-followups',
 
@@ -149,7 +153,7 @@ implements OnInit {
 
     this.http.get<any[]>(
 
-      'http://localhost:8080/api/patients'
+      `${environment.apiUrl}/api/patients`
 
     ).subscribe({
 
@@ -171,7 +175,7 @@ implements OnInit {
 
           this.http.get<any[]>(
 
-            `http://localhost:8080/api/followups/patient/${patient.id}`
+            `${environment.apiUrl}/api/followups/patient/${patient.id}`
 
           ).subscribe({
 
@@ -458,7 +462,7 @@ implements OnInit {
 
     this.http.get<any[]>(
 
-      `http://localhost:8080/api/followups/patient/${patientId}`
+      `${environment.apiUrl}/api/followups/patient/${patientId}`
 
     ).subscribe({
 
@@ -564,7 +568,7 @@ implements OnInit {
 
     this.http.put(
 
-      `http://localhost:8080/api/followups/${this.followup.id}`,
+      `${environment.apiUrl}/api/followups/${this.followup.id}`,
 
       payload,
 
@@ -617,7 +621,7 @@ implements OnInit {
 
     this.http.post(
 
-      'http://localhost:8080/api/followups',
+      `${environment.apiUrl}/api/followups`,
 
       payload,
 
@@ -773,7 +777,7 @@ afterSaveSuccess(){
 
   this.http.get<any[]>(
 
-    `http://localhost:8080/api/followups/patient/${patient.id}`
+    `${environment.apiUrl}/api/followups/patient/${patient.id}`
 
   ).subscribe({
 
@@ -907,7 +911,7 @@ afterSaveSuccess(){
 
     this.http.delete(
 
-      `http://localhost:8080/api/followups/${id}`,
+      `${environment.apiUrl}/api/followups/${id}`,
 
       {
         responseType:'text'
