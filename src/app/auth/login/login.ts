@@ -7,10 +7,15 @@ import {
   environment
 } from '../../../environments/environment';
 
+import {
+  Router,
+  RouterLink
+} from '@angular/router';
+
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule,RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
