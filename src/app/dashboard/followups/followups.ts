@@ -515,8 +515,6 @@ implements OnInit {
 
   if(
 
-    !this.followup.nextFollowupDate ||
-
     !this.followup.improvementStatus
 
   ){

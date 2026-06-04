@@ -445,7 +445,6 @@ goToPage(page:number) {
 
       !this.patient.name ||
 
-      !this.patient.phoneNumber ||
 
       !this.patient.age
 
@@ -560,8 +559,6 @@ closePreview() {
     if (
 
       !this.patient.name ||
-
-      !this.patient.phoneNumber ||
 
       !this.patient.age
 
