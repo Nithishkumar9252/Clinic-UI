@@ -1014,4 +1014,17 @@ downloadPrescriptionPDF() {
 
     };
   }
+
+  truncateDiagnosis(
+      diagnosis: string
+    ): string {
+
+      if (!diagnosis) {
+        return 'No Diagnosis';
+      }
+
+      return diagnosis.length > 40
+        ? diagnosis.substring(0, 40) + '...'
+        : diagnosis;
+    }
 }

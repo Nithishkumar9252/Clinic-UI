@@ -1496,3 +1496,16 @@ body{
     padding:16px;
   }
 }
+
+.disease-text {
+
+  display: inline-block;
+
+  max-width: 300px;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}

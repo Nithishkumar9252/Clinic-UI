@@ -1247,11 +1247,23 @@ body{
 
 /* DIAGNOSIS */
 
-.disease-text{
+
+
+.disease-text {
 
   font-size:14px;
 
   color:#f4f4f4;
+
+  display: inline-block;
+
+  max-width: 300px;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
 }
 
 /* ACTIONS */
@@ -2880,3 +2892,4 @@ body{
 
   background:transparent;
 }
+

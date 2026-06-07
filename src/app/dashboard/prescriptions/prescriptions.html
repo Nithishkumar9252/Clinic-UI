@@ -148,7 +148,14 @@
 
             <td>
 
-              {{ p.diagnosis }}
+              <span
+                class="disease-text"
+                [title]="p.diagnosis"
+              >
+
+                {{ truncateDiagnosis(p.diagnosis) }}
+
+              </span>
 
             </td>
 

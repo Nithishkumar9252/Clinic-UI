@@ -165,12 +165,12 @@
 
             <td>
 
-              <span class="disease-text">
+              <span
+                class="disease-text"
+                [title]="p.diagnosis"
+              >
 
-                {{
-                  p.diagnosis
-                  || 'No Diagnosis'
-                }}
+                {{ truncateDiagnosis(p.diagnosis) }}
 
               </span>
 

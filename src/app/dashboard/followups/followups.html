@@ -149,11 +149,18 @@
 
         <!-- DIAGNOSIS -->
 
-        <td>
+            <td>
 
-          {{ p.diagnosis || 'N/A' }}
+              <span
+                class="disease-text"
+                [title]="p.diagnosis"
+              >
 
-        </td>
+                {{ truncateDiagnosis(p.diagnosis) }}
+
+              </span>
+
+            </td>
 
         <!-- LAST FOLLOWUP -->
 
