@@ -260,111 +260,138 @@ totalPages:number = 1;
 
 
 
-updatePagination() {
+updatePagination(): void {
 
-  /* UNIVERSAL SEARCH */
-
-  const search =
-    this.searchText
+  const search = this.searchText
     .toLowerCase()
     .trim();
 
-  this.searchedPatients =
-    this.patients.filter((p) => {
+  // SEARCH FILTER
 
-      return (
+  this.searchedPatients = this.patients.filter((p) => {
 
-        String(p.patientCode || '')
+    return (
+
+      String(p.patientCode || '')
         .toLowerCase()
         .includes(search)
 
-        ||
+      ||
 
-        String(p.name || '')
+      String(p.name || '')
         .toLowerCase()
         .includes(search)
 
-        ||
+      ||
 
-        String(p.age || '')
+      String(p.age || '')
         .toLowerCase()
         .includes(search)
 
-        ||
+      ||
 
-        String(p.diagnosis || '')
+      String(p.diagnosis || '')
         .toLowerCase()
         .includes(search)
 
-        ||
+      ||
 
-        String(p.phoneNumber || '')
+      String(p.phoneNumber || '')
         .toLowerCase()
         .includes(search)
-      );
-    });
 
-  /* RESET PAGE IF SEARCH */
+    );
+
+  });
+
+  // RESET TO FIRST PAGE WHEN SEARCHING
 
   if (search) {
 
     this.currentPage = 1;
+
   }
 
-  /* TOTAL PAGES */
+  // TOTAL PAGES
 
-  this.totalPages =
-    Math.max(
-      1,
-      Math.ceil(
-        this.searchedPatients.length
-        / this.itemsPerPage
-      )
-    );
+  this.totalPages = Math.ceil(
+    this.searchedPatients.length / this.itemsPerPage
+  );
 
-  /* PAGE ARRAY */
+  if (this.totalPages === 0) {
 
-  this.pages =
-    Array.from(
-      { length:this.totalPages },
-      (_, i) => i + 1
-    );
+    this.totalPages = 1;
 
-  /* START / END */
+  }
 
-  const start =
-    (this.currentPage - 1)
-    * this.itemsPerPage;
+  // FIX INVALID PAGE
 
-  const end =
-    start + this.itemsPerPage;
+  if (this.currentPage > this.totalPages) {
 
-  /* FINAL FILTERED */
+    this.currentPage = this.totalPages;
 
-  this.filteredPatients =
-    this.searchedPatients.slice(
-      start,
-      end
-    );
+  }
+
+  // PAGE NUMBERS
+
+  this.pages = Array.from(
+    { length: this.totalPages },
+    (_, index) => index + 1
+  );
+
+  // PAGINATION SLICE
+
+  const startIndex =
+    (this.currentPage - 1) *
+    this.itemsPerPage;
+
+  const endIndex =
+    startIndex +
+    this.itemsPerPage;
+
+  this.filteredPatients = [
+    ...this.searchedPatients.slice(
+      startIndex,
+      endIndex
+    )
+  ];
+
+  console.log(
+    'Current Page:',
+    this.currentPage
+  );
+
+  console.log(
+    'Total Pages:',
+    this.totalPages
+  );
+
+  console.log(
+    'Showing Patients:',
+    this.filteredPatients
+  );
+
 }
 
 
 
 
-nextPage() {
+nextPage(): void {
 
   if (
-    this.currentPage
-    < this.totalPages
+    this.currentPage <
+    this.totalPages
   ) {
 
     this.currentPage++;
 
     this.updatePagination();
+
   }
+
 }
 
-prevPage() {
+prevPage(): void {
 
   if (
     this.currentPage > 1
@@ -373,14 +400,17 @@ prevPage() {
     this.currentPage--;
 
     this.updatePagination();
+
   }
+
 }
 
-goToPage(page:number) {
+goToPage(page: number): void {
 
   this.currentPage = page;
 
   this.updatePagination();
+
 }
 
 
