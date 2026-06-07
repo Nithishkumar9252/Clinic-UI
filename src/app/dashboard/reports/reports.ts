@@ -933,4 +933,18 @@ implements OnInit {
     );
   }
 
+  getAgeBarHeight(value: number): number {
+
+  const max = Math.max(
+    this.ageGroups.child,
+    this.ageGroups.youth,
+    this.ageGroups.adult,
+    this.ageGroups.middle,
+    this.ageGroups.senior,
+    1
+  );
+
+  return (value / max) * 100;
+}
+
 }

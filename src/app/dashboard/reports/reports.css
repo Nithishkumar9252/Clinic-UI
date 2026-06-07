@@ -747,7 +747,7 @@ html{
 
   width:100%;
 
-  min-height:18px;
+  min-height:0px;
 
   border-radius:
   14px 14px 0 0;
@@ -758,7 +758,7 @@ html{
     #22c55e,
     #14532d
   );
-
+  transition: height .4s ease;
   animation:
   growBar 1.2s ease;
 }

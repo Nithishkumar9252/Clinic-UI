@@ -300,7 +300,7 @@
             class="bar-fill"
 
             [style.height.%]="
-              ageGroups.child * 2
+              getAgeBarHeight(ageGroups.child)
             "
           ></div>
 
@@ -322,7 +322,7 @@
             class="bar-fill"
 
             [style.height.%]="
-              ageGroups.youth * 2
+              getAgeBarHeight(ageGroups.youth)
             "
           ></div>
 
@@ -344,7 +344,7 @@
             class="bar-fill"
 
             [style.height.%]="
-              ageGroups.adult * 2
+              getAgeBarHeight(ageGroups.adult)
             "
           ></div>
 
@@ -366,7 +366,7 @@
             class="bar-fill"
 
             [style.height.%]="
-              ageGroups.middle * 2
+              getAgeBarHeight(ageGroups.middle)
             "
           ></div>
 
@@ -388,7 +388,7 @@
             class="bar-fill"
 
             [style.height.%]="
-              ageGroups.senior * 2
+              getAgeBarHeight(ageGroups.senior)
             "
           ></div>
 
