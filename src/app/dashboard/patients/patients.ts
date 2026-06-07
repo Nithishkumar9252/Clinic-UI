@@ -260,157 +260,130 @@ totalPages:number = 1;
 
 
 
-updatePagination(): void {
+// PAGINATION
 
-  const search = this.searchText
+
+updatePagination() {
+
+  const search =
+
+    this.searchText
     .toLowerCase()
     .trim();
 
-  // SEARCH FILTER
+  this.searchedPatients =
 
-  this.searchedPatients = this.patients.filter((p) => {
+    this.patients.filter((p)=>{
 
-    return (
+      return(
 
-      String(p.patientCode || '')
-        .toLowerCase()
+        String(
+          p.name || ''
+        ).toLowerCase()
         .includes(search)
 
-      ||
+        ||
 
-      String(p.name || '')
-        .toLowerCase()
+        String(
+          p.patientCode || ''
+        ).toLowerCase()
         .includes(search)
 
-      ||
+        ||
 
-      String(p.age || '')
-        .toLowerCase()
+        String(
+          p.phoneNumber || ''
+        )
         .includes(search)
 
-      ||
+        ||
 
-      String(p.diagnosis || '')
-        .toLowerCase()
+        String(
+          p.diagnosis || ''
+        ).toLowerCase()
         .includes(search)
+      );
+    });
 
-      ||
-
-      String(p.phoneNumber || '')
-        .toLowerCase()
-        .includes(search)
-
-    );
-
-  });
-
-  // RESET TO FIRST PAGE WHEN SEARCHING
-
-  if (search) {
+  if(search){
 
     this.currentPage = 1;
-
   }
 
-  // TOTAL PAGES
+  this.totalPages =
 
-  this.totalPages = Math.ceil(
-    this.searchedPatients.length / this.itemsPerPage
-  );
+    Math.max(
 
-  if (this.totalPages === 0) {
+      1,
 
-    this.totalPages = 1;
+      Math.ceil(
+        this.searchedPatients.length
+        /
+        this.itemsPerPage
+      )
+    );
 
-  }
+  this.pages =
 
-  // FIX INVALID PAGE
+    Array.from(
 
-  if (this.currentPage > this.totalPages) {
+      { length:this.totalPages },
 
-    this.currentPage = this.totalPages;
+      (_,i)=> i + 1
+    );
 
-  }
+  const start =
 
-  // PAGE NUMBERS
-
-  this.pages = Array.from(
-    { length: this.totalPages },
-    (_, index) => index + 1
-  );
-
-  // PAGINATION SLICE
-
-  const startIndex =
-    (this.currentPage - 1) *
+    (this.currentPage - 1)
+    *
     this.itemsPerPage;
 
-  const endIndex =
-    startIndex +
+  const end =
+
+    start +
     this.itemsPerPage;
 
   this.filteredPatients = [
     ...this.searchedPatients.slice(
-      startIndex,
-      endIndex
+      start,
+      end
     )
   ];
 
-  console.log(
-    'Current Page:',
-    this.currentPage
-  );
-
-  console.log(
-    'Total Pages:',
-    this.totalPages
-  );
-
-  console.log(
-    'Showing Patients:',
-    this.filteredPatients
-  );
-
+  this.cdr.detectChanges();
 }
 
+nextPage() {
 
-
-
-nextPage(): void {
-
-  if (
-    this.currentPage <
+  if(
+    this.currentPage
+    <
     this.totalPages
-  ) {
+  ){
 
     this.currentPage++;
 
     this.updatePagination();
-
   }
-
 }
 
-prevPage(): void {
+prevPage() {
 
-  if (
+  if(
     this.currentPage > 1
-  ) {
+  ){
 
     this.currentPage--;
 
     this.updatePagination();
-
   }
-
 }
 
-goToPage(page: number): void {
+goToPage(page:number) {
 
   this.currentPage = page;
 
   this.updatePagination();
-
 }
 
 

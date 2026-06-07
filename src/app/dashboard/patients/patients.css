@@ -1836,6 +1836,23 @@ body{
   flex-wrap:wrap;
 }
 
+.pagination-wrapper {
+
+  position: relative;
+
+  z-index: 999999 !important;
+
+  pointer-events: auto !important;
+}
+
+.pagination-number,
+.pagination-nav {
+
+  pointer-events: auto !important;
+
+  cursor: pointer !important;
+}
+
 /* BUTTON BASE */
 
 .pagination-nav,
