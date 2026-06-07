@@ -14,7 +14,7 @@
 
   overflow:hidden;
 
-  background:#f4f8f2;
+  background:var(--page-bg);
 }
 
 .layout-content{
@@ -37,10 +37,6 @@
   padding:0;
 
   background:
-  linear-gradient(
-    135deg,
-    #f8fbf7,
-    #eef7ef
-  );
+  background:var(--page-bg);
 }
 

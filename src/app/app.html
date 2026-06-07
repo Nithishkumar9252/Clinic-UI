@@ -1,1 +1,8 @@
-<router-outlet></router-outlet>
+<div
+  [class.dark-theme]="isDarkMode"
+  [class.light-theme]="!isDarkMode"
+>
+
+  <router-outlet></router-outlet>
+
+</div>

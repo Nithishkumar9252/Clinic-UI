@@ -30,6 +30,8 @@ export class NavbarComponent implements OnInit {
   /* FULL NAME */
   fullName = 'Doctor';
 
+  isDarkMode = false;
+
   /* SHOW ID CARD */
   showCard = false;
 
@@ -38,13 +40,20 @@ export class NavbarComponent implements OnInit {
     /* SSR SAFE */
     if (typeof window !== 'undefined') {
 
-      /* GET FULL NAME */
-      this.fullName =
-        localStorage.getItem('fullName')
-        || 'Doctor';
-    }
+    this.fullName =
+      localStorage.getItem('fullName')
+      || 'Doctor';
 
-    this.updateDate();
+    this.isDarkMode =
+      localStorage.getItem('theme') === 'dark';
+
+    document.body.classList.toggle(
+      'dark-theme',
+      this.isDarkMode
+    );
+  }
+
+  this.updateDate();
   }
 
   /* TOGGLE ID CARD */
@@ -76,4 +85,21 @@ export class NavbarComponent implements OnInit {
         }
       );
   }
+
+  toggleTheme() {
+
+  this.isDarkMode = !this.isDarkMode;
+
+  document.body.classList.toggle(
+    'dark-theme',
+    this.isDarkMode
+  );
+
+  localStorage.setItem(
+    'theme',
+    this.isDarkMode
+      ? 'dark'
+      : 'light'
+  );
+}
 }

@@ -1,0 +1,17 @@
+:root {
+
+  --primary-bg: #006b31;
+  --secondary-bg: #003b1f;
+  --card-bg: rgba(255,255,255,.08);
+  --text-color: #ffffff;
+}
+
+/* LIGHT */
+
+body.light-theme {
+
+  --primary-bg: #ffffff;
+  --secondary-bg: #f5f7fa;
+  --card-bg: #ffffff;
+  --text-color: #111827;
+}
