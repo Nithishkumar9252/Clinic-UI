@@ -124,7 +124,7 @@ You can:
   /* ===================================== */
   /* ANALYZE PATIENT */
   /* ===================================== */
-  analyzePatient() {
+analyzePatient() {
 
   if (!this.patientId.trim()) {
 
@@ -198,15 +198,29 @@ Preparing holistic recommendations...
 
             followupText = `
 
+==================================================
+
 FOLLOWUP HISTORY ANALYSIS
 
 Patient has followup history.
+
+Analyze:
+• improvement progression
+• medicine response
+• remedy effectiveness
+• symptom evolution
+• constitutional changes
+• prognosis improvement
+• remedy repetition suitability
+• potency adjustment necessity
 
 `;
 
             followups.forEach((f, index) => {
 
               followupText += `
+
+----------------------------------------
 
 FOLLOWUP ${index + 1}
 
@@ -235,16 +249,33 @@ ${f.doctorNotes}
 
             followupText = `
 
+==================================================
+
 NO FOLLOWUP HISTORY AVAILABLE
 
-Analyze based only on initial constitutional case.
+Analyze based only on
+initial constitutional case.
 
 `;
           }
 
           const prompt = `
 
-You are an internationally experienced senior AI Homeopathy Doctor.
+You are an internationally experienced
+senior AI Homeopathy Doctor.
+
+Expertise:
+
+• Classical Homeopathy
+• Constitutional Homeopathy
+• Acute & Chronic Disease
+• Miasmatic Analysis
+• Remedy Differentiation
+• Followup Evaluation
+• Remedy Progress Analysis
+• Potency Adjustment
+
+==================================================
 
 PATIENT DETAILS
 
@@ -301,9 +332,74 @@ ${patient?.rx}
 
 ${followupText}
 
-Generate detailed professional homeopathic analysis.
+==================================================
 
-Doctor verification required before treatment.
+GENERATE PROFESSIONAL ANALYSIS
+
+IMPORTANT:
+
+Do NOT write:
+
+Professional Analysis
+
+Start directly with:
+
+1. Constitutional Analysis
+
+2. Disease Evolution Analysis
+
+3. Followup Progress Evaluation
+
+4. Remedy Effectiveness Analysis
+
+5. Symptom Change Analysis
+
+6. Miasmatic Analysis
+
+7. Remedy Differentiation
+
+8. Potency Adjustment Suggestions
+
+9. Future Remedy Planning
+
+10. Prognosis Evaluation
+
+11. Recovery Progress
+
+12. Relapse Risk
+
+13. Diet Restrictions
+
+14. Lifestyle Advice
+
+15. Followup Recommendations
+
+16. Holistic Healing Advice
+
+17. Long-Term Prevention
+
+18. Final Clinical Summary
+
+==================================================
+
+IMPORTANT RULES
+
+• Focus ONLY on homeopathy
+• Mention ONLY homeopathy remedies
+• Mention potencies properly
+• Mention dosage professionally
+• Analyze followup progression carefully
+• Compare old symptoms vs new symptoms
+• Mention whether patient improving or worsening
+• Mention whether remedy should continue/change
+• Mention constitutional remedy possibilities
+• Keep response highly professional
+
+Add:
+"Doctor verification required before treatment."
+
+==================================================
+
 `;
 
           this.http.post<any>(
