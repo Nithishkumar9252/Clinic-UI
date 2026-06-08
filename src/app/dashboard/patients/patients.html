@@ -236,7 +236,7 @@
 
 <div
   class="pagination-wrapper"
-  *ngIf="totalPages > 1"
+  *ngIf="totalPages > 1 && !showForm && !previewMode"
 >
 
   <!-- PREVIOUS -->
@@ -377,11 +377,10 @@
 
         [class.active-step]="currentStep === 2"
 
-        [class.locked-step]="!patient.name || !patient.phoneNumber || !patient.age"
+        [class.locked-step]="!patient.name ||  !patient.age"
 
         (click)="
           patient.name &&
-          patient.phoneNumber &&
           patient.age &&
           goToStep(2)
         "
